@@ -1,0 +1,8 @@
+[user]
+    signingkey = 259A8ECD1A65D3F7
+
+[commit]
+    gpgsign = true
+
+[gpg]
+    program = /home/guest/gpg-no-tty.sh
