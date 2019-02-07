@@ -22,6 +22,9 @@
 *.tar.gz
 *.rar
 
+# Include the gradle wrapper
+!gradle/wrapper/gradle-wrapper.jar
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
@@ -30,3 +33,6 @@ hs_err_pid*
 .idea/
 build/
 out/
+src/main/java/com/fishy/provalang/parser/visitors/
+src/main/resources/
+src/test/
