@@ -1,3 +1,6 @@
+# keep my config stuff private
+.gitconfig
+
 # Compiled class file
 *.class
 
@@ -27,6 +30,3 @@ hs_err_pid*
 .idea/
 build/
 out/
-
-# keep my config stuff private
-.gitconfig
