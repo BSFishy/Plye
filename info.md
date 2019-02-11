@@ -12,4 +12,4 @@ to see if I wasn't not lazy enough to not update this.
  * Code:
    * [Hierarchy][code-hierarchy]
 
- [code-hierarchy]: ./info/code-hierarchy/
+ [code-hierarchy]: ./code-hierarchy/
