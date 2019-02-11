@@ -5,3 +5,8 @@ description: The main destination for all information relating to Provalang.
 show_downloads: true
 
 permalink: pretty
+
+collections:
+  info:
+    output: true
+    permalink: /info/:title
