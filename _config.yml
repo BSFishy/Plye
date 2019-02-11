@@ -9,4 +9,4 @@ permalink: pretty
 collections:
   info:
     output: true
-    permalink: /info/:title
+    permalink: /info/:title/
