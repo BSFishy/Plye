@@ -1,6 +1,5 @@
 ---
 layout: default
-permalink: pretty
 ---
 # Provalang
 Provalang is an extremely extensible general purpose programming language. Provalang's main purpose is to provide any developer with an easy to use and understand language for any application.
