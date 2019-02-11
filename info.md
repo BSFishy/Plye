@@ -1,6 +1,5 @@
 ---
 layout: default
-permalink: pretty
 ---
 # Provalang info
 Welcome to Provalang info. Here, you can find all sorts of information about the syntax, underlying systems, or hopefully anything else you might want to know.
