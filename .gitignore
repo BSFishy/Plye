@@ -1,3 +1,6 @@
+# I have my gh-pages folder in this folder as well
+gh-pages/
+
 # keep my config stuff private
 .gitconfig
 
