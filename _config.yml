@@ -10,3 +10,6 @@ collections:
   info:
     output: true
     permalink: /info/:title/
+  develop:
+    output: true
+    permalink: /development/:title/
