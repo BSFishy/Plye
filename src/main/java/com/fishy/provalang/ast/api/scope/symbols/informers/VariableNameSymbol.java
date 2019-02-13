@@ -1,4 +1,4 @@
-package com.fishy.provalang.ast.api.scope.symbols;
+package com.fishy.provalang.ast.api.scope.symbols.informers;
 
 import com.fishy.provalang.ast.api.scope.Symbol;
 import com.fishy.provalang.ast.informers.VariableName;

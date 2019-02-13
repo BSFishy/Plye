@@ -5,7 +5,7 @@ import com.fishy.provalang.ast.api.nodes.AstContainer;
 import com.fishy.provalang.ast.api.nodes.Type;
 import com.fishy.provalang.ast.api.scope.Symbol;
 import com.fishy.provalang.ast.api.scope.scopes.ClassScope;
-import com.fishy.provalang.ast.api.scope.symbols.ClassSymbol;
+import com.fishy.provalang.ast.api.scope.symbols.blocks.ClassSymbol;
 import com.fishy.provalang.ast.api.value.builtins.Void;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -36,6 +36,3 @@ hs_err_pid*
 .idea/
 build/
 out/
-src/main/java/com/fishy/provalang/parser/visitors/
-src/main/resources/
-src/test/

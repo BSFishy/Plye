@@ -9,7 +9,15 @@ public abstract class Visitor<T extends AstNode>
 {
     public abstract boolean canVisit(List<LexerToken> tokens);
 
-    public abstract T visit(List<LexerToken> tokens);
+    public abstract T visit(List<LexerToken> tokens, AstNode visit);
 
     public abstract void clean(List<LexerToken> tokens);
+
+    public void remove(int amount, List<LexerToken> tokens)
+    {
+        for(int i = 0; i < amount; i++)
+        {
+            tokens.remove(0);
+        }
+    }
 }

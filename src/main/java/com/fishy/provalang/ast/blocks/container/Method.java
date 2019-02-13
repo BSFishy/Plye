@@ -9,7 +9,7 @@ import com.fishy.provalang.ast.api.nodes.Type;
 import com.fishy.provalang.ast.api.scope.Symbol;
 import com.fishy.provalang.ast.api.scope.scopes.ClassScope;
 import com.fishy.provalang.ast.api.scope.scopes.MethodScope;
-import com.fishy.provalang.ast.api.scope.symbols.MethodSymbol;
+import com.fishy.provalang.ast.api.scope.symbols.blocks.MethodSymbol;
 import com.fishy.provalang.ast.api.value.builtins.Void;
 import com.fishy.provalang.ast.informers.VariableName;
 import lombok.Data;

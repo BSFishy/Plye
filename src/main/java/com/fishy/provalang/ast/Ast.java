@@ -9,6 +9,6 @@ public class Ast
 
     public void execute()
     {
-
+        root.expr();
     }
 }

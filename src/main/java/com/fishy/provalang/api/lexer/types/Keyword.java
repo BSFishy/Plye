@@ -17,6 +17,7 @@ public class Keyword
     public static final Static staticToken = new Static();
 
     public static final Package packageToken = new Package();
+    public static final Import importToken = new Import();
 
     public static final Public    publicToken    = new Public();
     public static final Private   privateToken   = new Private();
@@ -30,7 +31,7 @@ public class Keyword
     public static void addDefaultTypes(List<ILexerTokenType> list)
     {
         LexerApi.addTokenTypes(list, new ILexerTokenType[]{newToken, classToken, staticToken,
-                packageToken,
+                packageToken, importToken,
                 publicToken, privateToken, protectedToken});
     }
 
@@ -123,6 +124,28 @@ public class Keyword
     }
 
     @Data
+    public static class Import implements ILexerTokenType
+    {
+        @Override
+        public boolean canCast(String currentString)
+        {
+            return currentString.matches(Utils.generateLeadingRegex("import") + Utils.generateSingleLeadingRegex("[^a-zA-Z0-9_]?"));
+        }
+
+        @Override
+        public LexerCastData shouldCast(String currentString)
+        {
+            return new LexerCastData(currentString.matches("import[^a-zA-Z0-9_]"), true);
+        }
+
+        @Override
+        public LexerTokenData cast(LexerTokenInfo info, String currentString)
+        {
+            return new KeywordData(info, KeywordData.KeyWord.IMPORT);
+        }
+    }
+
+    @Data
     public static class Public implements ILexerTokenType
     {
         @Override
@@ -209,6 +232,7 @@ public class Keyword
             STATIC,
 
             PACKAGE,
+            IMPORT,
 
             PUBLIC,
             PROTECTED,

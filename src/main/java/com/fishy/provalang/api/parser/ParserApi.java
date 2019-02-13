@@ -6,6 +6,7 @@ import com.fishy.provalang.api.parser.annotation.OverridableVisitor;
 import com.fishy.provalang.api.parser.visitor.Visitor;
 import com.fishy.provalang.api.parser.visitor.VisitorComparator;
 import com.fishy.provalang.ast.api.AstNode;
+import com.fishy.provalang.parser.visitors.Informers;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -17,6 +18,11 @@ public class ParserApi
 
     // LIST STUFF
 
+    public static List<Visitor> getVisitors()
+    {
+        return visitors;
+    }
+
     public static void addVisitor(Visitor v)
     {
         addVisitor(visitors, v);
@@ -24,8 +30,19 @@ public class ParserApi
 
     public static void addVisitor(List<Visitor> list, Visitor v)
     {
-        if(!list.contains(v))
+        if (!list.contains(v))
             list.add(v);
+    }
+
+    public static void addVisitors(Visitor... vs)
+    {
+        addVisitors(visitors, vs);
+    }
+
+    public static void addVisitors(List<Visitor> list, Visitor... vs)
+    {
+        for(Visitor v : vs)
+            addVisitor(list, v);
     }
 
     public static void addDefaultVisitors()
@@ -35,34 +52,34 @@ public class ParserApi
 
     public static void addDefaultVisitors(List<Visitor> list)
     {
-
+        Informers.addDefaultTypes(list);
     }
 
     // VISITORS
 
-    public static AstNode visit(List<LexerToken> tokens)
+    public static AstNode visit(List<LexerToken> tokens, AstNode parent)
     {
-        return visit(visitors, tokens);
+        return visit(visitors, tokens, parent);
     }
 
-    public static AstNode visit(List<Visitor> list, List<LexerToken> tokens)
+    public static AstNode visit(List<Visitor> list, List<LexerToken> tokens, AstNode parent)
     {
-        if(tokens.isEmpty())
+        if (tokens.isEmpty())
             return null;
 
         List<Visitor> vs = new ArrayList<>();
-        for(Visitor v : list)
+        for (Visitor v : list)
         {
-            if(v.canVisit(tokens))
+            if (v.canVisit(tokens))
                 vs.add(v);
         }
         vs.sort(VisitorComparator.singleton);
 
-        if(vs.isEmpty())
+        if (vs.isEmpty())
             ProvalangApi.error("Unexpected token: %s", tokens.get(0).getData().toString());
 
-        Visitor v = vs.get(0);
-        AstNode out = v.visit(tokens);
+        Visitor v   = vs.get(0);
+        AstNode out = v.visit(tokens, parent);
         v.clean(tokens);
 
         return out;

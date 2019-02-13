@@ -3,7 +3,7 @@ package com.fishy.provalang.ast.informers;
 import com.fishy.provalang.ast.api.AstNode;
 import com.fishy.provalang.ast.api.nodes.Type;
 import com.fishy.provalang.ast.api.scope.Symbol;
-import com.fishy.provalang.ast.api.scope.symbols.VariableNameSymbol;
+import com.fishy.provalang.ast.api.scope.symbols.informers.VariableNameSymbol;
 import com.fishy.provalang.ast.api.value.builtins.Void;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

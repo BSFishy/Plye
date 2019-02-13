@@ -11,6 +11,8 @@ public class Parser extends AbstractParser
     @Override
     public Ast parse(List<LexerToken> tokens)
     {
+        prepare(tokens);
+
         return visit();
     }
 }
