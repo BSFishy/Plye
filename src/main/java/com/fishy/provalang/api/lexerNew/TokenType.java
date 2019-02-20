@@ -6,7 +6,7 @@ import lombok.experimental.NonFinal;
 
 public interface TokenType
 {
-    TokenData cast(char[] buffer);
+    TokenData cast(LexerTokenInfo info, char[] buffer);
 
     @Value
     @NonFinal

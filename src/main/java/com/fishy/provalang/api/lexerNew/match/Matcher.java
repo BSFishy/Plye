@@ -1,5 +1,6 @@
 package com.fishy.provalang.api.lexerNew.match;
 
+import com.fishy.provalang.api.lexer.LexerTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexToken;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import com.fishy.provalang.api.lexerNew.data.MatchData;
@@ -19,9 +20,14 @@ public abstract class Matcher<T extends TokenType>
 
     public abstract MatchData run(PersistentMatchData data, char currentCharacter, int position);
 
-    public LexToken run(char[] buffer)
+    public LexToken run(LexerTokenInfo info, char[] buffer)
     {
-        return new LexToken(type, type.cast(buffer));
+        return new LexToken(type, type.cast(info, buffer));
+    }
+
+    public Match<T> toMatch()
+    {
+        return Match.of(this);
     }
 
     // Helper stuff

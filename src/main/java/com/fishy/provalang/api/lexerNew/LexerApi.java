@@ -1,5 +1,7 @@
 package com.fishy.provalang.api.lexerNew;
 
+import com.fishy.provalang.lexer.tokens.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,24 @@ public class LexerApi
     {
         for (TokenType token : tokens)
             addTokenType(list, token);
+    }
+
+    public static void addDefaultTokens()
+    {
+        addDefaultTokens(getTokens());
+    }
+
+    public static void addDefaultTokens(List<TokenType> tokens)
+    {
+        BinaryOperator.addDefaultTypes(tokens);
+        Comment.addDefaultTypes(tokens);
+        Identifier.addDefaultType(tokens);
+        Ignored.addDefaultTypes(tokens);
+        Keyword.addDefaultTypes(tokens);
+        Literal.addDefaultTypes(tokens);
+        OpAssignOperator.addDefaultTypes(tokens);
+        Separator.addDefaultTypes(tokens);
+        UnaryOperator.addDefaultTypes(tokens);
     }
 
     public static List<TokenType> getTokens()
