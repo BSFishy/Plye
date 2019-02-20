@@ -53,14 +53,14 @@ public abstract class AbstractParser implements IParser
             if(node instanceof Package)
             {
                 if(!imports.isEmpty())
-                    ProvalangApi.error("Error parsing: package must be first command");
+                    ProvalangApi.error("Error parsing: package must be first token");
 
                 pkg = (Package) node;
             }
             else if(node instanceof Import)
             {
                 if(pkg == null)
-                    ProvalangApi.error("Error parsing: package must be first command");
+                    ProvalangApi.error("Error parsing: package must be first token");
 
                 imports.add((Import) node);
             }
