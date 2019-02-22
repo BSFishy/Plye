@@ -63,14 +63,6 @@ public abstract class AbstractLexer implements ILexer
             }
         }
 
-        return new LexToken();
-    }
-
-    public boolean canStep() throws IOException
-    {
-        input.mark(2);
-        boolean value = input.read() != -1;
-        input.reset();
-        return value;
+        return new LexToken(null, null);
     }
 }

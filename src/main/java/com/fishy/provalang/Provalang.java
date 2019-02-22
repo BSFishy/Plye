@@ -1,13 +1,11 @@
 package com.fishy.provalang;
 
 import com.fishy.provalang.api.ProvalangApi;
-import com.fishy.provalang.api.lexer.LexerToken;
-import com.fishy.provalang.ast.Ast;
+import com.fishy.provalang.api.file.Program;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class Provalang
@@ -15,34 +13,37 @@ public class Provalang
 
     public static final String VERSION = "0.1.0";
 
-    public static List<LexerToken> lex(String code)
+    public static Program lex(String filename)
     {
-        return ProvalangApi.getLexer().lex(code);
+        Program p = new Program(filename);
+        ProvalangApi.getLexer().lex(p);
+        return p;
     }
 
-    public static Ast parse(List<LexerToken> tokens)
+    public static Program parse(Program program)
     {
-        return ProvalangApi.getParser().parse(tokens);
+        ProvalangApi.getParser().parse(program);
+        return program;
     }
 
     public static void interpret(String code)
     {
-        List<LexerToken> lexed = lex(code);
+        Program program = lex(code);
 
-        ProvalangApi.log(lexed.stream()
+        ProvalangApi.log(program.getTokens().stream()
                               .map(l -> "" + l.getData().toString() + "")
                               .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
-        Ast ast = parse(lexed);
+        parse(program);
 
-        ast.execute();
+        program.getAst().execute();
     }
 
-    public static List<LexerToken> lexFile(String file)
+    public static Program lexFile(String file)
     {
         return lex(readFile(file));
     }
 
-    public static Ast parseFile(String file)
+    public static Program parseFile(String file)
     {
         return parse(lexFile(file));
     }

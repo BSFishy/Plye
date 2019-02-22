@@ -1,11 +1,11 @@
 package com.fishy.provalang.api;
 
 import com.fishy.provalang.api.cli.ProvalangCliApi;
-import com.fishy.provalang.api.lexer.ILexer;
 import com.fishy.provalang.api.lexer.LexerToken;
+import com.fishy.provalang.api.lexerNew.ILexer;
 import com.fishy.provalang.api.parser.IParser;
 import com.fishy.provalang.api.util.Utils;
-import com.fishy.provalang.lexer.Lexer;
+import com.fishy.provalang.lexer.LexerNew;
 import com.fishy.provalang.parser.Parser;
 
 import java.util.logging.Level;
@@ -36,7 +36,7 @@ public class ProvalangApi
     public static ILexer getLexer()
     {
         if (lexer == null)
-            lexer = new Lexer();
+            lexer = new LexerNew();
 
         return lexer;
     }

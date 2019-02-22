@@ -87,6 +87,24 @@ public abstract class Matcher<T extends TokenType>
         return data;
     }
 
+    protected MatchData lookahead(char currentCharacter, int position, MatchMethod method)
+    {
+        return lookahead(new MatchData(), currentCharacter, position, method);
+    }
+
+    protected MatchData lookahead(MatchData data, char currentCharacter, int position, MatchMethod method)
+    {
+        return lookahead(new MatchData(), new PersistentMatchData(0), currentCharacter, position, method);
+    }
+
+    protected MatchData lookahead(MatchData data, PersistentMatchData pdata, char currentCharacter, int position, MatchMethod method)
+    {
+        // TODO: get next char
+        data = method.match(data, pdata, currentCharacter, position+1);
+
+        return data;
+    }
+
     // Match Methods
 
     protected MatchMethod charMatcher(char c)
@@ -131,6 +149,11 @@ public abstract class Matcher<T extends TokenType>
     protected MatchMethod multipleMatch(MatchMethod method)
     {
         return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> matchMultiple(data, pdata, currentCharacter, pos, method);
+    }
+
+    protected MatchMethod lookahead(MatchMethod method)
+    {
+        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> lookahead(data, pdata, currentCharacter, pos, method);
     }
 
     // Specific matching

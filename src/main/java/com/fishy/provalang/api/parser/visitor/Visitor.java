@@ -15,9 +15,6 @@ public abstract class Visitor<T extends AstNode>
 
     public void remove(int amount, List<LexerToken> tokens)
     {
-        for(int i = 0; i < amount; i++)
-        {
-            tokens.remove(0);
-        }
+        if (amount > 0) {tokens.subList(0, amount).clear();}
     }
 }
