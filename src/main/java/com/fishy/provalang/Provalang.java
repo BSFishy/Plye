@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class Provalang
 {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "@VERSION@";
 
     public static Program lex(String filename)
     {

@@ -1,12 +1,13 @@
 package com.fishy.provalang.api.lexerNew.data;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
+@AllArgsConstructor
 public class PersistentMatchData
 {
-    @NonNull private int previousMatch;
+    private int previousMatch;
 
     public static PersistentMatchData of(MatchData data)
     {

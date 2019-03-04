@@ -48,7 +48,7 @@ public class ProvalangCliApi
 
     public static void printVersion()
     {
-        log(Level.INFO, "Provalang v%s\n", Provalang.VERSION);
+        log(Level.INFO, "Provalang %s\n", Provalang.VERSION);
     }
 
     public static void printHelp()

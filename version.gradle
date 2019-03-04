@@ -1,0 +1,55 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+def getVersion = { ->
+    def details = versionDetails()
+
+    def dist = ""
+    def distance = details.commitDistance
+    if (distance > 0)
+        dist = "-${distance}"
+
+    def version = "${details.lastTag}${dist}"
+    return version.toString()
+}
+
+version getVersion()
+
+def replaceFilesDir = 'com/fishy/provalang'
+def replaceFiles = ['Provalang']
+
+task updateVersion(type: Copy) {
+    group = 'Versioning'
+    description = 'Copies files from source to build/generated-src, replacing instances of @version@ with the current version.'
+
+    from sourceSets.main.allJava.srcDirs
+    into "$buildDir/generated-src"
+
+    replaceFiles.forEach { value ->
+        include "$replaceFilesDir/${value}.java"
+    }
+
+    filter(ReplaceTokens, tokens: [VERSION: project.version])
+}
+
+task finalizeBuild(type: Copy) {
+    group = 'Build'
+    description = 'Copies the latest build and renames it to have current instead of the version'
+
+    from file("${buildDir}/libs/${project.name}-${project.version}.jar")
+    into file("${buildDir}/libs")
+
+    rename '(.+)-(.+)\\.(.+)', '$1-current.$3'
+}
+
+sourceSets {
+    main {
+        java {
+            replaceFiles.forEach { value ->
+                exclude "$replaceFilesDir/${value}.java"
+            }
+        }
+    }
+}
+compileJava.source "$buildDir/generated-src"
+compileJava.dependsOn updateVersion
+build.finalizedBy(finalizeBuild)
