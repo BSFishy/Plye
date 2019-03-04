@@ -38,7 +38,7 @@ task finalizeBuild(type: Copy) {
     from file("${buildDir}/libs/${project.name}-${project.version}.jar")
     into file("${buildDir}/libs")
 
-    rename '(.+)-(.+)\\.(.+)', '$1-current.$3'
+    rename '(.+)-(v.+)\\.(.+)', '$1-current.$3'
 }
 
 sourceSets {
