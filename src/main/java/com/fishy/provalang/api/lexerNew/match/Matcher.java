@@ -132,6 +132,22 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
         };
     }
 
+    protected MatchMethod muntil(MatchMethod method)
+    {
+        return (int index) -> {
+            int i = 0;
+            while (true)
+            {
+                MatchData data = method.match(index + i);
+
+                if(data.isValue())
+                    return new MatchData(true, i+data.getLookahead());
+
+                i++;
+            }
+        };
+    }
+
     protected MatchMethod mand(MatchMethod... methods)
     {
         return (int index) -> {
