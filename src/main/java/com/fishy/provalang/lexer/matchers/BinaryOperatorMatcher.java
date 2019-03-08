@@ -45,7 +45,13 @@ public class BinaryOperatorMatcher
     public static void addDefaultMatches(List<Match> matches)
     {
         LexerApi.addMatches(matches, new Match[] {
-
+            assignMatch, equalsMatch, notEqualsMatch,
+                addMatch, subtractMatch, multiplyMatch, divideMatch,
+                greaterThanMatch, lessThanMatch, greaterThanEqualsMatch, lessThanEqualsMatch,
+                andMatch, orMatch, xorMatch,
+                booleanAndMatch, booleanOrMatch,
+                modulusMatch,
+                shiftLeftMatch, shiftRightMatch
         });
     }
 
