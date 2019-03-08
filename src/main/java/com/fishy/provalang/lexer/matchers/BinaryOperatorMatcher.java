@@ -1,8 +1,11 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
 import com.fishy.provalang.api.lexerNew.match.Matcher;
+
+import java.util.List;
 
 import static com.fishy.provalang.lexer.tokens.BinaryOperator.*;
 
@@ -34,6 +37,18 @@ public class BinaryOperatorMatcher
     public static final Match<ShiftLeftMatcher>  shiftLeftMatch  = Match.of(new ShiftLeftMatcher());
     public static final Match<ShiftRightMatcher> shiftRightMatch = Match.of(new ShiftRightMatcher());
 
+    public static void addDefaultMatches()
+    {
+        addDefaultMatches(LexerApi.getMatches());
+    }
+
+    public static void addDefaultMatches(List<Match> matches)
+    {
+        LexerApi.addMatches(matches, new Match[] {
+
+        });
+    }
+
     public static class AssignMatcher extends Matcher<Assign>
     {
         public AssignMatcher()
@@ -44,7 +59,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match(m('='), mnot(m('=')));
+            return match(m('='), mnot('='));
         }
     }
 
@@ -58,7 +73,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('='), m('='));
         }
     }
 
@@ -72,7 +87,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('!'), m('='));
         }
     }
 
@@ -86,7 +101,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('+'), mnot('='));
         }
     }
 
@@ -100,7 +115,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('-'), mnot('='));
         }
     }
 
@@ -114,7 +129,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('*'), mnot('='));
         }
     }
 
@@ -128,7 +143,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('/'), mnot('='));
         }
     }
 
@@ -142,7 +157,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('>'), mand(mnot('='), mnot('>')));
         }
     }
 
@@ -156,7 +171,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('<'), mand(mnot('='), mnot('<')));
         }
     }
 
@@ -170,7 +185,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('>'), m('='));
         }
     }
 
@@ -184,7 +199,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('<'), m('='));
         }
     }
 
@@ -198,7 +213,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('&'), mand(mnot('&'), mnot('=')));
         }
     }
 
@@ -212,7 +227,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('|'), mand(mnot('|'), mnot('=')));
         }
     }
 
@@ -226,7 +241,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('&'), mnot('='));
         }
     }
 
@@ -240,7 +255,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('&'), m('&'));
         }
     }
 
@@ -254,7 +269,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('|'), m('|'));
         }
     }
 
@@ -268,7 +283,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('%'), mnot('='));
         }
     }
 
@@ -282,7 +297,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('<'), m('<'));
         }
     }
 
@@ -296,7 +311,7 @@ public class BinaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('>'), m('>'));
         }
     }
 }

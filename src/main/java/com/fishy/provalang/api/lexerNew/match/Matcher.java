@@ -200,6 +200,14 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
         };
     }
 
+    protected MatchMethod mnot(char c)
+    {
+        return (int index) -> {
+            char ch = read(index);
+            return new MatchData(ch != c, 1);
+        };
+    }
+
     protected MatchMethod m(String s)
     {
         return (int index) -> {

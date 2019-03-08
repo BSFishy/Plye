@@ -1,5 +1,7 @@
 package com.fishy.provalang.api.lexerNew;
 
+import com.fishy.provalang.api.lexerNew.match.Match;
+import com.fishy.provalang.lexer.matchers.BinaryOperatorMatcher;
 import com.fishy.provalang.lexer.tokens.*;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ public class LexerApi
     // LIST STUFF
 
     private static final List<TokenType> tokenTypes = new ArrayList<>();
+    private static final List<Match>     matches    = new ArrayList<>();
 
     public static void addTokenType(TokenType token)
     {
@@ -33,6 +36,28 @@ public class LexerApi
             addTokenType(list, token);
     }
 
+    public static void addMatch(Match match)
+    {
+        addMatch(getMatches(), match);
+    }
+
+    public static void addMatch(List<Match> list, Match match)
+    {
+        if(!list.contains(match))
+            list.add(match);
+    }
+
+    public static void addMatches(Match[] matches)
+    {
+        addMatches(getMatches(), matches);
+    }
+
+    public static void addMatches(List<Match> list, Match[] matches)
+    {
+        for(Match match : matches)
+            addMatch(list, match);
+    }
+
     public static void addDefaultTokens()
     {
         addDefaultTokens(getTokens());
@@ -51,9 +76,24 @@ public class LexerApi
         UnaryOperator.addDefaultTypes(tokens);
     }
 
+    public static void addDefaultMatches()
+    {
+        addDefaultMatches(getMatches());
+    }
+
+    public static void addDefaultMatches(List<Match> match)
+    {
+        BinaryOperatorMatcher.addDefaultMatches(match);
+    }
+
     public static List<TokenType> getTokens()
     {
         return tokenTypes;
+    }
+
+    public static List<Match> getMatches()
+    {
+        return matches;
     }
 
     // TOKEN STUFF

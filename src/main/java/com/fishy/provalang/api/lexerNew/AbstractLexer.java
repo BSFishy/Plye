@@ -25,6 +25,9 @@ public abstract class AbstractLexer implements ILexer
     {
         this.reader = reader;
 
+        LexerApi.addDefaultTokens();
+        LexerApi.addDefaultMatches();
+
         this.prepared = true;
     }
 
