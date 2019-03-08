@@ -252,6 +252,11 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Generic helpers
 
+    protected MatchMethod newline()
+    {
+        return mor(m('\n'), m('\r'));
+    }
+
     protected MatchMethod uppercase()
     {
         return minRange(0x41, 0x5A);

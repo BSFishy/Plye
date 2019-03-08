@@ -2,6 +2,7 @@ package com.fishy.provalang.api.lexerNew;
 
 import com.fishy.provalang.api.lexerNew.match.Match;
 import com.fishy.provalang.lexer.matchers.BinaryOperatorMatcher;
+import com.fishy.provalang.lexer.matchers.CommentMatcher;
 import com.fishy.provalang.lexer.tokens.*;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class LexerApi
 
     public static void addMatch(List<Match> list, Match match)
     {
-        if(!list.contains(match))
+        if (!list.contains(match))
             list.add(match);
     }
 
@@ -54,7 +55,7 @@ public class LexerApi
 
     public static void addMatches(List<Match> list, Match[] matches)
     {
-        for(Match match : matches)
+        for (Match match : matches)
             addMatch(list, match);
     }
 
@@ -84,6 +85,7 @@ public class LexerApi
     public static void addDefaultMatches(List<Match> match)
     {
         BinaryOperatorMatcher.addDefaultMatches(match);
+        CommentMatcher.addDefaultMatches(match);
     }
 
     public static List<TokenType> getTokens()
