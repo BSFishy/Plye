@@ -1,14 +1,12 @@
 package com.fishy.provalang.api.lexerNew;
 
 import com.fishy.provalang.api.ProvalangApi;
+import com.fishy.provalang.api.file.FileReader;
 import com.fishy.provalang.api.lexer.LexerTokenInfo;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import java.io.DataInputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +17,13 @@ public abstract class AbstractLexer implements ILexer
 
     private boolean prepared = false;
 
-    private DataInputStream input;
+    private FileReader reader;
 
     private LexerTokenInfo info = new LexerTokenInfo();
 
-    protected void prepare(InputStream input)
+    protected void prepare(FileReader reader)
     {
-        this.input = new DataInputStream(input);
+        this.reader = reader;
 
         this.prepared = true;
     }
@@ -47,22 +45,22 @@ public abstract class AbstractLexer implements ILexer
         List<Character> buffer = new ArrayList<>();
         char c;
 
-        boolean eof = false;
-
-        while (!eof)
+        while (!reader.eof())
         {
-            try{
-                c = input.readChar();
+            c = reader.read();
 
-                System.out.println("Char: " + c);
+            System.out.println("Char: " + c);
 
-                buffer.add(c);
-            } catch (EOFException ignored)
-            {
-                eof = true;
-            }
+            buffer.add(c);
+
+
         }
 
         return new LexToken(null, null);
+    }
+
+    public boolean canStep()
+    {
+        return !reader.eof();
     }
 }

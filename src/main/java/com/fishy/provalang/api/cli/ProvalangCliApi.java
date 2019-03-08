@@ -71,6 +71,11 @@ public class ProvalangCliApi
         System.out.printf(format, options);
     }
 
+    public static void err(Level level, String format, Object... options)
+    {
+        System.err.printf(format, options);
+    }
+
     private static String addBuffer(String s, int size)
     {
         return addBuffer(s, size, true);

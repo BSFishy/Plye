@@ -1,373 +1,256 @@
 package com.fishy.provalang.api.lexerNew.match;
 
+import com.fishy.provalang.api.ProvalangApi;
+import com.fishy.provalang.api.file.FileWrapper;
 import com.fishy.provalang.api.lexer.LexerTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexToken;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import com.fishy.provalang.api.lexerNew.data.MatchData;
-import com.fishy.provalang.api.lexerNew.data.MatchData.MatchType;
-import com.fishy.provalang.api.lexerNew.data.PersistentMatchData;
+import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import lombok.Data;
-import org.intellij.lang.annotations.Language;
-import org.jetbrains.annotations.NonNls;
+
+import java.io.IOException;
 
 //@SuppressWarnings("unused")
 @Data
-public abstract class Matcher<T extends TokenType>
+public abstract class Matcher<T extends TokenType> implements Cloneable
 {
-    // Type stuff
+    private       FileWrapper wrapper;
+    private final T           type;
 
-    public final T type;
+    public Matcher(T type) {this.type = type;}
 
-    public abstract MatchData run(PersistentMatchData data, char currentCharacter, int position);
-
-    public LexToken run(LexerTokenInfo info, char[] buffer)
+    Matcher<T> copy(FileWrapper wrapper)
     {
-        return new LexToken(type, type.cast(info, buffer));
-    }
-
-    public Match<T> toMatch()
-    {
-        return Match.of(this);
-    }
-
-    // Helper stuff
-
-    protected boolean checkData(MatchData data, PersistentMatchData pdata)
-    {
-        boolean value = data.getMatchNumber() == pdata.getPreviousMatch();
-        data.increment();
-        return value;
-    }
-
-    protected void endData(MatchData data, PersistentMatchData pdata)
-    {
-        if(!data.isHasMatch())
-            pdata.increment();
-    }
-
-    // Helper matching stuff
-
-    protected MatchData linearMatch(char currentCharacter, int position, MatchMethod... methods)
-    {
-        return linearMatch(new MatchData(), currentCharacter, position, methods);
-    }
-
-    protected MatchData linearMatch(MatchData data, char currentCharacter, int position, MatchMethod... methods)
-    {
-        return linearMatch(data, new PersistentMatchData(0), currentCharacter, position, methods);
-    }
-
-    protected MatchData linearMatch(MatchData data, PersistentMatchData pdata, char currentCharacter, int position, MatchMethod... methods)
-    {
-        for (MatchMethod method : methods)
+        Matcher<T> c = null;
+        try
         {
-            data = method.match(data, pdata, currentCharacter, position);
+            c = this.clone();
+        }
+        catch (CloneNotSupportedException e)
+        {
+            ProvalangApi.error("Error trying to clone a matcher");
         }
 
+        c.wrapper = wrapper;
+        return c;
+    }
+
+    protected Matcher<T> clone() throws CloneNotSupportedException
+    {
+        Object o = super.clone();
+        if (!(o instanceof Matcher))
+        {
+            throw new CloneNotSupportedException("Cloning did not produce a matcher");
+        }
+
+        return (Matcher<T>) o;
+    }
+
+    // Helper
+
+    private void check()
+    {
+        if (wrapper == null)
+            ProvalangApi.error("Tried to use a Matcher but it wasn't instantiated");
+    }
+
+    // Type stuff
+
+    public abstract MatchReturnData run();
+
+    public LexToken run(LexerTokenInfo info, String buffer)
+    {
+        check();
+        return new LexToken(type, type.cast(info, buffer.toCharArray()));
+    }
+
+    // Parent matches
+
+    protected MatchReturnData match(MatchMethod... methods)
+    {
+        check();
+        MatchReturnData data  = new MatchReturnData();
+        int             index = 0;
+
+        for (int i = 0; i < methods.length; i++)
+        {
+            if (!data.isMatch())
+                return data;
+
+            MatchMethod method = methods[i];
+
+            MatchData match = method.match(index);
+
+            if (!match.isValue())
+                return data.setMatch(false);
+
+            index += match.getLookahead();
+        }
+        data.setMatch(true);
+        data.setLength(index);
+
         return data;
     }
 
-    protected MatchData matchMultiple(char currentCharacter, int position, MatchMethod method)
+    // Helps
+
+    private char read(int index)
     {
-        return matchMultiple(new MatchData(), currentCharacter, position, method);
+        check();
+        try
+        {
+            return wrapper.read(index);
+        }
+        catch (IOException e)
+        {
+            ProvalangApi.error("Could not read from file(%s): %s", wrapper.reader.filename, e.getMessage());
+            return '\u0000';
+        }
     }
 
-    protected MatchData matchMultiple(MatchData data, char currentCharacter, int position, MatchMethod method)
+    // Helper matches
+
+    protected MatchMethod mwhile(MatchMethod method)
     {
-        return matchMultiple(data, new PersistentMatchData(0), currentCharacter, position, method);
-    }
+        return (int index) -> {
+            MatchData data = method.match(index);
+            if (!data.isValue())
+                return new MatchData(false);
 
-    protected MatchData matchMultiple(MatchData data, PersistentMatchData pdata, char currentCharacter, int position, MatchMethod method)
-    {
-        data = method.match(data, pdata, currentCharacter, position);
+            int lookahead = 0;
+            while (true)
+            {
+                data = method.match(index + lookahead);
+                if (!data.isValue())
+                    break;
 
-        pdata.decrement();
-        endData(data, pdata);
+                lookahead += data.getLookahead();
+            }
 
-        return data;
-    }
-
-    protected MatchData lookahead(char currentCharacter, int position, MatchMethod method)
-    {
-        return lookahead(new MatchData(), currentCharacter, position, method);
-    }
-
-    protected MatchData lookahead(MatchData data, char currentCharacter, int position, MatchMethod method)
-    {
-        return lookahead(new MatchData(), new PersistentMatchData(0), currentCharacter, position, method);
-    }
-
-    protected MatchData lookahead(MatchData data, PersistentMatchData pdata, char currentCharacter, int position, MatchMethod method)
-    {
-        // TODO: get next char
-        data = method.match(data, pdata, currentCharacter, position+1);
-
-        return data;
-    }
-
-    // Match Methods
-
-    protected MatchMethod charMatcher(char c)
-    {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> match(data, pdata, c, currentCharacter);
-    }
-
-    protected MatchMethod stringMatch(String s)
-    {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> match(data, pdata, s, currentCharacter, pos);
-    }
-
-    protected MatchMethod regexMatch(@Language("RegExp") @NonNls String regex)
-    {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> matchRegex(data, pdata, regex, currentCharacter);
-    }
-
-    protected MatchMethod finalMatch(MatchMethod method)
-    {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> {
-            data = method.match(data, pdata, currentCharacter, pos);
-            data.setFullMatch(data.isHasMatch());
-            return data;
+            return new MatchData(true, lookahead);
         };
     }
 
-    protected MatchMethod identifierMatch()
+    protected MatchMethod mand(MatchMethod... methods)
     {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> matchIdentifier(data, pdata, currentCharacter);
+        return (int index) -> {
+            int lookahead = 0;
+
+            for (MatchMethod method : methods)
+            {
+                MatchData data = method.match(index);
+
+                if (!data.isValue())
+                    return new MatchData(false);
+
+                lookahead = Math.max(lookahead, data.getLookahead());
+            }
+
+            return new MatchData(true, lookahead);
+        };
     }
 
-    protected MatchMethod numberMatch()
+    protected MatchMethod mor(MatchMethod... methods)
     {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> matchNumber(data, pdata, currentCharacter);
+        return (int index) -> {
+            for (MatchMethod method : methods)
+            {
+                MatchData data = method.match(index);
+
+                if (data.isValue())
+                    return data;
+            }
+
+            return new MatchData(false);
+        };
     }
 
-    protected MatchMethod fullNumberMatch()
+    protected MatchMethod mnot(MatchMethod method)
     {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> matchFullNumber(data, pdata, currentCharacter);
+        return (int index) -> {
+            MatchData data = method.match(index);
+            return new MatchData(!data.isValue(), data.getLookahead());
+        };
     }
 
-    protected MatchMethod multipleMatch(MatchMethod method)
+    protected MatchMethod moptional(MatchMethod method)
     {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> matchMultiple(data, pdata, currentCharacter, pos, method);
+        return (int index) -> {
+            MatchData data = method.match(index);
+            return new MatchData(true, data.isValue() ? data.getLookahead() : 0);
+        };
     }
 
-    protected MatchMethod lookahead(MatchMethod method)
+    protected MatchMethod mignoreLookahead(MatchMethod method)
     {
-        return (MatchData data, PersistentMatchData pdata, char currentCharacter, int pos) -> lookahead(data, pdata, currentCharacter, pos, method);
+        return (int index) -> {
+            MatchData data = method.match(index);
+            return new MatchData(data.isValue());
+        };
     }
 
-    // Specific matching
+    // Matches
 
-    protected MatchData match(String s, char currentCharacter, int position)
+    protected MatchMethod m(char c)
     {
-        return match(new MatchData(), s, currentCharacter, position);
+        return (int index) -> {
+            char ch = read(index);
+            return new MatchData(ch == c, 1);
+        };
     }
 
-    protected MatchData match(char c, char currentCharacter)
+    protected MatchMethod m(String s)
     {
-        return match(new MatchData(), c, currentCharacter);
+        return (int index) -> {
+            for (int i = 0; i < s.length(); i++)
+            {
+                char c  = read(index + i);
+                char sc = s.charAt(i);
+
+                if (c != sc)
+                {
+                    return new MatchData(false, i);
+                }
+            }
+
+            return new MatchData(true, s.length());
+        };
     }
 
-    protected MatchData match(MatchData data, String s, char currentCharacter, int position)
+    protected MatchMethod minRange(int lo, int hi)
     {
-        return match(data, new PersistentMatchData(0), s, currentCharacter, position);
+        return (int index) -> {
+            char c = read(index);
+            return new MatchData((int) c >= lo && (int) c <= hi, 1);
+        };
     }
 
-    protected MatchData match(MatchData data, char c, char currentCharacter)
+    // Generic helpers
+
+    protected MatchMethod uppercase()
     {
-        return match(data, new PersistentMatchData(0), c, currentCharacter);
+        return minRange(0x41, 0x5A);
     }
 
-    protected MatchData match(MatchData data, PersistentMatchData pdata, String s, char currentCharacter, int position)
+    protected MatchMethod lowercase()
     {
-        if (!data.isHasMatch())
-            return data;
-
-        char c = s.charAt(position);
-
-        return match(data, pdata, c, currentCharacter).sType(MatchType.STRING);
+        return minRange(0x61, 0x7A);
     }
 
-    protected MatchData match(MatchData data, PersistentMatchData pdata, char c, char currentCharacter)
+    protected MatchMethod number()
     {
-        if(checkData(data, pdata)) return data;
-        if (!data.isHasMatch()) return data;
-
-        data.setHasMatch(c == currentCharacter);
-
-//        endData(data, pdata);
-        pdata.increment();
-
-        return data.sType(MatchType.CHAR);
+        return minRange(0x30, 0x39);
     }
 
-    protected MatchData matchRegex(@Language("RegExp") @NonNls String regex, char currentCharacter)
+    protected MatchMethod identifierChar()
     {
-        return matchRegex(new MatchData(), regex, currentCharacter);
+        // A-Z, a-z, 0-9, _
+        return mor(uppercase(), lowercase(), number(), m('_'));
     }
 
-    protected MatchData matchRegex(MatchData data, @Language("RegExp") @NonNls String regex, char currentCharacter)
+    protected MatchMethod identifier()
     {
-        return matchRegex(data, new PersistentMatchData(0), regex, currentCharacter);
-    }
-
-    protected MatchData matchRegex(MatchData data, PersistentMatchData pdata, @Language("RegExp") @NonNls String regex, char currentCharacter)
-    {
-        if(checkData(data, pdata)) return data;
-        if (!data.isHasMatch()) return data;
-
-        data.setHasMatch(String.valueOf(currentCharacter).matches(regex));
-
-//        endData(data, pdata);
-        pdata.increment();
-
-        return data.sType(MatchType.REGEX);
-    }
-
-    // Helper matching
-
-    protected MatchData matchIdentifier(char currentCharacter)
-    {
-        return matchIdentifier(new MatchData(), currentCharacter);
-    }
-
-    protected MatchData matchNumber(char currentCharacter)
-    {
-        return matchNumber(new MatchData(), currentCharacter);
-    }
-
-    protected MatchData matchFullNumber(char currentCharacter)
-    {
-        return matchFullNumber(new MatchData(), currentCharacter);
-    }
-
-    protected MatchData matchIdentifier(MatchData data, char currentCharacter)
-    {
-        return matchIdentifier(data, new PersistentMatchData(0), currentCharacter);
-    }
-
-    protected MatchData matchNumber(MatchData data, char currentCharacter)
-    {
-        return matchNumber(data, new PersistentMatchData(0), currentCharacter);
-    }
-
-    protected MatchData matchFullNumber(MatchData data, char currentCharacter)
-    {
-        return matchNumber(data, new PersistentMatchData(0), currentCharacter);
-    }
-
-    protected MatchData matchIdentifier(MatchData data, PersistentMatchData pdata, char currentCharacter)
-    {
-        return matchRegex(data, pdata, "[a-zA-Z0-9_]", currentCharacter).sType(MatchType.IDENTIFIER);
-    }
-
-    protected MatchData matchNumber(MatchData data, PersistentMatchData pdata, char currentCharacter)
-    {
-        return matchRegex(data, pdata, "[0-9]", currentCharacter).sType(MatchType.NUMBER);
-    }
-
-    protected MatchData matchFullNumber(MatchData data, PersistentMatchData pdata, char currentCharacter)
-    {
-        return matchRegex(data, pdata, "(-|[0-9]|e)", currentCharacter).sType(MatchType.FULL_NUMBER);
-    }
-
-    // Specific final matching
-
-    private MatchData fixFinal(MatchData data)
-    {
-        data.setFullMatch(data.isHasMatch());
-        return data;
-    }
-
-    protected MatchData matchFinal(String s, char currentCharacter, int position)
-    {
-        return fixFinal(match(s, currentCharacter, position));
-    }
-
-    protected MatchData matchFinal(char c, char currentCharacter)
-    {
-        return fixFinal(match(c, currentCharacter));
-    }
-
-    protected MatchData matchFinal(MatchData data, String s, char currentCharacter, int position)
-    {
-        return fixFinal(match(data, s, currentCharacter, position));
-    }
-
-    protected MatchData matchFinal(MatchData data, char c, char currentCharacter)
-    {
-        return fixFinal(match(data, c, currentCharacter));
-    }
-
-    protected MatchData matchFinal(MatchData data, PersistentMatchData pdata, String s, char currentCharacter, int position)
-    {
-        return fixFinal(match(data, pdata, s, currentCharacter, position));
-    }
-
-    protected MatchData matchFinal(MatchData data, PersistentMatchData pdata, char c, char currentCharacter)
-    {
-        return fixFinal(match(data, pdata, c, currentCharacter));
-    }
-
-    protected MatchData matchFinalRegex(@Language("RegExp") @NonNls String regex, char currentCharacter)
-    {
-        return fixFinal(matchRegex(regex, currentCharacter));
-    }
-
-    protected MatchData matchFinalRegex(MatchData data, @Language("RegExp") @NonNls String regex, char currentCharacter)
-    {
-        return fixFinal(matchRegex(data, regex, currentCharacter));
-    }
-
-    protected MatchData matchFinalRegex(MatchData data, PersistentMatchData pdata, @Language("RegExp") @NonNls String regex, char currentCharacter)
-    {
-        return fixFinal(matchRegex(data, pdata, regex, currentCharacter));
-    }
-
-    // Helper final matching
-
-    protected MatchData matchFinalIdentifier(char currentCharacter)
-    {
-        return fixFinal(matchIdentifier(currentCharacter));
-    }
-
-    protected MatchData matchFinalNumber(char currentCharacter)
-    {
-        return fixFinal(matchNumber(currentCharacter));
-    }
-
-    protected MatchData matchFinalFullNumber(char currentCharacter)
-    {
-        return fixFinal(matchFullNumber(currentCharacter));
-    }
-
-    protected MatchData matchFinalIdentifier(MatchData data, char currentCharacter)
-    {
-        return fixFinal(matchIdentifier(data, currentCharacter));
-    }
-
-    protected MatchData matchFinalNumber(MatchData data, char currentCharacter)
-    {
-        return fixFinal(matchNumber(data, currentCharacter));
-    }
-
-    protected MatchData matchFinalFullNumber(MatchData data, char currentCharacter)
-    {
-        return fixFinal(matchFullNumber(data, currentCharacter));
-    }
-
-    protected MatchData matchFinalIdentifier(MatchData data, PersistentMatchData pdata, char currentCharacter)
-    {
-        return fixFinal(matchIdentifier(data, pdata, currentCharacter));
-    }
-
-    protected MatchData matchFinalNumber(MatchData data, PersistentMatchData pdata, char currentCharacter)
-    {
-        return fixFinal(matchNumber(data, pdata, currentCharacter));
-    }
-
-    protected MatchData matchFinalFullNumber(MatchData data, PersistentMatchData pdata, char currentCharacter)
-    {
-        return fixFinal(matchFullNumber(data, pdata, currentCharacter));
+        return mwhile(identifierChar());
     }
 }

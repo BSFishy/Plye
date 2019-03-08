@@ -1,30 +1,21 @@
 package com.fishy.provalang.api.lexerNew.match;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
-import com.fishy.provalang.api.lexerNew.LexToken;
+import com.fishy.provalang.api.file.FileWrapper;
 import com.fishy.provalang.api.lexerNew.TokenType;
-import com.fishy.provalang.api.lexerNew.data.MatchData;
-import com.fishy.provalang.api.lexerNew.data.PersistentMatchData;
 import lombok.Data;
 
 @Data
-public class Match<T extends TokenType>
+public class Match<T extends Matcher<? extends TokenType>>
 {
-    public final Matcher<T> matcher;
-    public final PersistentMatchData data;
+    private final T matcher;
 
-    public static <T extends TokenType> Match<T> of(Matcher<T> m)
+    public static <T extends Matcher<? extends TokenType>> Match<T> of(T matcher)
     {
-        return new Match<>(m, new PersistentMatchData(0));
+        return new Match<T>(matcher);
     }
 
-    public MatchData run(char currentCharacter, int position)
+    public T convert(FileWrapper wrapper)
     {
-        return matcher.run(data, currentCharacter, position);
-    }
-
-    public LexToken run(LexerTokenInfo info, char[] buffer)
-    {
-        return matcher.run(info, buffer);
+        return (T) matcher.copy(wrapper);
     }
 }

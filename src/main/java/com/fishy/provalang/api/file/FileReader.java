@@ -6,10 +6,10 @@ import lombok.Data;
 import java.io.*;
 
 @Data
-public class FileReader
+public class FileReader implements Closeable
 {
     public final String          filename;
-    private      DataInputStream stream;
+    private      FileInputStream stream;
 
     private boolean eof = false;
 
@@ -19,7 +19,18 @@ public class FileReader
 
         try
         {
-            stream = new DataInputStream(new FileInputStream(filename));
+            File file = new File(filename);
+            if (!file.exists())
+            {
+                ProvalangApi.error("File does not exist: %s", filename);
+            }
+
+            if (!(file.isFile() && file.canRead()))
+            {
+                ProvalangApi.error("Unable to read file: %s", filename);
+            }
+
+            stream = new FileInputStream(file);
         }
         catch (FileNotFoundException e)
         {
@@ -37,10 +48,20 @@ public class FileReader
         char c = '\u0000';
 
         if (eof()) return c;
+        if (stream.available() <= 0)
+        {
+            eof = true;
+            return c;
+        }
+        else if (stream.available() == 1)
+        {
+            eof = true;
+            return (char) stream.read();
+        }
 
         try
         {
-            c = stream.readChar();
+            c = (char) stream.read();
         }
         catch (EOFException ignored)
         {
@@ -55,5 +76,11 @@ public class FileReader
         char c = read();
         stream.reset();
         return c;
+    }
+
+    @Override
+    public void close() throws IOException
+    {
+        stream.close();
     }
 }

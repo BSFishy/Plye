@@ -3,9 +3,7 @@ package com.fishy.provalang;
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.file.Program;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.stream.Collectors;
 
 public class Provalang
@@ -17,6 +15,16 @@ public class Provalang
     {
         Program p = new Program(filename);
         ProvalangApi.getLexer().lex(p);
+
+        try
+        {
+            p.getReader().close();
+        }
+        catch (IOException e)
+        {
+            ProvalangApi.error("Unable to close file (%s): %s", filename, e.getMessage());
+        }
+
         return p;
     }
 
@@ -26,47 +34,29 @@ public class Provalang
         return program;
     }
 
-    public static void interpret(String code)
+    public static Program parse(String file)
     {
-        Program program = lex(code);
+        return parse(lex(file));
+    }
+
+    public static void interpret(String file)
+    {
+        Program program = parse(file);
 
         ProvalangApi.log(program.getTokens().stream()
-                              .map(l -> "" + l.getData().toString() + "")
-                              .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
-        parse(program);
+                                .map(l -> "" + l.getData().toString() + "")
+                                .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
 
         program.getAst().execute();
     }
 
-    public static Program lexFile(String file)
+    public static void compile(String file)
     {
-        return lex(readFile(file));
-    }
+        Program program = parse(file);
 
-    public static Program parseFile(String file)
-    {
-        return parse(lexFile(file));
-    }
+        ProvalangApi.log(program.getTokens().stream()
+                                .map(l -> "" + l.getData().toString() + "")
+                                .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
 
-    public static void interpretFile(String file)
-    {
-        interpret(readFile(file));
-    }
-
-    public static String readFile(String file)
-    {
-        File   f        = new File(file);
-        String contents = "";
-
-        try
-        {
-            contents = new String(Files.readAllBytes(f.toPath()));
-        }
-        catch (IOException e)
-        {
-            ProvalangApi.error("Error: Unable to read file: %s", file);
-        }
-
-        return contents;
     }
 }

@@ -20,9 +20,14 @@ public class ProvalangApi
         ProvalangCliApi.log(Level.INFO, format, options);
     }
 
+    public static void err(String format, Object... options)
+    {
+        ProvalangCliApi.err(Level.SEVERE, format, options);
+    }
+
     public static void error(String format, Object... options)
     {
-        log(format, options);
+        err(format, options);
         System.exit(1);
     }
 

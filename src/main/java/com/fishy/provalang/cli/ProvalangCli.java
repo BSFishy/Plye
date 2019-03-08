@@ -13,7 +13,7 @@ public class ProvalangCli
 
         if (arg.getOption() == CliArgs.Option.INTERPRET)
         {
-            Provalang.interpretFile(arg.getFile());
+            Provalang.interpret(arg.getFile());
         }
         else if (arg.getOption() == CliArgs.Option.COMPILE)
         {
