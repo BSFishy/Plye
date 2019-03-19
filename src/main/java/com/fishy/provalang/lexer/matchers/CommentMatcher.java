@@ -17,7 +17,7 @@ public class CommentMatcher
 
     public static void addDefaultMatches()
     {
-
+        addDefaultMatches(LexerApi.getMatches());
     }
 
     public static void addDefaultMatches(List<Match> list)

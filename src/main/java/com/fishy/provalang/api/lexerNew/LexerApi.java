@@ -1,8 +1,7 @@
 package com.fishy.provalang.api.lexerNew;
 
 import com.fishy.provalang.api.lexerNew.match.Match;
-import com.fishy.provalang.lexer.matchers.BinaryOperatorMatcher;
-import com.fishy.provalang.lexer.matchers.CommentMatcher;
+import com.fishy.provalang.lexer.matchers.*;
 import com.fishy.provalang.lexer.tokens.*;
 
 import java.util.ArrayList;
@@ -86,6 +85,13 @@ public class LexerApi
     {
         BinaryOperatorMatcher.addDefaultMatches(match);
         CommentMatcher.addDefaultMatches(match);
+        IdentifierMatcher.addDefaultMatch(match);
+        IgnoredMatcher.addDefaultMatchers(match);
+        KeywordMatcher.addDefaultMatches(match);
+        LiteralMatcher.addDefaultMatches(match);
+        OpAssignOperatorMatcher.addDefaultMatches(match);
+        SeparatorMatcher.addDefaultMatches(match);
+        UnaryOperatorMatcher.addDefaultMatches(match);
     }
 
     public static List<TokenType> getTokens()

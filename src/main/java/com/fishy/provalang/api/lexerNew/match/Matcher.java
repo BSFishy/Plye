@@ -140,8 +140,8 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
             {
                 MatchData data = method.match(index + i);
 
-                if(data.isValue())
-                    return new MatchData(true, i+data.getLookahead());
+                if (data.isValue())
+                    return new MatchData(true, i + data.getLookahead());
 
                 i++;
             }
@@ -198,11 +198,59 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
         };
     }
 
+    protected MatchMethod mfor(int amount, MatchMethod method)
+    {
+        return (int index) -> {
+            int lookahead = 0;
+
+            for(int i = 0; i < amount; i++)
+            {
+                MatchData data = method.match(index + lookahead);
+
+                if(!data.isValue())
+                    return new MatchData(false, lookahead);
+
+                lookahead += data.getLookahead();
+            }
+
+            return new MatchData(true, lookahead);
+        };
+    }
+
     protected MatchMethod mignoreLookahead(MatchMethod method)
     {
         return (int index) -> {
             MatchData data = method.match(index);
             return new MatchData(data.isValue());
+        };
+    }
+
+    protected MatchMethod mlookbehind(MatchMethod method)
+    {
+        return (int index) -> {
+            if(index == 0) throw new IllegalStateException("Could not look behind index 0");
+            return method.match(index-1);
+        };
+    }
+
+    protected MatchMethod m(MatchMethod... methods)
+    {
+        return (int index) -> {
+            int lookahead = 0;
+
+            for (MatchMethod method : methods)
+            {
+                MatchData data = method.match(index + lookahead);
+
+                if (!data.isValue())
+                {
+                    return new MatchData(false, lookahead);
+                }
+
+                lookahead += data.getLookahead();
+            }
+
+            return new MatchData(true, lookahead);
         };
     }
 
@@ -248,6 +296,28 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
             char c = read(index);
             return new MatchData((int) c >= lo && (int) c <= hi, 1);
         };
+    }
+
+    protected MatchMethod manyCase(char c)
+    {
+        if (0x41 <= (int) c && 0x5A >= (int) c)
+        {
+            return (int index) -> {
+                char ch = read(index);
+                return new MatchData(ch == c || ((int) ch)-0x20 == (int) c, 1);
+            };
+        }
+        else if (0x61 <= (int) c && 0x7A >= (int) c)
+        {
+            return (int index) -> {
+                char ch = read(index);
+                return new MatchData(ch == c || ((int) ch)+0x20 == (int) c, 1);
+            };
+        }
+        else
+        {
+            throw new IllegalArgumentException(String.format("When using anyCase, the character must be a letter: %s", c));
+        }
     }
 
     // Generic helpers
