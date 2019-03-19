@@ -42,7 +42,7 @@ public class UnaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('+'), m('+'));
         }
     }
 
@@ -56,7 +56,7 @@ public class UnaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('-'), m('-'));
         }
     }
 
@@ -70,7 +70,7 @@ public class UnaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('-'));
         }
     }
 
@@ -84,7 +84,7 @@ public class UnaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('!'));
         }
     }
 
@@ -98,7 +98,7 @@ public class UnaryOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('~'));
         }
     }
 }

@@ -45,7 +45,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('+'), m('='));
         }
     }
 
@@ -58,7 +58,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('-'), m('='));
         }
     }
 
@@ -71,7 +71,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('*'), m('='));
         }
     }
 
@@ -84,7 +84,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('/'), m('='));
         }
     }
 
@@ -97,7 +97,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('<'), m('<'), m('='));
         }
     }
 
@@ -110,7 +110,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('<'), m('<'), m('='));
         }
     }
 
@@ -123,7 +123,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('&'), m('='));
         }
     }
 
@@ -136,7 +136,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('|'), m('='));
         }
     }
 
@@ -149,7 +149,7 @@ public class OpAssignOperatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('^'), m('='));
         }
     }
 }

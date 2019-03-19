@@ -47,7 +47,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('{'));
         }
     }
 
@@ -61,7 +61,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('}'));
         }
     }
 
@@ -75,7 +75,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('['));
         }
     }
 
@@ -89,7 +89,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m(']'));
         }
     }
 
@@ -103,7 +103,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('('));
         }
     }
 
@@ -117,7 +117,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m(')'));
         }
     }
 
@@ -131,7 +131,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m(';'));
         }
     }
 
@@ -145,7 +145,7 @@ public class SeparatorMatcher
         @Override
         public MatchReturnData run()
         {
-            return match();
+            return match(m('.'));
         }
     }
 }
