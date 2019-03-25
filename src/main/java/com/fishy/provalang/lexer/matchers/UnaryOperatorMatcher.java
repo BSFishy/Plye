@@ -2,10 +2,10 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
-import com.fishy.provalang.api.lexerNew.LexerApi;
-import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
-import com.fishy.provalang.api.lexerNew.match.Match;
-import com.fishy.provalang.api.lexerNew.match.Matcher;
+import com.fishy.provalang.api.lexer.LexerApi;
+import com.fishy.provalang.api.lexer.data.MatchReturnData;
+import com.fishy.provalang.api.lexer.match.Match;
+import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.UnaryOperator;
 
 import java.util.List;

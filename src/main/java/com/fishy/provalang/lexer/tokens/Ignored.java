@@ -1,8 +1,8 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexerNew.LexTokenInfo;
-import com.fishy.provalang.api.lexerNew.LexerApi;
-import com.fishy.provalang.api.lexerNew.TokenType;
+import com.fishy.provalang.api.lexer.LexTokenInfo;
+import com.fishy.provalang.api.lexer.LexerApi;
+import com.fishy.provalang.api.lexer.TokenType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

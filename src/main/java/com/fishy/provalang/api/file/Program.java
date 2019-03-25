@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.file;
 
-import com.fishy.provalang.api.lexerNew.LexToken;
-import com.fishy.provalang.api.lexerNew.TokenType;
+import com.fishy.provalang.api.lexer.LexToken;
+import com.fishy.provalang.api.lexer.TokenType;
 import com.fishy.provalang.ast.Ast;
 import lombok.Data;
 

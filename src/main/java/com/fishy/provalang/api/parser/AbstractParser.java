@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.parser;
 
 import com.fishy.provalang.api.ProvalangApi;
-import com.fishy.provalang.api.lexer.LexerToken;
+import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.ast.Ast;
 import com.fishy.provalang.ast.Root;
 import com.fishy.provalang.ast.api.AstNode;
@@ -18,10 +18,10 @@ import java.util.List;
 @EqualsAndHashCode
 public abstract class AbstractParser implements IParser
 {
-    protected List<LexerToken> tokens;
-    private boolean prepared = false;
+    protected List<LexToken> tokens;
+    private boolean          prepared = false;
 
-    public void prepare(List<LexerToken> tokens)
+    public void prepare(List<LexToken> tokens)
     {
         this.tokens = tokens;
 

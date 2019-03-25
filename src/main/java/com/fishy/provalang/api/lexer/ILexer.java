@@ -1,8 +1,8 @@
 package com.fishy.provalang.api.lexer;
 
-import java.util.List;
+import com.fishy.provalang.api.file.Program;
 
-public interface ILexer // TODO: make it step as tokens are needed
+public interface ILexer
 {
-    List<LexerToken> lex(String code);
+    void lex(Program program);
 }

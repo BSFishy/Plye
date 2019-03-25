@@ -1,121 +1,88 @@
 package com.fishy.provalang.api.lexer;
 
-import com.fishy.provalang.api.lexer.types.Ignored;
-import lombok.Data;
+import com.fishy.provalang.api.ProvalangApi;
+import com.fishy.provalang.api.file.FileReader;
+import com.fishy.provalang.api.file.FileWrapper;
+import com.fishy.provalang.api.lexer.data.LexReturnData;
+import com.fishy.provalang.api.lexer.data.NullTokenType;
+import com.fishy.provalang.lexer.tokens.Ignored;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 @ToString
 @EqualsAndHashCode
 public abstract class AbstractLexer implements ILexer
 {
+
     private boolean prepared = false;
 
-    @Getter
-    private List<LexerToken> tokens = new ArrayList<>();
-    private String           code;
-    private String[]         split;
+    private FileReader  reader;
+    private FileWrapper wrapper;
 
-    private int index = 0;
+    private LexTokenInfo info = new LexTokenInfo();
 
-    private LexerTokenInfo info = new LexerTokenInfo();
-
-    protected void prepareCode(String code)
+    protected void prepare(FileReader reader)
     {
-        this.code = code;
-        this.split = code.split("");
+        this.reader = reader;
+        this.wrapper = new FileWrapper(reader);
 
-        LexerApi.addDefaultTypes();
+        LexerApi.addDefaultTokens();
+        LexerApi.addDefaultMatches();
+
+        LexerApi.finalizeMatches();
 
         this.prepared = true;
     }
 
-    protected boolean isPrepared()
+    public boolean isPrepared()
     {
         return prepared;
     }
 
-    protected void checkPrepared()
+    protected void check()
     {
-        if (!isPrepared()) throw new IllegalStateException("prepareCode() must be called before any other method");
+        if (!isPrepared()) ProvalangApi.error("Lexer was not prepared before running");
     }
 
-    protected LexerToken step()
+    public LexToken step()
     {
-        checkPrepared();
+        check();
 
-        if (index >= split.length) return new LexerToken(null, new NullTokenData(info.clone()));
+        LexReturnData data = LexerApi.lex(wrapper);
+        if(data == null)
+            return NullTokenType.create(info);
 
-        LexerData     tmpData   = null;
-        StringBuilder tmpString = new StringBuilder();
+        String buffer = clean(data.length);
+        LexToken token = new LexToken(data.type, data.cast(info, buffer));
 
-        while (true)
+        if(data.type instanceof Ignored.Return)
+            info.incrementLine();
+        else
+            info.increment(data.length);
+
+        return token;
+    }
+
+    public boolean canStep()
+    {
+        return !reader.eof();
+    }
+
+    protected String clean(int length)
+    {
+        String output = "";
+        try
         {
-            if (!canStep())
-            {
-                info.decrement();
-                return new LexerToken(null, new NullTokenData(info.clone()));
-            }
-
-            String character = split[index];
-            tmpString.append(character);
-
-
-            if (tmpData == null)
-            {
-                tmpData = LexerApi.canCast(tmpString.toString());
-            }
-
-            tmpData.canCastElimination(tmpString.toString());
-
-            if(tmpData.empty())
-            {
-                return new LexerToken(null, new NullTokenData(info.clone()));
-            }
-
-            LexerData.LexerShouldCastData data = LexerApi.shouldCast(tmpData, tmpString.toString());
-
-            if (data != null)
-            {
-                if (!data.data.isLookAhead())
-                {
-                    info.increment();
-                    index++;
-                }
-                else
-                {
-                    tmpString.deleteCharAt(tmpString.length()-1);
-                }
-
-                if (data.token instanceof Ignored.CarriageReturn || data.token instanceof Ignored.Return)
-                    info.incrementLine();
-
-                info.incrementColumn();
-
-                return new LexerToken(data.token, data.token.cast(info.clone(), tmpString.toString()));
-            }
-
-            info.increment();
-            index++;
+            output = wrapper.readLength(length);
         }
-    }
-
-    protected boolean canStep()
-    {
-        return index < split.length;
-    }
-
-    @EqualsAndHashCode(callSuper = false)
-    @Data
-    public static class NullTokenData extends ILexerTokenType.LexerTokenData
-    {
-        public NullTokenData(LexerTokenInfo info)
+        catch (IOException e)
         {
-            super(info);
+            ProvalangApi.error("Error reading the file", e);
         }
+        wrapper.clean(length);
+
+        return output;
     }
 }

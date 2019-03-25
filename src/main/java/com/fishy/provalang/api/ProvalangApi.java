@@ -1,11 +1,11 @@
 package com.fishy.provalang.api;
 
 import com.fishy.provalang.api.cli.ProvalangCliApi;
-import com.fishy.provalang.api.lexer.LexerToken;
-import com.fishy.provalang.api.lexerNew.ILexer;
+import com.fishy.provalang.api.lexer.ILexer;
+import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.parser.IParser;
 import com.fishy.provalang.api.util.Utils;
-import com.fishy.provalang.lexer.LexerNew;
+import com.fishy.provalang.lexer.Lexer;
 import com.fishy.provalang.parser.Parser;
 
 import java.util.logging.Level;
@@ -42,7 +42,7 @@ public class ProvalangApi
         System.exit(1);
     }
 
-    public static void errorPretty(String error, LexerToken token, String code)
+    public static void errorPretty(String error, LexToken token, String code)
     {
         error("%s at line %d, column %d:\n\t%s\n\t%s%s\n", error, token.getData().getInfo().line + 1,
               token.getData().getInfo().column + 1, code.split("\n")[token.getData().getInfo().line],
@@ -52,7 +52,7 @@ public class ProvalangApi
     public static ILexer getLexer()
     {
         if (lexer == null)
-            lexer = new LexerNew();
+            lexer = new Lexer();
 
         return lexer;
     }

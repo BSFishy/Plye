@@ -1,37 +1,26 @@
 package com.fishy.provalang.lexer;
 
-import com.fishy.provalang.api.ProvalangApi;
+import com.fishy.provalang.api.file.Program;
 import com.fishy.provalang.api.lexer.AbstractLexer;
-import com.fishy.provalang.api.lexer.LexerToken;
-import com.fishy.provalang.api.lexer.types.Ignored;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.fishy.provalang.api.lexer.LexToken;
+import com.fishy.provalang.lexer.tokens.Ignored;
 
 public class Lexer extends AbstractLexer
 {
     @Override
-    public List<LexerToken> lex(String code)
+    public void lex(Program program)
     {
-        List<LexerToken> output = new ArrayList<>();
-        prepareCode(code);
+        prepare(program.reader);
 
-        while (canStep())
+        while(canStep())
         {
-            LexerToken step = step();
+            LexToken token = step();
 
-            if (step.getType() == null)
+            if(!(token.type instanceof Ignored.Space))
             {
-//                ProvalangApi.error("Error lexing: Unexpected character at line %d, column %d:\n\t%s\n\t%s%s\n", step.getData().getInfo().line + 1,
-//                                   step.getData().getInfo().column + 1, code.split("\n")[step.getData().getInfo().line],
-//                                   Utils.repeat(" ", step.getData().getInfo().column), Utils.repeat("^", step.getData().getInfo().length));
-                ProvalangApi.errorPretty("Error lexing: Unexpected character", step, code);
+                System.out.println(token.toString());
+                program.getTokens().add(token);
             }
-
-            if (!(step.getType() instanceof Ignored.Space))
-                output.add(step);
         }
-
-        return output;
     }
 }

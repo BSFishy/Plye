@@ -1,4 +1,4 @@
-package com.fishy.provalang.api.lexerNew;
+package com.fishy.provalang.api.lexer;
 
 import lombok.Value;
 import lombok.experimental.NonFinal;

@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.annotations;
 
 
-import com.fishy.provalang.api.lexerNew.match.Matcher;
+import com.fishy.provalang.api.lexer.match.Matcher;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

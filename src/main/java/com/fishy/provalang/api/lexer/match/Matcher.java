@@ -1,12 +1,12 @@
-package com.fishy.provalang.api.lexerNew.match;
+package com.fishy.provalang.api.lexer.match;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.file.FileWrapper;
-import com.fishy.provalang.api.lexerNew.LexToken;
-import com.fishy.provalang.api.lexerNew.LexTokenInfo;
-import com.fishy.provalang.api.lexerNew.TokenType;
-import com.fishy.provalang.api.lexerNew.data.MatchData;
-import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
+import com.fishy.provalang.api.lexer.LexToken;
+import com.fishy.provalang.api.lexer.LexTokenInfo;
+import com.fishy.provalang.api.lexer.TokenType;
+import com.fishy.provalang.api.lexer.data.MatchData;
+import com.fishy.provalang.api.lexer.data.MatchReturnData;
 import lombok.Data;
 
 import java.io.IOException;

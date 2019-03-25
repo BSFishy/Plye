@@ -1,9 +1,9 @@
-package com.fishy.provalang.api.lexerNew.data.util;
+package com.fishy.provalang.api.lexer.data.util;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
-import com.fishy.provalang.api.lexerNew.LexerApi;
-import com.fishy.provalang.api.lexerNew.match.Matcher;
+import com.fishy.provalang.api.lexer.LexerApi;
+import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.utils.ArrayUtils;
 
 import java.util.Comparator;

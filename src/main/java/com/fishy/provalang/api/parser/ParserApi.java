@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.parser;
 
 import com.fishy.provalang.api.ProvalangApi;
-import com.fishy.provalang.api.lexer.LexerToken;
+import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.parser.annotation.OverridableVisitor;
 import com.fishy.provalang.api.parser.visitor.Visitor;
 import com.fishy.provalang.api.parser.visitor.VisitorComparator;
@@ -57,12 +57,12 @@ public class ParserApi
 
     // VISITORS
 
-    public static AstNode visit(List<LexerToken> tokens, AstNode parent)
+    public static AstNode visit(List<LexToken> tokens, AstNode parent)
     {
         return visit(visitors, tokens, parent);
     }
 
-    public static AstNode visit(List<Visitor> list, List<LexerToken> tokens, AstNode parent)
+    public static AstNode visit(List<Visitor> list, List<LexToken> tokens, AstNode parent)
     {
         if (tokens.isEmpty())
             return null;
