@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 
 import java.util.List;
@@ -13,18 +13,18 @@ import static com.fishy.provalang.lexer.tokens.Comment.*;
 
 public class CommentMatcher
 {
-    public static final Match<SingleLineMatcher>    singleLineMatcher    = Match.of(new SingleLineMatcher());
-    public static final Match<MultiLineMatcher>     multiLineMatcher     = Match.of(new MultiLineMatcher());
-    public static final Match<DocumentationMatcher> documentationMatcher = Match.of(new DocumentationMatcher());
+    public static final SingleLineMatcher    singleLineMatcher    = new SingleLineMatcher();
+    public static final MultiLineMatcher     multiLineMatcher     = new MultiLineMatcher();
+    public static final DocumentationMatcher documentationMatcher = new DocumentationMatcher();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> list)
+    public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[]{
+        LexerApi.addMatches(list, new Matcher[]{
                 singleLineMatcher,
                 multiLineMatcher,
                 documentationMatcher
@@ -40,9 +40,9 @@ public class CommentMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('/'), m('/'), muntil(newline()));
+            return match(context, m('/'), m('/'), muntil(newline()));
         }
     }
 
@@ -55,9 +55,9 @@ public class CommentMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('/'), m('*'), mignoreLookahead(mnot('*')), muntil(m("*/")));
+            return match(context, m('/'), m('*'), mignoreLookahead(mnot('*')), muntil(m("*/")));
         }
     }
 
@@ -70,9 +70,9 @@ public class CommentMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('/'), m('*'), m('*'), muntil(m("*/")));
+            return match(context, m('/'), m('*'), m('*'), muntil(m("*/")));
         }
     }
 }

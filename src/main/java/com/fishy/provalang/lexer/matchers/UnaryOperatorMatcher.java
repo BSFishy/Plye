@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.UnaryOperator;
 
@@ -12,22 +12,22 @@ import java.util.List;
 
 public class UnaryOperatorMatcher
 {
-    public static final Match<Increment> increment = Match.of(new Increment());
-    public static final Match<Decrement> decrement = Match.of(new Decrement());
+    public static final Increment increment = new Increment();
+    public static final Decrement decrement = new Decrement();
 
-    public static final Match<Negate> negate = Match.of(new Negate());
-    public static final Match<Not> not = Match.of(new Not());
+    public static final Negate negate = new Negate();
+    public static final Not not = new Not();
 
-    public static final Match<NegateBits> negateBits = Match.of(new NegateBits());
+    public static final NegateBits negateBits = new NegateBits();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> list)
+    public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[] {
+        LexerApi.addMatches(list, new Matcher[] {
                 increment, decrement,
                 negate, not,
                 negateBits
@@ -43,9 +43,9 @@ public class UnaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('+'), m('+'));
+            return match(context, m('+'), m('+'));
         }
     }
 
@@ -58,9 +58,9 @@ public class UnaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('-'), m('-'));
+            return match(context, m('-'), m('-'));
         }
     }
 
@@ -73,9 +73,9 @@ public class UnaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('-'));
+            return match(context, m('-'));
         }
     }
 
@@ -88,9 +88,9 @@ public class UnaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('!'));
+            return match(context, m('!'));
         }
     }
 
@@ -103,9 +103,9 @@ public class UnaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('~'));
+            return match(context, m('~'));
         }
     }
 }

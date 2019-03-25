@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.Ignored;
 
@@ -12,18 +12,18 @@ import java.util.List;
 
 public class IgnoredMatcher
 {
-    public static final Match<Return>         returnMatch    = Match.of(new Return());
-    public static final Match<CarriageReturn> carriageReturn = Match.of(new CarriageReturn());
-    public static final Match<Space>          space          = Match.of(new Space());
+    public static final Return         returnMatch    = new Return();
+    public static final CarriageReturn carriageReturn = new CarriageReturn();
+    public static final Space          space          = new Space();
 
     public static void addDefaultMatchers()
     {
         addDefaultMatchers(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatchers(List<Match> list)
+    public static void addDefaultMatchers(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[]{returnMatch, carriageReturn, space});
+        LexerApi.addMatches(list, new Matcher[]{returnMatch, carriageReturn, space});
     }
 
     @MatcherPriority(priority = Priority.Normal)
@@ -36,9 +36,9 @@ public class IgnoredMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('\n'));
+            return match(context, m('\n'));
         }
     }
 
@@ -52,9 +52,9 @@ public class IgnoredMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('\r'));
+            return match(context, m('\r'));
         }
     }
 
@@ -68,9 +68,9 @@ public class IgnoredMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m(' '));
+            return match(context, m(' '));
         }
     }
 }

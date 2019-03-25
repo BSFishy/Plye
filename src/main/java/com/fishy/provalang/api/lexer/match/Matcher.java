@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.lexer.match;
 
 import com.fishy.provalang.api.ProvalangApi;
-import com.fishy.provalang.api.file.FileWrapper;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.lexer.LexTokenInfo;
 import com.fishy.provalang.api.lexer.TokenType;
@@ -11,65 +11,24 @@ import lombok.Data;
 
 import java.io.IOException;
 
-//@SuppressWarnings("unused")
 @Data
 public abstract class Matcher<T extends TokenType> implements Cloneable
 {
-    private       FileWrapper wrapper;
     private final T           type;
-
-    public Matcher(T type) {this.type = type;}
-
-    Matcher<T> copy(FileWrapper wrapper)
-    {
-        Matcher<T> c = null;
-        try
-        {
-            c = this.clone();
-        }
-        catch (CloneNotSupportedException e)
-        {
-            ProvalangApi.error("Error trying to clone a matcher");
-        }
-
-        c.wrapper = wrapper;
-        return c;
-    }
-
-    protected Matcher<T> clone() throws CloneNotSupportedException
-    {
-        Object o = super.clone();
-        if (!(o instanceof Matcher))
-        {
-            throw new CloneNotSupportedException("Cloning did not produce a matcher");
-        }
-
-        return (Matcher<T>) o;
-    }
-
-    // Helper
-
-    private void check()
-    {
-        if (wrapper == null)
-            ProvalangApi.error("Tried to use a Matcher but it wasn't instantiated");
-    }
 
     // Type stuff
 
-    public abstract MatchReturnData run();
+    public abstract MatchReturnData run(LexContext context);
 
     public LexToken run(LexTokenInfo info, String buffer)
     {
-        check();
         return new LexToken(type, type.cast(info, buffer.toCharArray()));
     }
 
     // Parent matches
 
-    protected MatchReturnData match(MatchMethod... methods)
+    protected MatchReturnData match(LexContext context, MatchMethod... methods)
     {
-        check();
         MatchReturnData data  = new MatchReturnData();
         int             index = 0;
 
@@ -80,7 +39,7 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
             MatchMethod method = methods[i];
 
-            MatchData match = method.match(index);
+            MatchData match = method.match(context, index);
 
             if (!match.isValue())
                 return data.setMatch(false);
@@ -95,16 +54,15 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Helps
 
-    private char read(int index)
+    private char read(LexContext context, int index)
     {
-        check();
         try
         {
-            return wrapper.read(index);
+            return context.getWrapper().read(index);
         }
         catch (IOException e)
         {
-            ProvalangApi.error("Could not read from file(%s): %s", wrapper.reader.filename, e.getMessage());
+            ProvalangApi.error("Could not read from file(%s): %s", context.getWrapper().reader.filename, e.getMessage());
             return '\u0000';
         }
     }
@@ -113,15 +71,15 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod mwhile(MatchMethod method)
     {
-        return (int index) -> {
-            MatchData data = method.match(index);
+        return (LexContext context, int index) -> {
+            MatchData data = method.match(context, index);
             if (!data.isValue())
                 return new MatchData(false);
 
             int lookahead = 0;
             while (true)
             {
-                data = method.match(index + lookahead);
+                data = method.match(context, index + lookahead);
                 if (!data.isValue())
                     break;
 
@@ -134,11 +92,11 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod muntil(MatchMethod method)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             int i = 0;
             while (true)
             {
-                MatchData data = method.match(index + i);
+                MatchData data = method.match(context, index + i);
 
                 if (data.isValue())
                     return new MatchData(true, i + data.getLookahead());
@@ -150,12 +108,12 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod mand(MatchMethod... methods)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             int lookahead = 0;
 
             for (MatchMethod method : methods)
             {
-                MatchData data = method.match(index);
+                MatchData data = method.match(context, index);
 
                 if (!data.isValue())
                     return new MatchData(false);
@@ -169,10 +127,10 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod mor(MatchMethod... methods)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             for (MatchMethod method : methods)
             {
-                MatchData data = method.match(index);
+                MatchData data = method.match(context, index);
 
                 if (data.isValue())
                     return data;
@@ -184,28 +142,28 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod mnot(MatchMethod method)
     {
-        return (int index) -> {
-            MatchData data = method.match(index);
+        return (LexContext context, int index) -> {
+            MatchData data = method.match(context, index);
             return new MatchData(!data.isValue(), data.getLookahead());
         };
     }
 
     protected MatchMethod moptional(MatchMethod method)
     {
-        return (int index) -> {
-            MatchData data = method.match(index);
+        return (LexContext context, int index) -> {
+            MatchData data = method.match(context, index);
             return new MatchData(true, data.isValue() ? data.getLookahead() : 0);
         };
     }
 
     protected MatchMethod mfor(int amount, MatchMethod method)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             int lookahead = 0;
 
             for(int i = 0; i < amount; i++)
             {
-                MatchData data = method.match(index + lookahead);
+                MatchData data = method.match(context, index + lookahead);
 
                 if(!data.isValue())
                     return new MatchData(false, lookahead);
@@ -219,28 +177,28 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod mignoreLookahead(MatchMethod method)
     {
-        return (int index) -> {
-            MatchData data = method.match(index);
+        return (LexContext context, int index) -> {
+            MatchData data = method.match(context, index);
             return new MatchData(data.isValue());
         };
     }
 
     protected MatchMethod mlookbehind(MatchMethod method)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             if(index == 0) throw new IllegalStateException("Could not look behind index 0");
-            return method.match(index-1);
+            return method.match(context, index-1);
         };
     }
 
     protected MatchMethod m(MatchMethod... methods)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             int lookahead = 0;
 
             for (MatchMethod method : methods)
             {
-                MatchData data = method.match(index + lookahead);
+                MatchData data = method.match(context, index + lookahead);
 
                 if (!data.isValue())
                 {
@@ -258,26 +216,26 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod m(char c)
     {
-        return (int index) -> {
-            char ch = read(index);
+        return (LexContext context, int index) -> {
+            char ch = read(context, index);
             return new MatchData(ch == c, 1);
         };
     }
 
     protected MatchMethod mnot(char c)
     {
-        return (int index) -> {
-            char ch = read(index);
+        return (LexContext context, int index) -> {
+            char ch = read(context, index);
             return new MatchData(ch != c, 1);
         };
     }
 
     protected MatchMethod m(String s)
     {
-        return (int index) -> {
+        return (LexContext context, int index) -> {
             for (int i = 0; i < s.length(); i++)
             {
-                char c  = read(index + i);
+                char c  = read(context, index + i);
                 char sc = s.charAt(i);
 
                 if (c != sc)
@@ -292,8 +250,8 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     protected MatchMethod minRange(int lo, int hi)
     {
-        return (int index) -> {
-            char c = read(index);
+        return (LexContext context, int index) -> {
+            char c = read(context, index);
             return new MatchData((int) c >= lo && (int) c <= hi, 1);
         };
     }
@@ -302,15 +260,15 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
     {
         if (0x41 <= (int) c && 0x5A >= (int) c)
         {
-            return (int index) -> {
-                char ch = read(index);
+            return (LexContext context, int index) -> {
+                char ch = read(context, index);
                 return new MatchData(ch == c || ((int) ch)-0x20 == (int) c, 1);
             };
         }
         else if (0x61 <= (int) c && 0x7A >= (int) c)
         {
-            return (int index) -> {
-                char ch = read(index);
+            return (LexContext context, int index) -> {
+                char ch = read(context, index);
                 return new MatchData(ch == c || ((int) ch)+0x20 == (int) c, 1);
             };
         }

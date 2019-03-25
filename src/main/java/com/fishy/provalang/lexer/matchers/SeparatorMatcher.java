@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.Separator;
 
@@ -12,26 +12,26 @@ import java.util.List;
 
 public class SeparatorMatcher
 {
-    public static final Match<CurlyBracketOpen> curlyBracketOpen = Match.of(new CurlyBracketOpen());
-    public static final Match<CurlyBracketClose> curlyBracketClose = Match.of(new CurlyBracketClose());
+    public static final CurlyBracketOpen curlyBracketOpen = new CurlyBracketOpen();
+    public static final CurlyBracketClose curlyBracketClose = new CurlyBracketClose();
 
-    public static final Match<SquareBracketOpen> squareBracketOpen = Match.of(new SquareBracketOpen());
-    public static final Match<SquareBracketClose> squareBracketClose = Match.of(new SquareBracketClose());
+    public static final SquareBracketOpen squareBracketOpen = new SquareBracketOpen();
+    public static final SquareBracketClose squareBracketClose = new SquareBracketClose();
 
-    public static final Match<ParenthesisOpen> parenthesisOpen = Match.of(new ParenthesisOpen());
-    public static final Match<ParenthesisClose> parenthesisClose = Match.of(new ParenthesisClose());
+    public static final ParenthesisOpen parenthesisOpen = new ParenthesisOpen();
+    public static final ParenthesisClose parenthesisClose = new ParenthesisClose();
 
-    public static final Match<Semicolon> semicolon = Match.of(new Semicolon());
-    public static final Match<Period> period = Match.of(new Period());
+    public static final Semicolon semicolon = new Semicolon();
+    public static final Period period = new Period();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> list)
+    public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[] {
+        LexerApi.addMatches(list, new Matcher[] {
                 curlyBracketOpen, curlyBracketClose,
                 squareBracketOpen, squareBracketClose,
                 parenthesisOpen, parenthesisClose,
@@ -48,9 +48,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('{'));
+            return match(context, m('{'));
         }
     }
 
@@ -63,9 +63,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('}'));
+            return match(context, m('}'));
         }
     }
 
@@ -78,9 +78,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('['));
+            return match(context, m('['));
         }
     }
 
@@ -93,9 +93,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m(']'));
+            return match(context, m(']'));
         }
     }
 
@@ -108,9 +108,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('('));
+            return match(context, m('('));
         }
     }
 
@@ -123,9 +123,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m(')'));
+            return match(context, m(')'));
         }
     }
 
@@ -138,9 +138,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m(';'));
+            return match(context, m(';'));
         }
     }
 
@@ -153,9 +153,9 @@ public class SeparatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('.'));
+            return match(context, m('.'));
         }
     }
 }

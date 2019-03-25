@@ -1,6 +1,7 @@
 package com.fishy.provalang.api.lexer;
 
 import com.fishy.provalang.api.ProvalangApi;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.file.FileReader;
 import com.fishy.provalang.api.file.FileWrapper;
 import com.fishy.provalang.api.lexer.data.LexReturnData;
@@ -22,11 +23,13 @@ public abstract class AbstractLexer implements ILexer
     private FileWrapper wrapper;
 
     private LexTokenInfo info = new LexTokenInfo();
+    private LexContext context;
 
     protected void prepare(FileReader reader)
     {
         this.reader = reader;
         this.wrapper = new FileWrapper(reader);
+        this.context = new LexContext(this.wrapper);
 
         LexerApi.addDefaultTokens();
         LexerApi.addDefaultMatches();
@@ -50,7 +53,7 @@ public abstract class AbstractLexer implements ILexer
     {
         check();
 
-        LexReturnData data = LexerApi.lex(wrapper);
+        LexReturnData data = LexerApi.lex(this.context);
         if(data == null)
             return NullTokenType.create(info);
 

@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.Literal;
 
@@ -12,27 +12,27 @@ import java.util.List;
 
 public class LiteralMatcher
 {
-    public static final Match<Integer> integer    = Match.of(new Integer());
-    public static final Match<Byte>    byteMatch  = Match.of(new Byte());
-    public static final Match<Short>   shortMatch = Match.of(new Short());
-    public static final Match<Long>    longMatch  = Match.of(new Long());
+    public static final Integer integer    = new Integer();
+    public static final Byte    byteMatch  = new Byte();
+    public static final Short   shortMatch = new Short();
+    public static final Long    longMatch  = new Long();
 
-    public static final Match<Float>  floatMatch  = Match.of(new Float());
-    public static final Match<Double> doubleMatch = Match.of(new Double());
+    public static final Float  floatMatch  = new Float();
+    public static final Double doubleMatch = new Double();
 
-    public static final Match<Boolean> booleanMatch = Match.of(new Boolean());
+    public static final Boolean booleanMatch = new Boolean();
 
-    public static final Match<String>    string    = Match.of(new String());
-    public static final Match<Character> character = Match.of(new Character());
+    public static final String    string    = new String();
+    public static final Character character = new Character();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> list)
+    public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[]{
+        LexerApi.addMatches(list, new Matcher[]{
                 integer, byteMatch, shortMatch, longMatch,
                 floatMatch, doubleMatch,
                 booleanMatch,
@@ -49,9 +49,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(mor(
+            return match(context, mor(
                     m(moptional(m('-')), mwhile(number())),
                     m(m('0'), mor(
                             m(manyCase('x'), mwhile(mor(number(), minRange(0x41, 0x46), minRange(0x61, 0x66)))),
@@ -69,9 +69,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(mor(
+            return match(context, mor(
                     m(moptional(m('-')), mwhile(number())),
                     m(m('0'), mor(
                             m(manyCase('x'), mwhile(mor(number(), minRange(0x41, 0x46), minRange(0x61, 0x66)))),
@@ -89,9 +89,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(mor(
+            return match(context, mor(
                     m(moptional(m('-')), mwhile(number())),
                     m(m('0'), mor(
                             m(manyCase('x'), mwhile(mor(number(), minRange(0x41, 0x46), minRange(0x61, 0x66)))),
@@ -109,9 +109,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(mor(
+            return match(context, mor(
                     m(moptional(m('-')), mwhile(number()), moptional(manyCase('l'))),
                     m(m('0'), mor(
                             m(manyCase('x'), mwhile(mor(number(), minRange(0x41, 0x46), minRange(0x61, 0x66)))),
@@ -129,9 +129,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(moptional(m('-')), mor(
+            return match(context, moptional(m('-')), mor(
                     mwhile(number()),
                     m(mwhile(number()), m('.'), mwhile(number())),
                     m(m('.'), mwhile(number())),
@@ -149,9 +149,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(moptional(m('-')), mor(
+            return match(context, moptional(m('-')), mor(
                     mwhile(number()),
                     m(mwhile(number()), m('.'), mwhile(number())),
                     m(m('.'), mwhile(number())),
@@ -169,9 +169,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(mor(m("true"), m("false")), mnot(identifierChar()));
+            return match(context, mor(m("true"), m("false")), mnot(identifierChar()));
         }
     }
 
@@ -184,9 +184,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('"'), mwhile(mor(
+            return match(context, m('"'), mwhile(mor(
                     mnot('"'),
                     mand(mlookbehind(m('\\')), m('"'))
             )), m('"'));
@@ -202,9 +202,9 @@ public class LiteralMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('\''), mor(
+            return match(context, m('\''), mor(
                     mnot('\''),
                     m(m('\''), mnot('\'')),
                     m(m('\''), m('u'), mfor(4, number()))

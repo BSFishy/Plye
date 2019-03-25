@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.OpAssignOperator;
 
@@ -12,26 +12,26 @@ import java.util.List;
 
 public class OpAssignOperatorMatcher
 {
-    public static final Match<Add> add = Match.of(new Add());
-    public static final Match<Subtract> subtract = Match.of(new Subtract());
-    public static final Match<Multiply> multiply = Match.of(new Multiply());
-    public static final Match<Divide> divide = Match.of(new Divide());
+    public static final Add add = new Add();
+    public static final Subtract subtract = new Subtract();
+    public static final Multiply multiply = new Multiply();
+    public static final Divide divide = new Divide();
 
-    public static final Match<ShiftLeft> shiftLeft = Match.of(new ShiftLeft());
-    public static final Match<ShiftRight> shiftRight = Match.of(new ShiftRight());
+    public static final ShiftLeft shiftLeft = new ShiftLeft();
+    public static final ShiftRight shiftRight = new ShiftRight();
 
-    public static final Match<And> and = Match.of(new And());
-    public static final Match<Or> or = Match.of(new Or());
-    public static final Match<Xor> xor = Match.of(new Xor());
+    public static final And and = new And();
+    public static final Or or = new Or();
+    public static final Xor xor = new Xor();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> list)
+    public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[] {
+        LexerApi.addMatches(list, new Matcher[] {
                 add, subtract, multiply, divide,
                 shiftLeft, shiftRight,
                 and, or, xor
@@ -46,9 +46,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('+'), m('='));
+            return match(context, m('+'), m('='));
         }
     }
 
@@ -60,9 +60,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('-'), m('='));
+            return match(context, m('-'), m('='));
         }
     }
 
@@ -74,9 +74,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('*'), m('='));
+            return match(context, m('*'), m('='));
         }
     }
 
@@ -88,9 +88,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('/'), m('='));
+            return match(context, m('/'), m('='));
         }
     }
 
@@ -102,9 +102,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('<'), m('<'), m('='));
+            return match(context, m('<'), m('<'), m('='));
         }
     }
 
@@ -116,9 +116,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('<'), m('<'), m('='));
+            return match(context, m('<'), m('<'), m('='));
         }
     }
 
@@ -130,9 +130,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('&'), m('='));
+            return match(context, m('&'), m('='));
         }
     }
 
@@ -144,9 +144,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('|'), m('='));
+            return match(context, m('|'), m('='));
         }
     }
 
@@ -158,9 +158,9 @@ public class OpAssignOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('^'), m('='));
+            return match(context, m('^'), m('='));
         }
     }
 }

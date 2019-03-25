@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 
 import java.util.List;
@@ -13,40 +13,40 @@ import static com.fishy.provalang.lexer.tokens.BinaryOperator.*;
 
 public class BinaryOperatorMatcher
 {
-    public static final Match<AssignMatcher>    assignMatch    = Match.of(new AssignMatcher());
-    public static final Match<EqualsMatcher>    equalsMatch    = Match.of(new EqualsMatcher());
-    public static final Match<NotEqualsMatcher> notEqualsMatch = Match.of(new NotEqualsMatcher());
+    public static final AssignMatcher    assignMatch    = new AssignMatcher();
+    public static final EqualsMatcher    equalsMatch    = new EqualsMatcher();
+    public static final NotEqualsMatcher notEqualsMatch = new NotEqualsMatcher();
 
-    public static final Match<AddMatcher>      addMatch      = Match.of(new AddMatcher());
-    public static final Match<SubtractMatcher> subtractMatch = Match.of(new SubtractMatcher());
-    public static final Match<MultiplyMatcher> multiplyMatch = Match.of(new MultiplyMatcher());
-    public static final Match<DivideMatcher>   divideMatch   = Match.of(new DivideMatcher());
+    public static final AddMatcher      addMatch      = new AddMatcher();
+    public static final SubtractMatcher subtractMatch = new SubtractMatcher();
+    public static final MultiplyMatcher multiplyMatch = new MultiplyMatcher();
+    public static final DivideMatcher   divideMatch   = new DivideMatcher();
 
-    public static final Match<GreaterThanMatcher>       greaterThanMatch       = Match.of(new GreaterThanMatcher());
-    public static final Match<LessThanMatcher>          lessThanMatch          = Match.of(new LessThanMatcher());
-    public static final Match<GreaterThanEqualsMatcher> greaterThanEqualsMatch = Match.of(new GreaterThanEqualsMatcher());
-    public static final Match<LessThanEqualsMatcher>    lessThanEqualsMatch    = Match.of(new LessThanEqualsMatcher());
+    public static final GreaterThanMatcher       greaterThanMatch       = new GreaterThanMatcher();
+    public static final LessThanMatcher          lessThanMatch          = new LessThanMatcher();
+    public static final GreaterThanEqualsMatcher greaterThanEqualsMatch = new GreaterThanEqualsMatcher();
+    public static final LessThanEqualsMatcher    lessThanEqualsMatch    = new LessThanEqualsMatcher();
 
-    public static final Match<AndMatcher> andMatch = Match.of(new AndMatcher());
-    public static final Match<OrMatcher>  orMatch  = Match.of(new OrMatcher());
-    public static final Match<XorMatcher> xorMatch = Match.of(new XorMatcher());
+    public static final AndMatcher andMatch = new AndMatcher();
+    public static final OrMatcher  orMatch  = new OrMatcher();
+    public static final XorMatcher xorMatch = new XorMatcher();
 
-    public static final Match<BooleanAndMatcher> booleanAndMatch = Match.of(new BooleanAndMatcher());
-    public static final Match<BooleanOrMatcher>  booleanOrMatch  = Match.of(new BooleanOrMatcher());
+    public static final BooleanAndMatcher booleanAndMatch = new BooleanAndMatcher();
+    public static final BooleanOrMatcher  booleanOrMatch  = new BooleanOrMatcher();
 
-    public static final Match<ModulusMatcher> modulusMatch = Match.of(new ModulusMatcher());
+    public static final ModulusMatcher modulusMatch = new ModulusMatcher();
 
-    public static final Match<ShiftLeftMatcher>  shiftLeftMatch  = Match.of(new ShiftLeftMatcher());
-    public static final Match<ShiftRightMatcher> shiftRightMatch = Match.of(new ShiftRightMatcher());
+    public static final ShiftLeftMatcher  shiftLeftMatch  = new ShiftLeftMatcher();
+    public static final ShiftRightMatcher shiftRightMatch = new ShiftRightMatcher();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> matches)
+    public static void addDefaultMatches(List<Matcher> matches)
     {
-        LexerApi.addMatches(matches, new Match[] {
+        LexerApi.addMatches(matches, new Matcher[] {
             assignMatch, equalsMatch, notEqualsMatch,
                 addMatch, subtractMatch, multiplyMatch, divideMatch,
                 greaterThanMatch, lessThanMatch, greaterThanEqualsMatch, lessThanEqualsMatch,
@@ -66,9 +66,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('='), mnot('='));
+            return match(context, m('='), mnot('='));
         }
     }
 
@@ -81,9 +81,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('='), m('='));
+            return match(context, m('='), m('='));
         }
     }
 
@@ -96,9 +96,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('!'), m('='));
+            return match(context, m('!'), m('='));
         }
     }
 
@@ -111,9 +111,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('+'), mnot('='));
+            return match(context, m('+'), mnot('='));
         }
     }
 
@@ -126,9 +126,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('-'), mnot('='));
+            return match(context, m('-'), mnot('='));
         }
     }
 
@@ -141,9 +141,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('*'), mnot('='));
+            return match(context, m('*'), mnot('='));
         }
     }
 
@@ -156,9 +156,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('/'), mnot('='));
+            return match(context, m('/'), mnot('='));
         }
     }
 
@@ -171,9 +171,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('>'), mand(mnot('='), mnot('>')));
+            return match(context, m('>'), mand(mnot('='), mnot('>')));
         }
     }
 
@@ -186,9 +186,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('<'), mand(mnot('='), mnot('<')));
+            return match(context, m('<'), mand(mnot('='), mnot('<')));
         }
     }
 
@@ -201,9 +201,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('>'), m('='));
+            return match(context, m('>'), m('='));
         }
     }
 
@@ -216,9 +216,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('<'), m('='));
+            return match(context, m('<'), m('='));
         }
     }
 
@@ -231,9 +231,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('&'), mand(mnot('&'), mnot('=')));
+            return match(context, m('&'), mand(mnot('&'), mnot('=')));
         }
     }
 
@@ -246,9 +246,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('|'), mand(mnot('|'), mnot('=')));
+            return match(context, m('|'), mand(mnot('|'), mnot('=')));
         }
     }
 
@@ -261,9 +261,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('&'), mnot('='));
+            return match(context, m('&'), mnot('='));
         }
     }
 
@@ -276,9 +276,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('&'), m('&'));
+            return match(context, m('&'), m('&'));
         }
     }
 
@@ -291,9 +291,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('|'), m('|'));
+            return match(context, m('|'), m('|'));
         }
     }
 
@@ -306,9 +306,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('%'), mnot('='));
+            return match(context, m('%'), mnot('='));
         }
     }
 
@@ -321,9 +321,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('<'), m('<'));
+            return match(context, m('<'), m('<'));
         }
     }
 
@@ -336,9 +336,9 @@ public class BinaryOperatorMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m('>'), m('>'));
+            return match(context, m('>'), m('>'));
         }
     }
 }

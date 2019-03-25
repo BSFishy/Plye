@@ -2,9 +2,9 @@ package com.fishy.provalang.lexer.matchers;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.data.MatchReturnData;
-import com.fishy.provalang.api.lexer.match.Match;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.Keyword;
 
@@ -12,25 +12,25 @@ import java.util.List;
 
 public class KeywordMatcher
 {
-    public static final Match<New>    newMatch    = Match.of(new New());
-    public static final Match<Class>  classMatch  = Match.of(new Class());
-    public static final Match<Static> staticMatch = Match.of(new Static());
+    public static final New    newMatch    = new New();
+    public static final Class  classMatch  = new Class();
+    public static final Static staticMatch = new Static();
 
-    public static final Match<Package> packageMatch = Match.of(new Package());
-    public static final Match<Import>  importMatch  = Match.of(new Import());
+    public static final Package packageMatch = new Package();
+    public static final Import  importMatch  = new Import();
 
-    public static final Match<Public>    publicMatch    = Match.of(new Public());
-    public static final Match<Protected> protectedMatch = Match.of(new Protected());
-    public static final Match<Private>   privateMatch   = Match.of(new Private());
+    public static final Public    publicMatch    = new Public();
+    public static final Protected protectedMatch = new Protected();
+    public static final Private   privateMatch   = new Private();
 
     public static void addDefaultMatches()
     {
         addDefaultMatches(LexerApi.getMatches());
     }
 
-    public static void addDefaultMatches(List<Match> list)
+    public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Match[]{
+        LexerApi.addMatches(list, new Matcher[]{
                 newMatch, classMatch, staticMatch,
                 packageMatch, importMatch,
                 publicMatch, protectedMatch, privateMatch
@@ -46,9 +46,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("new"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("new"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -61,9 +61,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("class"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("class"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -76,9 +76,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("static"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("static"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -91,9 +91,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("package"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("package"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -106,9 +106,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("import"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("import"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -121,9 +121,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("public"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("public"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -136,9 +136,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("protected"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("protected"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 
@@ -151,9 +151,9 @@ public class KeywordMatcher
         }
 
         @Override
-        public MatchReturnData run()
+        public MatchReturnData run(LexContext context)
         {
-            return match(m("private"), mignoreLookahead(mnot(identifierChar())));
+            return match(context, m("private"), mignoreLookahead(mnot(identifierChar())));
         }
     }
 }
