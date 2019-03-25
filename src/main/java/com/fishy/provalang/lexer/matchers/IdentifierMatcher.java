@@ -10,7 +10,7 @@ import com.fishy.provalang.lexer.tokens.Identifier;
 
 import java.util.List;
 
-@MatcherPriority(priority = Priority.Normal)
+@MatcherPriority(priority = Priority.Low)
 public class IdentifierMatcher extends Matcher<Identifier>
 {
     public static final Match<IdentifierMatcher> instance = Match.of(new IdentifierMatcher());

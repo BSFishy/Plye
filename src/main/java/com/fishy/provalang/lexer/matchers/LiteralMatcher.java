@@ -40,7 +40,7 @@ public class LiteralMatcher
         });
     }
 
-    @MatcherPriority(priority = Priority.Normal)
+    @MatcherPriority(priority = Priority.High)
     public static class Integer extends Matcher<Literal.Integer>
     {
         public Integer()
@@ -120,7 +120,7 @@ public class LiteralMatcher
         }
     }
 
-    @MatcherPriority(priority = Priority.Normal)
+    @MatcherPriority(priority = Priority.Normal, overrides = {Double.class})
     public static class Float extends Matcher<Literal.Float>
     {
         public Float()
@@ -160,7 +160,7 @@ public class LiteralMatcher
         }
     }
 
-    @MatcherPriority(priority = Priority.Normal)
+    @MatcherPriority(priority = Priority.High)
     public static class Boolean extends Matcher<Literal.Boolean>
     {
         public Boolean()
