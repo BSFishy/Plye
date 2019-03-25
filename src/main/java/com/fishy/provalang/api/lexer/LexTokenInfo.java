@@ -7,19 +7,24 @@ public class LexTokenInfo implements Cloneable
 {
     public int line;
     public int column;
-    public int length = 1;
+    public int length = 0;
 
     public void increment(int length)
     {
-        column += length;
         this.length += length;
+    }
+
+    public void incrementColumn(int length)
+    {
+        this.column += length;
+        this.length = 0;
     }
 
     public void incrementLine()
     {
         line++;
         column = 0;
-        length = 1;
+        length = 0;
     }
 
     public void increment()

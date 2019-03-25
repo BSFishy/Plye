@@ -54,13 +54,15 @@ public abstract class AbstractLexer implements ILexer
         if(data == null)
             return NullTokenType.create(info);
 
+        info.increment(data.length);
+
         String buffer = clean(data.length);
-        LexToken token = new LexToken(data.type, data.cast(info, buffer));
+        LexToken token = new LexToken(data.type, data.cast(info.clone(), buffer));
 
         if(data.type instanceof Ignored.Return)
             info.incrementLine();
         else
-            info.increment(data.length);
+            info.incrementColumn(data.length);
 
         return token;
     }
