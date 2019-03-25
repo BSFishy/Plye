@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -59,7 +59,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Assign);
         }
@@ -70,7 +70,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Equals);
         }
@@ -81,7 +81,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.NotEquals);
         }
@@ -92,7 +92,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Add);
         }
@@ -103,7 +103,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Subtract);
         }
@@ -114,7 +114,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Multiply);
         }
@@ -125,7 +125,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Divide);
         }
@@ -136,7 +136,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.GreaterThan);
         }
@@ -147,7 +147,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.LessThan);
         }
@@ -158,7 +158,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.GreaterThanEquals);
         }
@@ -169,7 +169,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.LessThanEquals);
         }
@@ -180,7 +180,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.And);
         }
@@ -191,7 +191,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Or);
         }
@@ -202,7 +202,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Xor);
         }
@@ -213,7 +213,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.BooleanAnd);
         }
@@ -224,7 +224,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.BooleanOr);
         }
@@ -235,7 +235,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.Modulus);
         }
@@ -246,7 +246,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.ShiftLeft);
         }
@@ -257,7 +257,7 @@ public class BinaryOperator
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BinaryOperatorData(info, OperatorType.ShiftRight);
         }
@@ -298,7 +298,7 @@ public class BinaryOperator
     {
         public final OperatorType type;
 
-        public BinaryOperatorData(LexerTokenInfo info, OperatorType type)
+        public BinaryOperatorData(LexTokenInfo info, OperatorType type)
         {
             super(info);
 

@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -24,6 +26,7 @@ public class IgnoredMatcher
         LexerApi.addMatches(list, new Match[]{returnMatch, carriageReturn, space});
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Return extends Matcher<Ignored.Return>
     {
 
@@ -39,6 +42,7 @@ public class IgnoredMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class CarriageReturn extends Matcher<Ignored.CarriageReturn>
     {
 
@@ -54,6 +58,7 @@ public class IgnoredMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Space extends Matcher<Ignored.Space>
     {
 

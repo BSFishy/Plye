@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -40,7 +40,7 @@ public class OpAssignOperator
     public static class Add implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.Add);
         }
@@ -50,7 +50,7 @@ public class OpAssignOperator
     public static class Subtract implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.Subtract);
         }
@@ -60,7 +60,7 @@ public class OpAssignOperator
     public static class Multiply implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.Multiply);
         }
@@ -70,7 +70,7 @@ public class OpAssignOperator
     public static class Divide implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.Divide);
         }
@@ -80,7 +80,7 @@ public class OpAssignOperator
     public static class ShiftLeft implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.ShiftLeft);
         }
@@ -90,7 +90,7 @@ public class OpAssignOperator
     public static class ShiftRight implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.ShiftRight);
         }
@@ -100,7 +100,7 @@ public class OpAssignOperator
     public static class And implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.And);
         }
@@ -110,7 +110,7 @@ public class OpAssignOperator
     public static class Or implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.Or);
         }
@@ -120,7 +120,7 @@ public class OpAssignOperator
     public static class Xor implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new OpAssignOperatorData(info, OperatorType.Xor);
         }
@@ -147,7 +147,7 @@ public class OpAssignOperator
     {
         public final OperatorType type;
 
-        public OpAssignOperatorData(LexerTokenInfo info, OperatorType type)
+        public OpAssignOperatorData(LexTokenInfo info, OperatorType type)
         {
             super(info);
 

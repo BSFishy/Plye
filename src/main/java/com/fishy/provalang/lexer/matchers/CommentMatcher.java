@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -29,6 +31,7 @@ public class CommentMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class SingleLineMatcher extends Matcher<SingleLine>
     {
         public SingleLineMatcher()
@@ -43,6 +46,7 @@ public class CommentMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class MultiLineMatcher extends Matcher<MultiLine>
     {
         public MultiLineMatcher()
@@ -57,6 +61,7 @@ public class CommentMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class DocumentationMatcher extends Matcher<Documentation>
     {
         public DocumentationMatcher()

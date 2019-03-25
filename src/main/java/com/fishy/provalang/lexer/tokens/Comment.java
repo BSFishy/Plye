@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class Comment
     public static class SingleLine implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new CommentData(info, new String(Arrays.copyOfRange(buffer, 1, buffer.length)));
         }
@@ -43,7 +43,7 @@ public class Comment
     public static class MultiLine implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new CommentData(info, new String(Arrays.copyOfRange(buffer, 1, buffer.length - 2)));
         }
@@ -53,7 +53,7 @@ public class Comment
     public static class Documentation implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new CommentData(info, new String(Arrays.copyOfRange(buffer, 2, buffer.length - 2)));
         }
@@ -65,7 +65,7 @@ public class Comment
     {
         public final String value;
 
-        public CommentData(LexerTokenInfo info, String value)
+        public CommentData(LexTokenInfo info, String value)
         {
             super(info);
 

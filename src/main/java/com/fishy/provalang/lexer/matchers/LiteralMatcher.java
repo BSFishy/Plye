@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -38,6 +40,7 @@ public class LiteralMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Integer extends Matcher<Literal.Integer>
     {
         public Integer()
@@ -57,6 +60,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Byte extends Matcher<Literal.Byte>
     {
         public Byte()
@@ -76,6 +80,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Short extends Matcher<Literal.Short>
     {
         public Short()
@@ -95,6 +100,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Long extends Matcher<Literal.Long>
     {
         public Long()
@@ -114,6 +120,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Float extends Matcher<Literal.Float>
     {
         public Float()
@@ -133,6 +140,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Double extends Matcher<Literal.Double>
     {
         public Double()
@@ -152,6 +160,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Boolean extends Matcher<Literal.Boolean>
     {
         public Boolean()
@@ -166,6 +175,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class String extends Matcher<Literal.String>
     {
         public String()
@@ -183,6 +193,7 @@ public class LiteralMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Character extends Matcher<Literal.Character>
     {
         public Character()

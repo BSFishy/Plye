@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -37,6 +39,7 @@ public class SeparatorMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class CurlyBracketOpen extends Matcher<Separator.CurlyBracketOpen>
     {
         public CurlyBracketOpen()
@@ -51,6 +54,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class CurlyBracketClose extends Matcher<Separator.CurlyBracketClose>
     {
         public CurlyBracketClose()
@@ -65,6 +69,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class SquareBracketOpen extends Matcher<Separator.SquareBracketOpen>
     {
         public SquareBracketOpen()
@@ -79,6 +84,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class SquareBracketClose extends Matcher<Separator.SquareBracketClose>
     {
         public SquareBracketClose()
@@ -93,6 +99,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ParenthesisOpen extends Matcher<Separator.ParenthesisOpen>
     {
         public ParenthesisOpen()
@@ -107,6 +114,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ParenthesisClose extends Matcher<Separator.ParenthesisClose>
     {
         public ParenthesisClose()
@@ -121,6 +129,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Semicolon extends Matcher<Separator.Semicolon>
     {
         public Semicolon()
@@ -135,6 +144,7 @@ public class SeparatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Period extends Matcher<Separator.Period>
     {
         public Period()

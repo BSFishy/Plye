@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -40,7 +40,7 @@ public class Literal
     public static class Integer implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new IntegerData(info, java.lang.Integer.parseInt(new java.lang.String(buffer)));
         }
@@ -51,7 +51,7 @@ public class Literal
         {
             public final int value;
 
-            public IntegerData(LexerTokenInfo info, int value)
+            public IntegerData(LexTokenInfo info, int value)
             {
                 super(info);
 
@@ -64,7 +64,7 @@ public class Literal
     public static class Byte implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new ByteData(info, java.lang.Byte.parseByte(new java.lang.String(buffer)));
         }
@@ -75,7 +75,7 @@ public class Literal
         {
             public final byte value;
 
-            public ByteData(LexerTokenInfo info, byte value)
+            public ByteData(LexTokenInfo info, byte value)
             {
                 super(info);
 
@@ -88,7 +88,7 @@ public class Literal
     public static class Short implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new ShortData(info, java.lang.Short.parseShort(new java.lang.String(buffer)));
         }
@@ -99,7 +99,7 @@ public class Literal
         {
             public final short value;
 
-            public ShortData(LexerTokenInfo info, short value)
+            public ShortData(LexTokenInfo info, short value)
             {
                 super(info);
 
@@ -112,7 +112,7 @@ public class Literal
     public static class Long implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new LongData(info, java.lang.Long.parseLong(new java.lang.String(buffer)));
         }
@@ -123,7 +123,7 @@ public class Literal
         {
             public final long value;
 
-            public LongData(LexerTokenInfo info, long value)
+            public LongData(LexTokenInfo info, long value)
             {
                 super(info);
 
@@ -136,7 +136,7 @@ public class Literal
     public static class Float implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new FloatData(info, java.lang.Float.parseFloat(new java.lang.String(buffer)));
         }
@@ -147,7 +147,7 @@ public class Literal
         {
             public final float value;
 
-            public FloatData(LexerTokenInfo info, float value)
+            public FloatData(LexTokenInfo info, float value)
             {
                 super(info);
 
@@ -160,7 +160,7 @@ public class Literal
     public static class Double implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new DoubleData(info, java.lang.Double.parseDouble(new java.lang.String(buffer)));
         }
@@ -171,7 +171,7 @@ public class Literal
         {
             public final double value;
 
-            public DoubleData(LexerTokenInfo info, double value)
+            public DoubleData(LexTokenInfo info, double value)
             {
                 super(info);
 
@@ -184,7 +184,7 @@ public class Literal
     public static class Boolean implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new BooleanData(info, java.lang.Boolean.parseBoolean(new java.lang.String(buffer)));
         }
@@ -195,7 +195,7 @@ public class Literal
         {
             public final boolean value;
 
-            public BooleanData(LexerTokenInfo info, boolean value)
+            public BooleanData(LexTokenInfo info, boolean value)
             {
                 super(info);
 
@@ -208,7 +208,7 @@ public class Literal
     public static class String implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new StringData(info, new java.lang.String(buffer));
         }
@@ -219,7 +219,7 @@ public class Literal
         {
             public final java.lang.String value;
 
-            public StringData(LexerTokenInfo info, java.lang.String value)
+            public StringData(LexTokenInfo info, java.lang.String value)
             {
                 super(info);
 
@@ -232,7 +232,7 @@ public class Literal
     public static class Character implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new CharacterData(info, buffer[0]);
         }
@@ -243,7 +243,7 @@ public class Literal
         {
             public final char value;
 
-            public CharacterData(LexerTokenInfo info, char value)
+            public CharacterData(LexTokenInfo info, char value)
             {
                 super(info);
 

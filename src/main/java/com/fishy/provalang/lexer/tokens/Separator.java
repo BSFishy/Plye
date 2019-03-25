@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -41,7 +41,7 @@ public class Separator
     public static class CurlyBracketOpen implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.CurlyBracketOpen);
         }
@@ -51,7 +51,7 @@ public class Separator
     public static class CurlyBracketClose implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.CurlyBracketClose);
         }
@@ -61,7 +61,7 @@ public class Separator
     public static class SquareBracketOpen implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.SquareBracketOpen);
         }
@@ -71,7 +71,7 @@ public class Separator
     public static class SquareBracketClose implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.SquareBracketClose);
         }
@@ -81,7 +81,7 @@ public class Separator
     public static class ParenthesisOpen implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.ParenthesisOpen);
         }
@@ -91,7 +91,7 @@ public class Separator
     public static class ParenthesisClose implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.ParenthesisClose);
         }
@@ -101,7 +101,7 @@ public class Separator
     public static class Semicolon implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.Semicolon);
         }
@@ -111,7 +111,7 @@ public class Separator
     public static class Period implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new SeparatorData(info, SeparatorType.Period);
         }
@@ -139,7 +139,7 @@ public class Separator
 
         public final SeparatorType type;
 
-        public SeparatorData(LexerTokenInfo info, SeparatorType type)
+        public SeparatorData(LexTokenInfo info, SeparatorType type)
         {
             super(info);
 

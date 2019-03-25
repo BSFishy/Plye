@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class Identifier implements TokenType
     }
 
     @Override
-    public TokenData cast(LexerTokenInfo info, char[] buffer)
+    public TokenData cast(LexTokenInfo info, char[] buffer)
     {
         return new IdentifierData(info, new String(buffer));
     }
@@ -35,7 +35,7 @@ public class Identifier implements TokenType
     {
         public final String value;
 
-        public IdentifierData(LexerTokenInfo info, String value)
+        public IdentifierData(LexTokenInfo info, String value)
         {
             super(info);
 

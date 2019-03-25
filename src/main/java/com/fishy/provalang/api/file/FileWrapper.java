@@ -16,13 +16,13 @@ public class FileWrapper
 
     public char read(int index) throws IOException
     {
-        if(index > this.index)
+        if(index >= this.index)
         {
             if(reader.eof())
                 throw new EOFException("Reached end of file");
 
             StringBuilder sb = new StringBuilder(buffer);
-            while (this.index < index)
+            while (this.index <= index)
             {
                 char c = reader.read();
 
@@ -36,8 +36,21 @@ public class FileWrapper
         return buffer.charAt(index);
     }
 
+    public String readLength(int length) throws IOException
+    {
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < length; i++)
+        {
+            sb.append(read(i));
+        }
+
+        return sb.toString();
+    }
+
     public void clean(int length)
     {
         buffer = buffer.substring(length);
+        index -= length;
     }
 }

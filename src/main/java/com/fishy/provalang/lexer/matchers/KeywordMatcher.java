@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -35,6 +37,7 @@ public class KeywordMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class New extends Matcher<Keyword.New>
     {
         public New()
@@ -49,6 +52,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Class extends Matcher<Keyword.Class>
     {
         public Class()
@@ -63,6 +67,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Static extends Matcher<Keyword.Static>
     {
         public Static()
@@ -77,6 +82,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Package extends Matcher<Keyword.Package>
     {
         public Package()
@@ -91,6 +97,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Import extends Matcher<Keyword.Import>
     {
         public Import()
@@ -105,6 +112,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Public extends Matcher<Keyword.Public>
     {
         public Public()
@@ -119,6 +127,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Protected extends Matcher<Keyword.Protected>
     {
         public Protected()
@@ -133,6 +142,7 @@ public class KeywordMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Private extends Matcher<Keyword.Private>
     {
         public Private()

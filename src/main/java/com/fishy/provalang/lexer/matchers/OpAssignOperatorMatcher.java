@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -36,6 +38,7 @@ public class OpAssignOperatorMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Add extends Matcher<OpAssignOperator.Add> {
         public Add()
         {
@@ -49,6 +52,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Subtract extends Matcher<OpAssignOperator.Subtract> {
         public Subtract()
         {
@@ -62,6 +66,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Multiply extends Matcher<OpAssignOperator.Multiply> {
         public Multiply()
         {
@@ -75,6 +80,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Divide extends Matcher<OpAssignOperator.Divide> {
         public Divide()
         {
@@ -88,6 +94,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ShiftLeft extends Matcher<OpAssignOperator.ShiftLeft> {
         public ShiftLeft()
         {
@@ -101,6 +108,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ShiftRight extends Matcher<OpAssignOperator.ShiftRight> {
         public ShiftRight()
         {
@@ -114,6 +122,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class And extends Matcher<OpAssignOperator.And> {
         public And()
         {
@@ -127,6 +136,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Or extends Matcher<OpAssignOperator.Or> {
         public Or()
         {
@@ -140,6 +150,7 @@ public class OpAssignOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Xor extends Matcher<OpAssignOperator.Xor> {
         public Xor()
         {

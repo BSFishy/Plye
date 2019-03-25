@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -55,6 +57,7 @@ public class BinaryOperatorMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class AssignMatcher extends Matcher<Assign>
     {
         public AssignMatcher()
@@ -69,6 +72,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class EqualsMatcher extends Matcher<Equals>
     {
         public EqualsMatcher()
@@ -83,6 +87,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class NotEqualsMatcher extends Matcher<NotEquals>
     {
         public NotEqualsMatcher()
@@ -97,6 +102,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class AddMatcher extends Matcher<Add>
     {
         public AddMatcher()
@@ -111,6 +117,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class SubtractMatcher extends Matcher<Subtract>
     {
         public SubtractMatcher()
@@ -125,6 +132,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class MultiplyMatcher extends Matcher<Multiply>
     {
         public MultiplyMatcher()
@@ -139,6 +147,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class DivideMatcher extends Matcher<Divide>
     {
         public DivideMatcher()
@@ -153,6 +162,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class GreaterThanMatcher extends Matcher<GreaterThan>
     {
         public GreaterThanMatcher()
@@ -167,6 +177,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class LessThanMatcher extends Matcher<LessThan>
     {
         public LessThanMatcher()
@@ -181,6 +192,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class GreaterThanEqualsMatcher extends Matcher<GreaterThanEquals>
     {
         public GreaterThanEqualsMatcher()
@@ -195,6 +207,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class LessThanEqualsMatcher extends Matcher<LessThanEquals>
     {
         public LessThanEqualsMatcher()
@@ -209,6 +222,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class AndMatcher extends Matcher<And>
     {
         public AndMatcher()
@@ -223,6 +237,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class OrMatcher extends Matcher<Or>
     {
         public OrMatcher()
@@ -237,6 +252,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class XorMatcher extends Matcher<Xor>
     {
         public XorMatcher()
@@ -251,6 +267,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class BooleanAndMatcher extends Matcher<BooleanAnd>
     {
         public BooleanAndMatcher()
@@ -265,6 +282,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class BooleanOrMatcher extends Matcher<BooleanOr>
     {
         public BooleanOrMatcher()
@@ -279,6 +297,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ModulusMatcher extends Matcher<Modulus>
     {
         public ModulusMatcher()
@@ -293,6 +312,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ShiftLeftMatcher extends Matcher<ShiftLeft>
     {
         public ShiftLeftMatcher()
@@ -307,6 +327,7 @@ public class BinaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class ShiftRightMatcher extends Matcher<ShiftRight>
     {
         public ShiftRightMatcher()

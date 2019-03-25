@@ -2,13 +2,14 @@ package com.fishy.provalang.api.lexerNew;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.file.FileReader;
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.file.FileWrapper;
+import com.fishy.provalang.api.lexerNew.data.LexReturnData;
+import com.fishy.provalang.api.lexerNew.data.NullTokenType;
+import com.fishy.provalang.lexer.tokens.Ignored;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @ToString
 @EqualsAndHashCode
@@ -17,16 +18,20 @@ public abstract class AbstractLexer implements ILexer
 
     private boolean prepared = false;
 
-    private FileReader reader;
+    private FileReader  reader;
+    private FileWrapper wrapper;
 
-    private LexerTokenInfo info = new LexerTokenInfo();
+    private LexTokenInfo info = new LexTokenInfo();
 
     protected void prepare(FileReader reader)
     {
         this.reader = reader;
+        this.wrapper = new FileWrapper(reader);
 
         LexerApi.addDefaultTokens();
         LexerApi.addDefaultMatches();
+
+        LexerApi.finalizeMatches();
 
         this.prepared = true;
     }
@@ -38,32 +43,46 @@ public abstract class AbstractLexer implements ILexer
 
     protected void check()
     {
-        if(!isPrepared()) ProvalangApi.error("Lexer was not prepared before running");
+        if (!isPrepared()) ProvalangApi.error("Lexer was not prepared before running");
     }
 
-    public LexToken step() throws IOException
+    public LexToken step()
     {
         check();
 
-        List<Character> buffer = new ArrayList<>();
-        char c;
+        LexReturnData data = LexerApi.lex(wrapper);
+        if(data == null)
+            return NullTokenType.create(info);
 
-        while (!reader.eof())
-        {
-            c = reader.read();
+        String buffer = clean(data.length);
+        LexToken token = new LexToken(data.type, data.cast(info, buffer));
 
-            System.out.println("Char: " + c);
+        if(data.type instanceof Ignored.Return)
+            info.incrementLine();
+        else
+            info.increment(data.length);
 
-            buffer.add(c);
-
-
-        }
-
-        return new LexToken(null, null);
+        return token;
     }
 
     public boolean canStep()
     {
         return !reader.eof();
+    }
+
+    protected String clean(int length)
+    {
+        String output = "";
+        try
+        {
+            output = wrapper.readLength(length);
+        }
+        catch (IOException e)
+        {
+            ProvalangApi.error("Error reading the file", e);
+        }
+        wrapper.clean(length);
+
+        return output;
     }
 }

@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -36,7 +36,7 @@ public class UnaryOperator
     public static class Increment implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new UnaryOperatorData(info, OperatorType.Increment);
         }
@@ -46,7 +46,7 @@ public class UnaryOperator
     public static class Decrement implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new UnaryOperatorData(info, OperatorType.Decrement);
         }
@@ -56,7 +56,7 @@ public class UnaryOperator
     public static class Negate implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new UnaryOperatorData(info, OperatorType.Negate);
         }
@@ -66,7 +66,7 @@ public class UnaryOperator
     public static class Not implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new UnaryOperatorData(info, OperatorType.Not);
         }
@@ -76,7 +76,7 @@ public class UnaryOperator
     public static class NegateBits implements TokenType
     {
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new UnaryOperatorData(info, OperatorType.NegateBits);
         }
@@ -99,7 +99,7 @@ public class UnaryOperator
     {
         public final OperatorType type;
 
-        public UnaryOperatorData(LexerTokenInfo info, OperatorType type)
+        public UnaryOperatorData(LexTokenInfo info, OperatorType type)
         {
             super(info);
 

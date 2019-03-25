@@ -1,5 +1,7 @@
 package com.fishy.provalang.lexer.matchers;
 
+import com.fishy.provalang.api.annotations.MatcherPriority;
+import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
 import com.fishy.provalang.api.lexerNew.match.Match;
@@ -32,6 +34,7 @@ public class UnaryOperatorMatcher
         });
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Increment extends Matcher<UnaryOperator.Increment>
     {
         public Increment()
@@ -46,6 +49,7 @@ public class UnaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Decrement extends Matcher<UnaryOperator.Decrement>
     {
         public Decrement()
@@ -60,6 +64,7 @@ public class UnaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Negate extends Matcher<UnaryOperator.Negate>
     {
         public Negate()
@@ -74,6 +79,7 @@ public class UnaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class Not extends Matcher<UnaryOperator.Not>
     {
         public Not()
@@ -88,6 +94,7 @@ public class UnaryOperatorMatcher
         }
     }
 
+    @MatcherPriority(priority = Priority.Normal)
     public static class NegateBits extends Matcher<UnaryOperator.NegateBits>
     {
         public NegateBits()

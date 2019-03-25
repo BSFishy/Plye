@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -33,7 +33,7 @@ public class Ignored
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new IgnoredData(info, IgnoredType.Return);
         }
@@ -44,7 +44,7 @@ public class Ignored
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new IgnoredData(info, IgnoredType.CarriageReturn);
         }
@@ -55,7 +55,7 @@ public class Ignored
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new IgnoredData(info, IgnoredType.Space);
         }
@@ -74,7 +74,7 @@ public class Ignored
     {
         public final IgnoredType type;
 
-        public IgnoredData(LexerTokenInfo info, IgnoredType type)
+        public IgnoredData(LexTokenInfo info, IgnoredType type)
         {
             super(info);
 

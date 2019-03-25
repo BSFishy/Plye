@@ -12,7 +12,7 @@ import java.util.logging.Level;
 
 public class ProvalangApi
 {
-    public static ILexer lexer;
+    public static ILexer  lexer;
     public static IParser parser;
 
     public static void log(String format, Object... options)
@@ -25,9 +25,20 @@ public class ProvalangApi
         ProvalangCliApi.err(Level.SEVERE, format, options);
     }
 
+    public static void err(String message, Exception e, Object... options)
+    {
+        ProvalangCliApi.err(Level.SEVERE, message, e, options);
+    }
+
     public static void error(String format, Object... options)
     {
         err(format, options);
+        System.exit(1);
+    }
+
+    public static void error(String message, Exception e, Object... options)
+    {
+        err(message, e, options);
         System.exit(1);
     }
 

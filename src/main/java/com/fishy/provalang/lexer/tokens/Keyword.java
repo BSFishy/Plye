@@ -1,6 +1,6 @@
 package com.fishy.provalang.lexer.tokens;
 
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexerApi;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import lombok.Data;
@@ -40,7 +40,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.New);
         }
@@ -51,7 +51,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Class);
         }
@@ -62,7 +62,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Static);
         }
@@ -73,7 +73,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Package);
         }
@@ -84,7 +84,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Import);
         }
@@ -95,7 +95,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Public);
         }
@@ -106,7 +106,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Protected);
         }
@@ -117,7 +117,7 @@ public class Keyword
     {
 
         @Override
-        public TokenData cast(LexerTokenInfo info, char[] buffer)
+        public TokenData cast(LexTokenInfo info, char[] buffer)
         {
             return new KeywordData(info, KeyWordType.Private);
         }
@@ -144,7 +144,7 @@ public class Keyword
 
         public final KeyWordType keyword;
 
-        public KeywordData(LexerTokenInfo info, KeyWordType keyword)
+        public KeywordData(LexTokenInfo info, KeyWordType keyword)
         {
             super(info);
 

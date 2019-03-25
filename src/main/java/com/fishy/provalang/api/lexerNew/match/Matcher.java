@@ -2,8 +2,8 @@ package com.fishy.provalang.api.lexerNew.match;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.file.FileWrapper;
-import com.fishy.provalang.api.lexer.LexerTokenInfo;
 import com.fishy.provalang.api.lexerNew.LexToken;
+import com.fishy.provalang.api.lexerNew.LexTokenInfo;
 import com.fishy.provalang.api.lexerNew.TokenType;
 import com.fishy.provalang.api.lexerNew.data.MatchData;
 import com.fishy.provalang.api.lexerNew.data.MatchReturnData;
@@ -59,7 +59,7 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     public abstract MatchReturnData run();
 
-    public LexToken run(LexerTokenInfo info, String buffer)
+    public LexToken run(LexTokenInfo info, String buffer)
     {
         check();
         return new LexToken(type, type.cast(info, buffer.toCharArray()));
