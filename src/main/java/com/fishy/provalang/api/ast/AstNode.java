@@ -1,5 +1,5 @@
 package com.fishy.provalang.api.ast;
 
-public class AstNode
+public abstract class AstNode
 {
 }

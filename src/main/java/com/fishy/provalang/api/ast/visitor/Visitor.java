@@ -1,8 +1,8 @@
 package com.fishy.provalang.api.ast.visitor;
 
-import com.fishy.provalang.api.ast.feature.Feature;
+import com.fishy.provalang.api.ast.AstNode;
 
-public abstract class Visitor<T extends Feature>
+public abstract class Visitor<T extends AstNode> implements IVisitor<T>
 {
 
 }
