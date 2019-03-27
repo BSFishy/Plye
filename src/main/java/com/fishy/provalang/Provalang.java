@@ -1,7 +1,7 @@
 package com.fishy.provalang;
 
 import com.fishy.provalang.api.ProvalangApi;
-import com.fishy.provalang.api.file.Program;
+import com.fishy.provalang.file.Program;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -47,7 +47,7 @@ public class Provalang
                                 .map(l -> "" + l.getData().toString() + "")
                                 .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
 
-        program.getAst().execute();
+//        program.getAst().execute();
     }
 
     public static void compile(String file)
