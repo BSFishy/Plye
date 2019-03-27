@@ -1,6 +1,6 @@
 package com.fishy.provalang.api.context;
 
-import com.fishy.provalang.api.file.FileWrapper;
+import com.fishy.provalang.file.FileWrapper;
 import lombok.Data;
 
 @Data

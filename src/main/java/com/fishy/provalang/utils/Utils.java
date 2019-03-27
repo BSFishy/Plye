@@ -1,4 +1,4 @@
-package com.fishy.provalang.api.util;
+package com.fishy.provalang.utils;
 
 import java.util.function.BiFunction;
 import java.util.regex.Pattern;

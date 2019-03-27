@@ -2,10 +2,10 @@ package com.fishy.provalang.api.lexer;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.context.LexContext;
-import com.fishy.provalang.api.file.FileReader;
-import com.fishy.provalang.api.file.FileWrapper;
 import com.fishy.provalang.api.lexer.data.LexReturnData;
 import com.fishy.provalang.api.lexer.data.NullTokenType;
+import com.fishy.provalang.file.FileReader;
+import com.fishy.provalang.file.FileWrapper;
 import com.fishy.provalang.lexer.tokens.Ignored;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

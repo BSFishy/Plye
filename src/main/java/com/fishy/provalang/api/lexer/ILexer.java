@@ -1,6 +1,6 @@
 package com.fishy.provalang.api.lexer;
 
-import com.fishy.provalang.api.file.Program;
+import com.fishy.provalang.file.Program;
 
 public interface ILexer
 {

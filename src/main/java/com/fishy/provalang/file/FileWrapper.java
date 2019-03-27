@@ -1,4 +1,4 @@
-package com.fishy.provalang.api.file;
+package com.fishy.provalang.file;
 
 import lombok.Data;
 

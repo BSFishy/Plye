@@ -1,8 +1,8 @@
 package com.fishy.provalang.lexer;
 
-import com.fishy.provalang.api.file.Program;
 import com.fishy.provalang.api.lexer.AbstractLexer;
 import com.fishy.provalang.api.lexer.LexToken;
+import com.fishy.provalang.file.Program;
 import com.fishy.provalang.lexer.tokens.Ignored;
 
 public class Lexer extends AbstractLexer

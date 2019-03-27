@@ -4,9 +4,9 @@ import com.fishy.provalang.api.cli.ProvalangCliApi;
 import com.fishy.provalang.api.lexer.ILexer;
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.parser.IParser;
-import com.fishy.provalang.api.util.Utils;
 import com.fishy.provalang.lexer.Lexer;
 import com.fishy.provalang.parser.Parser;
+import com.fishy.provalang.utils.Utils;
 
 import java.util.logging.Level;
 

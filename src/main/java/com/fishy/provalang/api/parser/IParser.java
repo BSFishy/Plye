@@ -1,6 +1,6 @@
 package com.fishy.provalang.api.parser;
 
-import com.fishy.provalang.api.file.Program;
+import com.fishy.provalang.file.Program;
 
 public interface IParser
 {
