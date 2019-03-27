@@ -1,5 +1,7 @@
 package com.fishy.provalang.parser;
 
-public class Parser
+import com.fishy.provalang.api.parser.AbstractParser;
+
+public class Parser extends AbstractParser
 {
 }
