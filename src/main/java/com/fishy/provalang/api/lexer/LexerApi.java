@@ -147,19 +147,6 @@ public class LexerApi
     {
         return lex(context, matches);
     }
-//    @Nullable
-//    public static LexReturnData lex(FileWrapper file)
-//    {
-//        return lex(matches, file);
-//    }
-//
-//    @Nullable
-//    public static LexReturnData lex(List<Match> matches, FileWrapper file)
-//    {
-//        return lex(matches.stream()
-//                          .map(match -> match.convert(file))
-//                          .collect(Collectors.toList()));
-//    }
 
     @Nullable
     public static LexReturnData lex(LexContext context, List<Matcher> matchers)

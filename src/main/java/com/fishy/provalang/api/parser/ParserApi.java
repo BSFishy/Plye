@@ -1,11 +1,7 @@
 package com.fishy.provalang.api.parser;
 
-import com.fishy.provalang.api.ProvalangApi;
-import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.parser.annotation.OverridableVisitor;
 import com.fishy.provalang.api.parser.visitor.Visitor;
-import com.fishy.provalang.api.parser.visitor.VisitorComparator;
-import com.fishy.provalang.ast.api.AstNode;
 import com.fishy.provalang.parser.visitors.Informers;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,33 +53,7 @@ public class ParserApi
 
     // VISITORS
 
-    public static AstNode visit(List<LexToken> tokens, AstNode parent)
-    {
-        return visit(visitors, tokens, parent);
-    }
-
-    public static AstNode visit(List<Visitor> list, List<LexToken> tokens, AstNode parent)
-    {
-        if (tokens.isEmpty())
-            return null;
-
-        List<Visitor> vs = new ArrayList<>();
-        for (Visitor v : list)
-        {
-            if (v.canVisit(tokens))
-                vs.add(v);
-        }
-        vs.sort(VisitorComparator.singleton);
-
-        if (vs.isEmpty())
-            ProvalangApi.error("Unexpected token: %s", tokens.get(0).getData().toString());
-
-        Visitor v   = vs.get(0);
-        AstNode out = v.visit(tokens, parent);
-        v.clean(tokens);
-
-        return out;
-    }
+    // TODO: make visit methods
 
     // ANNOTATION
 
