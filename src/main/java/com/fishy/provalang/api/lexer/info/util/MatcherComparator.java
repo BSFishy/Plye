@@ -1,4 +1,4 @@
-package com.fishy.provalang.api.lexer.data.util;
+package com.fishy.provalang.api.lexer.info.util;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.MatcherPriority.Priority;

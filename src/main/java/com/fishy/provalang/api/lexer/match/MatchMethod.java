@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.lexer.match;
 
 import com.fishy.provalang.api.context.LexContext;
-import com.fishy.provalang.api.lexer.data.MatchData;
+import com.fishy.provalang.api.data.MatchData;
 
 public interface MatchMethod
 {

@@ -1,4 +1,4 @@
-package com.fishy.provalang.api.lexer.data;
+package com.fishy.provalang.api.lexer.info;
 
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.lexer.LexTokenInfo;

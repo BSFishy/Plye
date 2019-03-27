@@ -5,8 +5,8 @@ import com.fishy.provalang.api.context.LexContext;
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.lexer.LexTokenInfo;
 import com.fishy.provalang.api.lexer.TokenType;
-import com.fishy.provalang.api.lexer.data.MatchData;
-import com.fishy.provalang.api.lexer.data.MatchReturnData;
+import com.fishy.provalang.api.data.MatchData;
+import com.fishy.provalang.api.data.MatchReturnData;
 import lombok.Data;
 
 import java.io.IOException;
