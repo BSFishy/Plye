@@ -37,7 +37,7 @@ public class Literal
     }
 
     @Data
-    public static class Integer implements LiteralType
+    public static class Integer implements NumberType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -61,7 +61,7 @@ public class Literal
     }
 
     @Data
-    public static class Byte implements LiteralType
+    public static class Byte implements NumberType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -85,7 +85,7 @@ public class Literal
     }
 
     @Data
-    public static class Short implements LiteralType
+    public static class Short implements NumberType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -109,7 +109,7 @@ public class Literal
     }
 
     @Data
-    public static class Long implements LiteralType
+    public static class Long implements NumberType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -133,7 +133,7 @@ public class Literal
     }
 
     @Data
-    public static class Float implements LiteralType
+    public static class Float implements FloatingPointType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -157,7 +157,7 @@ public class Literal
     }
 
     @Data
-    public static class Double implements LiteralType
+    public static class Double implements FloatingPointType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -253,4 +253,8 @@ public class Literal
     }
 
     public interface LiteralType extends TokenType {}
+
+    public interface NumberType extends LiteralType {}
+
+    public interface FloatingPointType extends NumberType {}
 }

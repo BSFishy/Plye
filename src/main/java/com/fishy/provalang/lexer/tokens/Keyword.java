@@ -91,7 +91,7 @@ public class Keyword
     }
 
     @Data
-    public static class Public implements KeywordTokenType
+    public static class Public implements VisibilityTokenType
     {
 
         @Override
@@ -102,7 +102,7 @@ public class Keyword
     }
 
     @Data
-    public static class Protected implements KeywordTokenType
+    public static class Protected implements VisibilityTokenType
     {
 
         @Override
@@ -113,7 +113,7 @@ public class Keyword
     }
 
     @Data
-    public static class Private implements KeywordTokenType
+    public static class Private implements VisibilityTokenType
     {
 
         @Override
@@ -153,4 +153,6 @@ public class Keyword
     }
 
     public interface KeywordTokenType extends TokenType {}
+
+    public interface VisibilityTokenType extends KeywordTokenType {}
 }
