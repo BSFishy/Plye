@@ -1,5 +1,7 @@
 package com.fishy.provalang.api.parser.definer;
 
-public abstract class Definer
+import com.fishy.provalang.api.ast.AstElement;
+
+public abstract class Definer<T extends AstElement>
 {
 }
