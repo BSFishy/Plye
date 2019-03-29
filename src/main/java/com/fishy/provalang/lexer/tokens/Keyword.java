@@ -152,6 +152,5 @@ public class Keyword
         }
     }
 
-    @Data
-    public static abstract class KeywordTokenType implements TokenType {}
+    public interface KeywordTokenType extends TokenType {}
 }

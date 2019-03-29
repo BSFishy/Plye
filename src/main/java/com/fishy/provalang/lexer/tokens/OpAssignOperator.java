@@ -155,6 +155,5 @@ public class OpAssignOperator
         }
     }
 
-    @Data
-    public static abstract class OperatorTokenType implements TokenType {}
+    public interface OperatorTokenType extends TokenType {}
 }

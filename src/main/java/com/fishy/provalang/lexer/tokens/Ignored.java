@@ -82,6 +82,5 @@ public class Ignored
         }
     }
 
-    @Data
-    public static abstract class IgnoredTokenType implements TokenType {}
+    public interface IgnoredTokenType extends TokenType {}
 }

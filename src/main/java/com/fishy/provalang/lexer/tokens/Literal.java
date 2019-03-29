@@ -252,6 +252,5 @@ public class Literal
         }
     }
 
-    @Data
-    public static abstract class LiteralType implements TokenType {}
+    public interface LiteralType extends TokenType {}
 }

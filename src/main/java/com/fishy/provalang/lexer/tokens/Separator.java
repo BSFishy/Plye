@@ -147,6 +147,5 @@ public class Separator
         }
     }
 
-    @Data
-    public static abstract class SeparatorTokenType implements TokenType {}
+    public interface SeparatorTokenType extends TokenType {}
 }

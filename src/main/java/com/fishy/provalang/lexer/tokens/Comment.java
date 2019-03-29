@@ -73,6 +73,5 @@ public class Comment
         }
     }
 
-    @Data
-    public static abstract class CommentType implements TokenType {}
+    public interface CommentType extends TokenType {}
 }
