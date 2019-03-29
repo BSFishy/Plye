@@ -55,7 +55,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Assign implements TokenType
+    public static class Assign implements OperatorTokenType
     {
 
         @Override
@@ -66,7 +66,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Equals implements TokenType
+    public static class Equals implements OperatorTokenType
     {
 
         @Override
@@ -77,7 +77,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class NotEquals implements TokenType
+    public static class NotEquals implements OperatorTokenType
     {
 
         @Override
@@ -88,7 +88,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Add implements TokenType
+    public static class Add implements OperatorTokenType
     {
 
         @Override
@@ -99,7 +99,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Subtract implements TokenType
+    public static class Subtract implements OperatorTokenType
     {
 
         @Override
@@ -110,7 +110,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Multiply implements TokenType
+    public static class Multiply implements OperatorTokenType
     {
 
         @Override
@@ -121,7 +121,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Divide implements TokenType
+    public static class Divide implements OperatorTokenType
     {
 
         @Override
@@ -132,7 +132,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class GreaterThan implements TokenType
+    public static class GreaterThan implements OperatorTokenType
     {
 
         @Override
@@ -143,7 +143,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class LessThan implements TokenType
+    public static class LessThan implements OperatorTokenType
     {
 
         @Override
@@ -154,7 +154,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class GreaterThanEquals implements TokenType
+    public static class GreaterThanEquals implements OperatorTokenType
     {
 
         @Override
@@ -165,7 +165,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class LessThanEquals implements TokenType
+    public static class LessThanEquals implements OperatorTokenType
     {
 
         @Override
@@ -176,7 +176,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class And implements TokenType
+    public static class And implements OperatorTokenType
     {
 
         @Override
@@ -187,7 +187,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Or implements TokenType
+    public static class Or implements OperatorTokenType
     {
 
         @Override
@@ -198,7 +198,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Xor implements TokenType
+    public static class Xor implements OperatorTokenType
     {
 
         @Override
@@ -209,7 +209,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class BooleanAnd implements TokenType
+    public static class BooleanAnd implements OperatorTokenType
     {
 
         @Override
@@ -220,7 +220,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class BooleanOr implements TokenType
+    public static class BooleanOr implements OperatorTokenType
     {
 
         @Override
@@ -231,7 +231,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class Modulus implements TokenType
+    public static class Modulus implements OperatorTokenType
     {
 
         @Override
@@ -242,7 +242,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class ShiftLeft implements TokenType
+    public static class ShiftLeft implements OperatorTokenType
     {
 
         @Override
@@ -253,7 +253,7 @@ public class BinaryOperator
     }
 
     @Data
-    public static class ShiftRight implements TokenType
+    public static class ShiftRight implements OperatorTokenType
     {
 
         @Override

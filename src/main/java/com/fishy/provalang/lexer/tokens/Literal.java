@@ -37,7 +37,7 @@ public class Literal
     }
 
     @Data
-    public static class Integer implements TokenType
+    public static class Integer implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -61,7 +61,7 @@ public class Literal
     }
 
     @Data
-    public static class Byte implements TokenType
+    public static class Byte implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -85,7 +85,7 @@ public class Literal
     }
 
     @Data
-    public static class Short implements TokenType
+    public static class Short implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -109,7 +109,7 @@ public class Literal
     }
 
     @Data
-    public static class Long implements TokenType
+    public static class Long implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -133,7 +133,7 @@ public class Literal
     }
 
     @Data
-    public static class Float implements TokenType
+    public static class Float implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -157,7 +157,7 @@ public class Literal
     }
 
     @Data
-    public static class Double implements TokenType
+    public static class Double implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -181,7 +181,7 @@ public class Literal
     }
 
     @Data
-    public static class Boolean implements TokenType
+    public static class Boolean implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -205,7 +205,7 @@ public class Literal
     }
 
     @Data
-    public static class String implements TokenType
+    public static class String implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -229,7 +229,7 @@ public class Literal
     }
 
     @Data
-    public static class Character implements TokenType
+    public static class Character implements LiteralType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)

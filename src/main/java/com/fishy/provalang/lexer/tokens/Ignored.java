@@ -29,7 +29,7 @@ public class Ignored
     }
 
     @Data
-    public static class Return implements TokenType
+    public static class Return implements IgnoredTokenType
     {
 
         @Override
@@ -40,7 +40,7 @@ public class Ignored
     }
 
     @Data
-    public static class CarriageReturn implements TokenType
+    public static class CarriageReturn implements IgnoredTokenType
     {
 
         @Override
@@ -51,7 +51,7 @@ public class Ignored
     }
 
     @Data
-    public static class Space implements TokenType
+    public static class Space implements IgnoredTokenType
     {
 
         @Override

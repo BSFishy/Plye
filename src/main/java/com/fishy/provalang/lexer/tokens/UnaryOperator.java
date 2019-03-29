@@ -33,7 +33,7 @@ public class UnaryOperator
     }
 
     @Data
-    public static class Increment implements TokenType
+    public static class Increment implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -43,7 +43,7 @@ public class UnaryOperator
     }
 
     @Data
-    public static class Decrement implements TokenType
+    public static class Decrement implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -53,7 +53,7 @@ public class UnaryOperator
     }
 
     @Data
-    public static class Negate implements TokenType
+    public static class Negate implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -63,7 +63,7 @@ public class UnaryOperator
     }
 
     @Data
-    public static class Not implements TokenType
+    public static class Not implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -73,7 +73,7 @@ public class UnaryOperator
     }
 
     @Data
-    public static class NegateBits implements TokenType
+    public static class NegateBits implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)

@@ -30,7 +30,7 @@ public class Comment
     }
 
     @Data
-    public static class SingleLine implements TokenType
+    public static class SingleLine implements CommentType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -40,7 +40,7 @@ public class Comment
     }
 
     @Data
-    public static class MultiLine implements TokenType
+    public static class MultiLine implements CommentType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -50,7 +50,7 @@ public class Comment
     }
 
     @Data
-    public static class Documentation implements TokenType
+    public static class Documentation implements CommentType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)

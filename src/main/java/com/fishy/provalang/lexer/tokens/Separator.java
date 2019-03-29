@@ -38,7 +38,7 @@ public class Separator
     }
 
     @Data
-    public static class CurlyBracketOpen implements TokenType
+    public static class CurlyBracketOpen implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -48,7 +48,7 @@ public class Separator
     }
 
     @Data
-    public static class CurlyBracketClose implements TokenType
+    public static class CurlyBracketClose implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -58,7 +58,7 @@ public class Separator
     }
 
     @Data
-    public static class SquareBracketOpen implements TokenType
+    public static class SquareBracketOpen implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -68,7 +68,7 @@ public class Separator
     }
 
     @Data
-    public static class SquareBracketClose implements TokenType
+    public static class SquareBracketClose implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -78,7 +78,7 @@ public class Separator
     }
 
     @Data
-    public static class ParenthesisOpen implements TokenType
+    public static class ParenthesisOpen implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -88,7 +88,7 @@ public class Separator
     }
 
     @Data
-    public static class ParenthesisClose implements TokenType
+    public static class ParenthesisClose implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -98,7 +98,7 @@ public class Separator
     }
 
     @Data
-    public static class Semicolon implements TokenType
+    public static class Semicolon implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -108,7 +108,7 @@ public class Separator
     }
 
     @Data
-    public static class Period implements TokenType
+    public static class Period implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)

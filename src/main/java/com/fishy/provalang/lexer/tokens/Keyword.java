@@ -36,7 +36,7 @@ public class Keyword
     }
 
     @Data
-    public static class New implements TokenType
+    public static class New implements KeywordTokenType
     {
 
         @Override
@@ -47,7 +47,7 @@ public class Keyword
     }
 
     @Data
-    public static class Class implements TokenType
+    public static class Class implements KeywordTokenType
     {
 
         @Override
@@ -58,7 +58,7 @@ public class Keyword
     }
 
     @Data
-    public static class Static implements TokenType
+    public static class Static implements KeywordTokenType
     {
 
         @Override
@@ -69,7 +69,7 @@ public class Keyword
     }
 
     @Data
-    public static class Package implements TokenType
+    public static class Package implements KeywordTokenType
     {
 
         @Override
@@ -80,7 +80,7 @@ public class Keyword
     }
 
     @Data
-    public static class Import implements TokenType
+    public static class Import implements KeywordTokenType
     {
 
         @Override
@@ -91,7 +91,7 @@ public class Keyword
     }
 
     @Data
-    public static class Public implements TokenType
+    public static class Public implements KeywordTokenType
     {
 
         @Override
@@ -102,7 +102,7 @@ public class Keyword
     }
 
     @Data
-    public static class Protected implements TokenType
+    public static class Protected implements KeywordTokenType
     {
 
         @Override
@@ -113,7 +113,7 @@ public class Keyword
     }
 
     @Data
-    public static class Private implements TokenType
+    public static class Private implements KeywordTokenType
     {
 
         @Override

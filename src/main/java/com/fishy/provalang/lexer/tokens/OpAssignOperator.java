@@ -37,7 +37,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class Add implements TokenType
+    public static class Add implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -47,7 +47,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class Subtract implements TokenType
+    public static class Subtract implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -57,7 +57,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class Multiply implements TokenType
+    public static class Multiply implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -67,7 +67,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class Divide implements TokenType
+    public static class Divide implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -77,7 +77,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class ShiftLeft implements TokenType
+    public static class ShiftLeft implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -87,7 +87,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class ShiftRight implements TokenType
+    public static class ShiftRight implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -97,7 +97,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class And implements TokenType
+    public static class And implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -107,7 +107,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class Or implements TokenType
+    public static class Or implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
@@ -117,7 +117,7 @@ public class OpAssignOperator
     }
 
     @Data
-    public static class Xor implements TokenType
+    public static class Xor implements OperatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
