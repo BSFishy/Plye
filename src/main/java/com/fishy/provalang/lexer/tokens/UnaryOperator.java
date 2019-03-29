@@ -106,4 +106,7 @@ public class UnaryOperator
             this.type = type;
         }
     }
+
+    @Data
+    public static abstract class OperatorTokenType implements TokenType {}
 }

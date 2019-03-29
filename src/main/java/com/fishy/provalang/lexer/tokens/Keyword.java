@@ -42,7 +42,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.New);
+            return new KeywordData(info, KeywordType.New);
         }
     }
 
@@ -53,7 +53,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Class);
+            return new KeywordData(info, KeywordType.Class);
         }
     }
 
@@ -64,7 +64,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Static);
+            return new KeywordData(info, KeywordType.Static);
         }
     }
 
@@ -75,7 +75,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Package);
+            return new KeywordData(info, KeywordType.Package);
         }
     }
 
@@ -86,7 +86,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Import);
+            return new KeywordData(info, KeywordType.Import);
         }
     }
 
@@ -97,7 +97,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Public);
+            return new KeywordData(info, KeywordType.Public);
         }
     }
 
@@ -108,7 +108,7 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Protected);
+            return new KeywordData(info, KeywordType.Protected);
         }
     }
 
@@ -119,11 +119,11 @@ public class Keyword
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new KeywordData(info, KeyWordType.Private);
+            return new KeywordData(info, KeywordType.Private);
         }
     }
 
-    public enum KeyWordType
+    public enum KeywordType
     {
         New,
         Class,
@@ -142,13 +142,16 @@ public class Keyword
     public static class KeywordData extends TokenType.TokenData
     {
 
-        public final KeyWordType keyword;
+        public final KeywordType keyword;
 
-        public KeywordData(LexTokenInfo info, KeyWordType keyword)
+        public KeywordData(LexTokenInfo info, KeywordType keyword)
         {
             super(info);
 
             this.keyword = keyword;
         }
     }
+
+    @Data
+    public static abstract class KeywordTokenType implements TokenType {}
 }

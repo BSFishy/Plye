@@ -146,4 +146,7 @@ public class Separator
             this.type = type;
         }
     }
+
+    @Data
+    public static abstract class SeparatorTokenType implements TokenType {}
 }

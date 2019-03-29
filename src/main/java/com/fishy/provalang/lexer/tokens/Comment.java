@@ -72,4 +72,7 @@ public class Comment
             this.value = value;
         }
     }
+
+    @Data
+    public static abstract class CommentType implements TokenType {}
 }

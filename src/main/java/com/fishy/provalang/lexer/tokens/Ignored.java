@@ -81,4 +81,7 @@ public class Ignored
             this.type = type;
         }
     }
+
+    @Data
+    public static abstract class IgnoredTokenType implements TokenType {}
 }
