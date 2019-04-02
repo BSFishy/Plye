@@ -4,11 +4,12 @@ import com.fishy.provalang.api.lexer.AbstractLexer;
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.file.Program;
 import com.fishy.provalang.lexer.tokens.Ignored;
+import org.jetbrains.annotations.NotNull;
 
 public class Lexer extends AbstractLexer
 {
     @Override
-    public void lex(Program program)
+    public void lex(@NotNull Program program)
     {
         prepare(program.reader);
 

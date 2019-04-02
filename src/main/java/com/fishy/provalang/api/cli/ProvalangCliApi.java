@@ -1,6 +1,7 @@
 package com.fishy.provalang.api.cli;
 
 import com.fishy.provalang.Provalang;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +11,7 @@ public class ProvalangCliApi
 
     private static final Logger logger = Logger.getLogger("Provalang");
 
-    public static CliArgs parseArgs(String[] args)
+    public static CliArgs parseArgs(@NotNull String[] args)
     {
         CliArgs output = new CliArgs(args);
 
@@ -65,36 +66,39 @@ public class ProvalangCliApi
         log(Level.INFO, "\t\t%sInterpret the file\n", addBuffer("-i, --interpret", cell));
     }
 
-    public static void log(Level level, String format, Object... options)
+    public static void log(@NotNull Level level, @NotNull String format, @NotNull Object... options)
     {
         //logger.log(level, format, options);
         System.out.printf(format, options);
     }
 
-    public static void err(Level level, String format, Object... options)
+    public static void err(@NotNull Level level, @NotNull String format, @NotNull Object... options)
     {
         System.err.printf(format, options);
     }
 
-    public static void err(Level level, String format, Exception e, Object... options)
+    public static void err(@NotNull Level level, @NotNull String format, @NotNull Exception e, @NotNull Object... options)
     {
         System.err.printf(format, options);
 //        System.err.println(e.toString());
         e.printStackTrace(System.err);
     }
 
-    private static String addBuffer(String s, int size)
+    @NotNull
+    private static String addBuffer(@NotNull String s, @NotNull int size)
     {
         return addBuffer(s, size, true);
     }
 
-    private static String addBuffer(String s, int size, boolean right)
+    @NotNull
+    private static String addBuffer(@NotNull String s, int size, boolean right)
     {
         String buffer = repeat(" ", size - s.length());
         return right ? s + buffer : buffer + s;
     }
 
-    private static String repeat(String str, int times)
+    @NotNull
+    private static String repeat(@NotNull String str, int times)
     {
         return new String(new char[times]).replace("\0", str);
     }

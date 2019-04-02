@@ -1,5 +1,9 @@
 package com.fishy.provalang.api.annotations;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 public enum Priority
 {
     Lowest(0, "lowest", "Lowest"),
@@ -12,6 +16,7 @@ public enum Priority
     private final String name;
     private final String value;
 
+    @Contract(pure = true)
     Priority(int id, String name, String value)
     {
         this.id = id;
@@ -19,21 +24,25 @@ public enum Priority
         this.value = value;
     }
 
+    @Contract(pure = true)
     public int id()
     {
         return id;
     }
 
+    @Contract(pure = true)
     public String getName()
     {
         return name;
     }
 
+    @Contract(pure = true)
     public String getValue()
     {
         return value;
     }
 
+    @Nullable
     public static Priority fromName(String name)
     {
         for (Priority p : values())
@@ -45,6 +54,7 @@ public enum Priority
         return null;
     }
 
+    @Nullable
     public static Priority fromValue(String value)
     {
         for (Priority p : values())
@@ -56,6 +66,8 @@ public enum Priority
         return null;
     }
 
+    @NotNull
+    @Contract(pure = true)
     @Override
     public String toString()
     {

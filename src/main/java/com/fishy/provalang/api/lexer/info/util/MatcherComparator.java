@@ -1,7 +1,7 @@
 package com.fishy.provalang.api.lexer.info.util;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
-import com.fishy.provalang.api.annotations.MatcherPriority.Priority;
+import com.fishy.provalang.api.annotations.Priority;
 import com.fishy.provalang.api.lexer.LexerApi;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.utils.ArrayUtils;

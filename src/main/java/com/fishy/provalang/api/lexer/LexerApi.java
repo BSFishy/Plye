@@ -9,6 +9,8 @@ import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.matchers.*;
 import com.fishy.provalang.lexer.tokens.*;
 import com.fishy.provalang.utils.ArrayUtils;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -25,23 +27,23 @@ public class LexerApi
 
     // For tokens
 
-    public static void addTokenType(TokenType token)
+    public static void addTokenType(@NotNull TokenType token)
     {
         addTokenType(tokenTypes, token);
     }
 
-    public static void addTokenType(List<TokenType> list, TokenType token)
+    public static void addTokenType(@NotNull List<TokenType> list, @NotNull TokenType token)
     {
         if (!list.contains(token))
             list.add(token);
     }
 
-    public static void addTokenTypes(TokenType[] tokens)
+    public static void addTokenTypes(@NotNull TokenType[] tokens)
     {
         addTokenTypes(tokenTypes, tokens);
     }
 
-    public static void addTokenTypes(List<TokenType> list, TokenType[] tokens)
+    public static void addTokenTypes(@NotNull List<TokenType> list, @NotNull TokenType[] tokens)
     {
         for (TokenType token : tokens)
             addTokenType(list, token);
@@ -49,24 +51,24 @@ public class LexerApi
 
     // For matchers
 
-    public static void addMatch(Matcher match)
+    public static void addMatch(@NotNull Matcher match)
     {
 //        addMatch(matches, match);
         addMatch(hasReplacements(match) ? replacementMatches : regularMatches, match);
     }
 
-    public static void addMatch(List<Matcher> list, Matcher match)
+    public static void addMatch(@NotNull List<Matcher> list, @NotNull Matcher match)
     {
         if (!list.contains(match))
             list.add(match);
     }
 
-    public static void addMatches(Matcher[] matches)
+    public static void addMatches(@NotNull Matcher[] matches)
     {
         addMatches(getMatches(), matches);
     }
 
-    public static void addMatches(List<Matcher> list, Matcher[] matches)
+    public static void addMatches(@NotNull List<Matcher> list, @NotNull Matcher[] matches)
     {
         for (Matcher match : matches)
             addMatch(list, match);
@@ -79,7 +81,7 @@ public class LexerApi
         addDefaultTokens(getTokens());
     }
 
-    public static void addDefaultTokens(List<TokenType> tokens)
+    public static void addDefaultTokens(@NotNull List<TokenType> tokens)
     {
         BinaryOperator.addDefaultTypes(tokens);
         Comment.addDefaultTypes(tokens);
@@ -97,7 +99,7 @@ public class LexerApi
         addDefaultMatches(getMatches());
     }
 
-    public static void addDefaultMatches(List<Matcher> match)
+    public static void addDefaultMatches(@NotNull List<Matcher> match)
     {
         BinaryOperatorMatcher.addDefaultMatches(match);
         CommentMatcher.addDefaultMatches(match);
@@ -112,11 +114,13 @@ public class LexerApi
 
     // Getting lists
 
+    @Contract(pure = true)
     public static List<TokenType> getTokens()
     {
         return tokenTypes;
     }
 
+    @Contract(pure = true)
     public static List<Matcher> getMatches()
     {
         return matches;
@@ -143,13 +147,13 @@ public class LexerApi
         matches.sort(MatcherComparator.instance);
     }
 
-    public static LexReturnData lex(LexContext context)
+    public static LexReturnData lex(@NotNull LexContext context)
     {
         return lex(context, matches);
     }
 
     @Nullable
-    public static LexReturnData lex(LexContext context, List<Matcher> matchers)
+    public static LexReturnData lex(@NotNull LexContext context, @NotNull List<Matcher> matchers)
     {
         Map<Matcher, MatchReturnData> matched = new HashMap<>();
 
@@ -174,17 +178,18 @@ public class LexerApi
     // Annotation stuff
 
     @Nullable
-    public static MatcherPriority getAnnotation(Matcher matcher)
+    public static MatcherPriority getAnnotation(@NotNull Matcher matcher)
     {
         return matcher.getClass().getAnnotation(MatcherPriority.class);
     }
 
-    public static boolean hasReplacements(Matcher match)
+    public static boolean hasReplacements(@NotNull Matcher match)
     {
         return getReplacements(match).size() < 1;
     }
 
-    public static List<Class<? extends Matcher>> getOverrides(Matcher match)
+    @NotNull
+    public static List<Class<? extends Matcher>> getOverrides(@NotNull Matcher match)
     {
         MatcherPriority priority = getAnnotation(match);
         if (priority == null)
@@ -192,7 +197,8 @@ public class LexerApi
         return Arrays.asList(priority.overrides());
     }
 
-    public static List<Class<? extends Matcher>> getReplacements(Matcher match)
+    @NotNull
+    public static List<Class<? extends Matcher>> getReplacements(@NotNull Matcher match)
     {
         MatcherPriority priority = getAnnotation(match);
         if (priority == null)

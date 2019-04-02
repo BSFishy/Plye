@@ -8,6 +8,7 @@ import com.fishy.provalang.api.lexer.TokenType;
 import com.fishy.provalang.api.data.MatchData;
 import com.fishy.provalang.api.data.MatchReturnData;
 import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -18,16 +19,16 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Type stuff
 
-    public abstract MatchReturnData run(LexContext context);
+    public abstract MatchReturnData run(@NotNull LexContext context);
 
-    public LexToken run(LexTokenInfo info, String buffer)
+    public LexToken run(@NotNull LexTokenInfo info, @NotNull String buffer)
     {
         return new LexToken(type, type.cast(info, buffer.toCharArray()));
     }
 
     // Parent matches
 
-    protected MatchReturnData match(LexContext context, MatchMethod... methods)
+    protected MatchReturnData match(@NotNull LexContext context, @NotNull MatchMethod... methods)
     {
         MatchReturnData data  = new MatchReturnData();
         int             index = 0;
@@ -54,7 +55,7 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Helps
 
-    private char read(LexContext context, int index)
+    private char read(@NotNull LexContext context, int index)
     {
         try
         {

@@ -1,5 +1,6 @@
 package com.fishy.provalang.utils;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,7 +13,8 @@ import java.util.function.Predicate;
 
 public class ArrayUtils
 {
-    public static <T> boolean contains(T[] haystack, T needle)
+    @Contract(pure = true)
+    public static <T> boolean contains(@NotNull T[] haystack, @NotNull T needle)
     {
         for (T t : haystack)
             if (t.equals(needle))
@@ -21,7 +23,7 @@ public class ArrayUtils
         return false;
     }
 
-    public static <T> boolean check(@NotNull Collection<? extends T> haystack, Predicate<T> check)
+    public static <T> boolean check(@NotNull Collection<? extends T> haystack, @NotNull Predicate<T> check)
     {
         for (T t : haystack)
             if (check.test(t))
@@ -29,7 +31,7 @@ public class ArrayUtils
         return false;
     }
 
-    public static <T, K> List<T> multiCheck(@NotNull Collection<? extends T> haystack, @NotNull Collection<? extends K> needle, BiPredicate<T, K> predicate)
+    public static <T, K> List<T> multiCheck(@NotNull Collection<? extends T> haystack, @NotNull Collection<? extends K> needle, @NotNull BiPredicate<T, K> predicate)
     {
         List<T> contains = new ArrayList<>();
         for (T t : haystack)
@@ -40,12 +42,13 @@ public class ArrayUtils
     }
 
     @Nullable
-    public static <T, K> T deepContains(Map<T, List<K>> haystack, K needle)
+    public static <T, K> T deepContains(@NotNull Map<T, List<K>> haystack, @NotNull K needle)
     {
         return deepCheck(haystack, (K item) -> item.equals(needle));
     }
 
-    public static <T, K> T deepCheck(Map<T, List<K>> haystack, Predicate<K> predicate)
+    @Nullable
+    public static <T, K> T deepCheck(@NotNull Map<T, List<K>> haystack, @NotNull Predicate<K> predicate)
     {
         for (T t : haystack.keySet())
             for (K item : haystack.get(t))
