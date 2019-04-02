@@ -2,11 +2,11 @@ package com.fishy.provalang.api.lexer.match;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.context.LexContext;
+import com.fishy.provalang.api.data.MatchData;
+import com.fishy.provalang.api.data.MatchReturnData;
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.lexer.LexTokenInfo;
 import com.fishy.provalang.api.lexer.TokenType;
-import com.fishy.provalang.api.data.MatchData;
-import com.fishy.provalang.api.data.MatchReturnData;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +19,7 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Type stuff
 
-    public abstract MatchReturnData run(@NotNull LexContext context);
+    public abstract MatchReturnData run(LexContext context);
 
     public LexToken run(@NotNull LexTokenInfo info, @NotNull String buffer)
     {
@@ -28,17 +28,16 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Parent matches
 
+    @SuppressWarnings("FeatureEnvy")
     protected MatchReturnData match(@NotNull LexContext context, @NotNull MatchMethod... methods)
     {
         MatchReturnData data  = new MatchReturnData();
         int             index = 0;
 
-        for (int i = 0; i < methods.length; i++)
+        for (MatchMethod method : methods)
         {
             if (!data.isMatch())
                 return data;
-
-            MatchMethod method = methods[i];
 
             MatchData match = method.match(context, index);
 
@@ -70,6 +69,7 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
 
     // Helper matches
 
+    @SuppressWarnings("FeatureEnvy")
     protected MatchMethod mwhile(MatchMethod method)
     {
         return (LexContext context, int index) -> {

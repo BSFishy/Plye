@@ -13,6 +13,7 @@ public class FileReader implements Closeable
 
     private boolean eof = false;
 
+    @SuppressWarnings("FeatureEnvy")
     public FileReader(String filename)
     {
         this.filename = filename;

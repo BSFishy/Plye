@@ -42,6 +42,7 @@ public class ProvalangApi
         System.exit(1);
     }
 
+    @SuppressWarnings("FeatureEnvy")
     public static void errorPretty(@NotNull String error, @NotNull LexToken token, @NotNull String code)
     {
         error("%s at line %d, column %d:\n\t%s\n\t%s%s\n", error, token.getData().getInfo().line + 1,

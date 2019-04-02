@@ -31,10 +31,7 @@ public abstract class AbstractLexer implements ILexer
         this.wrapper = new FileWrapper(reader);
         this.context = new LexContext(this.wrapper);
 
-        LexerApi.addDefaultTokens();
-        LexerApi.addDefaultMatches();
-
-        LexerApi.finalizeMatches();
+        LexerApi.prepare();
 
         this.prepared = true;
     }
@@ -49,6 +46,7 @@ public abstract class AbstractLexer implements ILexer
         if (!isPrepared()) ProvalangApi.error("Lexer was not prepared before running");
     }
 
+    @SuppressWarnings("FeatureEnvy")
     public LexToken step()
     {
         check();

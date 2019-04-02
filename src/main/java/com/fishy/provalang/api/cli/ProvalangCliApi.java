@@ -11,6 +11,7 @@ public class ProvalangCliApi
 
     private static final Logger logger = Logger.getLogger("Provalang");
 
+    @SuppressWarnings("FeatureEnvy")
     public static CliArgs parseArgs(@NotNull String[] args)
     {
         CliArgs output = new CliArgs(args);
@@ -85,7 +86,7 @@ public class ProvalangCliApi
     }
 
     @NotNull
-    private static String addBuffer(@NotNull String s, @NotNull int size)
+    private static String addBuffer(@NotNull String s, int size)
     {
         return addBuffer(s, size, true);
     }

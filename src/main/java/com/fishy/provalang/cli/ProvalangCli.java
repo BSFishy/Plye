@@ -7,6 +7,7 @@ import com.fishy.provalang.api.cli.ProvalangCliApi;
 public class ProvalangCli
 {
 
+    @SuppressWarnings("FeatureEnvy")
     public static void main(String[] args)
     {
         CliArgs arg = ProvalangCliApi.parseArgs(args);

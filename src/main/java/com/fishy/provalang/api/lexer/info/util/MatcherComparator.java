@@ -13,6 +13,7 @@ public class MatcherComparator implements Comparator<Matcher>
     public static final MatcherComparator instance = new MatcherComparator();
 
     @Override
+    @SuppressWarnings("FeatureEnvy")
     // -1 == less than
     // 0  == equal to
     // 1  == greater than

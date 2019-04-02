@@ -147,6 +147,14 @@ public class LexerApi
         matches.sort(MatcherComparator.instance);
     }
 
+    public static void prepare()
+    {
+        addDefaultTokens();
+        addDefaultMatches();
+
+        finalizeMatches();
+    }
+
     public static LexReturnData lex(@NotNull LexContext context)
     {
         return lex(context, matches);
