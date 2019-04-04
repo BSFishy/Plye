@@ -2,18 +2,22 @@ package com.fishy.provalang.api.lexer.match;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.context.LexContext;
-import com.fishy.provalang.api.data.MatchData;
-import com.fishy.provalang.api.data.MatchReturnData;
+import com.fishy.provalang.api.data.lexer.MatchData;
+import com.fishy.provalang.api.data.lexer.MatchReturnData;
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.lexer.LexTokenInfo;
 import com.fishy.provalang.api.lexer.TokenType;
+import com.fishy.provalang.api.matching.AbstractMatcher;
+import com.fishy.provalang.api.matching.IMethod;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
 @Data
-public abstract class Matcher<T extends TokenType> implements Cloneable
+@EqualsAndHashCode(callSuper = true)
+public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexContext, MatchMethod, MatchData>
 {
     private final T           type;
 
@@ -24,6 +28,22 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
     public LexToken run(@NotNull LexTokenInfo info, @NotNull String buffer)
     {
         return new LexToken(type, type.cast(info, buffer.toCharArray()));
+    }
+
+    @Override
+    protected MatchData create(boolean value) {
+        return new MatchData(value);
+    }
+
+    @Override
+    protected MatchData create(boolean value, int lookahead) {
+        return new MatchData(value, lookahead);
+    }
+
+    @Override
+    protected MatchMethod create(@NotNull IMethod<MatchData, LexContext> method) {
+        return method::run;
+//        return (MatchMethod) method;
     }
 
     // Parent matches
@@ -39,7 +59,7 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
             if (!data.isMatch())
                 return data;
 
-            MatchData match = method.match(context, index);
+            MatchData match = method.run(context, index);
 
             if (!match.isValue())
                 return data.setMatch(false);
@@ -65,152 +85,6 @@ public abstract class Matcher<T extends TokenType> implements Cloneable
             ProvalangApi.error("Could not read from file(%s): %s", context.getWrapper().reader.filename, e.getMessage());
             return '\u0000';
         }
-    }
-
-    // Helper matches
-
-    @SuppressWarnings("FeatureEnvy")
-    protected MatchMethod mwhile(MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            MatchData data = method.match(context, index);
-            if (!data.isValue())
-                return new MatchData(false);
-
-            int lookahead = 0;
-            while (true)
-            {
-                data = method.match(context, index + lookahead);
-                if (!data.isValue())
-                    break;
-
-                lookahead += data.getLookahead();
-            }
-
-            return new MatchData(true, lookahead);
-        };
-    }
-
-    protected MatchMethod muntil(MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            int i = 0;
-            while (true)
-            {
-                MatchData data = method.match(context, index + i);
-
-                if (data.isValue())
-                    return new MatchData(true, i + data.getLookahead());
-
-                i++;
-            }
-        };
-    }
-
-    protected MatchMethod mand(MatchMethod... methods)
-    {
-        return (LexContext context, int index) -> {
-            int lookahead = 0;
-
-            for (MatchMethod method : methods)
-            {
-                MatchData data = method.match(context, index);
-
-                if (!data.isValue())
-                    return new MatchData(false);
-
-                lookahead = Math.max(lookahead, data.getLookahead());
-            }
-
-            return new MatchData(true, lookahead);
-        };
-    }
-
-    protected MatchMethod mor(MatchMethod... methods)
-    {
-        return (LexContext context, int index) -> {
-            for (MatchMethod method : methods)
-            {
-                MatchData data = method.match(context, index);
-
-                if (data.isValue())
-                    return data;
-            }
-
-            return new MatchData(false);
-        };
-    }
-
-    protected MatchMethod mnot(MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            MatchData data = method.match(context, index);
-            return new MatchData(!data.isValue(), data.getLookahead());
-        };
-    }
-
-    protected MatchMethod moptional(MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            MatchData data = method.match(context, index);
-            return new MatchData(true, data.isValue() ? data.getLookahead() : 0);
-        };
-    }
-
-    protected MatchMethod mfor(int amount, MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            int lookahead = 0;
-
-            for(int i = 0; i < amount; i++)
-            {
-                MatchData data = method.match(context, index + lookahead);
-
-                if(!data.isValue())
-                    return new MatchData(false, lookahead);
-
-                lookahead += data.getLookahead();
-            }
-
-            return new MatchData(true, lookahead);
-        };
-    }
-
-    protected MatchMethod mignoreLookahead(MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            MatchData data = method.match(context, index);
-            return new MatchData(data.isValue());
-        };
-    }
-
-    protected MatchMethod mlookbehind(MatchMethod method)
-    {
-        return (LexContext context, int index) -> {
-            if(index == 0) throw new IllegalStateException("Could not look behind index 0");
-            return method.match(context, index-1);
-        };
-    }
-
-    protected MatchMethod m(MatchMethod... methods)
-    {
-        return (LexContext context, int index) -> {
-            int lookahead = 0;
-
-            for (MatchMethod method : methods)
-            {
-                MatchData data = method.match(context, index + lookahead);
-
-                if (!data.isValue())
-                {
-                    return new MatchData(false, lookahead);
-                }
-
-                lookahead += data.getLookahead();
-            }
-
-            return new MatchData(true, lookahead);
-        };
     }
 
     // Matches

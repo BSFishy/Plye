@@ -4,20 +4,20 @@ import lombok.Data;
 import org.jetbrains.annotations.Contract;
 
 @Data
-public class MatchData
+public class AbstractMatchingData
 {
     private final boolean value;
     private final int     lookahead;
 
     @Contract(pure = true)
-    public MatchData(boolean value)
+    public AbstractMatchingData(boolean value)
     {
         this.value = value;
         this.lookahead = 0;
     }
 
     @Contract(pure = true)
-    public MatchData(boolean value, int lookahead)
+    public AbstractMatchingData(boolean value, int lookahead)
     {
         this.value = value;
         this.lookahead = lookahead;

@@ -2,8 +2,8 @@ package com.fishy.provalang.api.lexer;
 
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.context.LexContext;
-import com.fishy.provalang.api.data.LexReturnData;
-import com.fishy.provalang.api.data.MatchReturnData;
+import com.fishy.provalang.api.data.lexer.LexReturnData;
+import com.fishy.provalang.api.data.lexer.MatchReturnData;
 import com.fishy.provalang.api.lexer.info.util.MatcherComparator;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.matchers.*;

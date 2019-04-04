@@ -2,7 +2,7 @@ package com.fishy.provalang.api.lexer;
 
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.api.context.LexContext;
-import com.fishy.provalang.api.data.LexReturnData;
+import com.fishy.provalang.api.data.lexer.LexReturnData;
 import com.fishy.provalang.api.lexer.info.NullTokenType;
 import com.fishy.provalang.file.FileReader;
 import com.fishy.provalang.file.FileWrapper;

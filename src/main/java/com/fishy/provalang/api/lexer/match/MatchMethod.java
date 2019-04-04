@@ -1,9 +1,10 @@
 package com.fishy.provalang.api.lexer.match;
 
 import com.fishy.provalang.api.context.LexContext;
-import com.fishy.provalang.api.data.MatchData;
+import com.fishy.provalang.api.data.lexer.MatchData;
+import com.fishy.provalang.api.matching.IMethod;
 
-public interface MatchMethod
+@FunctionalInterface
+public interface MatchMethod extends IMethod<MatchData, LexContext>
 {
-    MatchData match(LexContext context, int index);
 }

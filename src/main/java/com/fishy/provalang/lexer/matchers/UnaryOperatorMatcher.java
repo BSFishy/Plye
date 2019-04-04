@@ -3,8 +3,8 @@ package com.fishy.provalang.lexer.matchers;
 import com.fishy.provalang.api.annotations.MatcherPriority;
 import com.fishy.provalang.api.annotations.Priority;
 import com.fishy.provalang.api.context.LexContext;
+import com.fishy.provalang.api.data.lexer.MatchReturnData;
 import com.fishy.provalang.api.lexer.LexerApi;
-import com.fishy.provalang.api.data.MatchReturnData;
 import com.fishy.provalang.api.lexer.match.Matcher;
 import com.fishy.provalang.lexer.tokens.UnaryOperator;
 
