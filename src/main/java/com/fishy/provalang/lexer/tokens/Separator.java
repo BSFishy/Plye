@@ -10,14 +10,14 @@ import java.util.List;
 
 public class Separator
 {
-    public static final CurlyBracketOpen curlyBracketOpen = new CurlyBracketOpen();
-    public static final CurlyBracketClose curlyBracketClose = new CurlyBracketClose();
+    public static final BlockOpen  blockOpen  = new BlockOpen();
+    public static final BlockClose blockClose = new BlockClose();
 
-    public static final SquareBracketOpen squareBracketOpen = new SquareBracketOpen();
-    public static final SquareBracketClose squareBracketClose = new SquareBracketClose();
+    public static final CollectionOpen  collectionOpen  = new CollectionOpen();
+    public static final CollectionClose collectionClose = new CollectionClose();
 
-    public static final ParenthesisOpen parenthesisOpen = new ParenthesisOpen();
-    public static final ParenthesisClose parenthesisClose = new ParenthesisClose();
+    public static final GroupOpen  groupOpen  = new GroupOpen();
+    public static final GroupClose groupClose = new GroupClose();
 
     public static final Semicolon semicolon = new Semicolon();
     public static final Period period = new Period();
@@ -30,70 +30,70 @@ public class Separator
     public static void addDefaultTypes(List<TokenType> list)
     {
         LexerApi.addTokenTypes(list, new TokenType[]{
-                curlyBracketOpen, curlyBracketClose,
-                squareBracketOpen, squareBracketClose,
-                parenthesisOpen, parenthesisClose,
+                blockOpen, blockClose,
+                collectionOpen, collectionClose,
+                groupOpen, groupClose,
                 semicolon, period
         });
     }
 
     @Data
-    public static class CurlyBracketOpen implements SeparatorTokenType
+    public static class BlockOpen implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new SeparatorData(info, SeparatorType.CurlyBracketOpen);
+            return new SeparatorData(info, SeparatorType.BlockOpen);
         }
     }
 
     @Data
-    public static class CurlyBracketClose implements SeparatorTokenType
+    public static class BlockClose implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new SeparatorData(info, SeparatorType.CurlyBracketClose);
+            return new SeparatorData(info, SeparatorType.BlockClose);
         }
     }
 
     @Data
-    public static class SquareBracketOpen implements SeparatorTokenType
+    public static class CollectionOpen implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new SeparatorData(info, SeparatorType.SquareBracketOpen);
+            return new SeparatorData(info, SeparatorType.CollectionOpen);
         }
     }
 
     @Data
-    public static class SquareBracketClose implements SeparatorTokenType
+    public static class CollectionClose implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new SeparatorData(info, SeparatorType.SquareBracketClose);
+            return new SeparatorData(info, SeparatorType.CollectionClose);
         }
     }
 
     @Data
-    public static class ParenthesisOpen implements SeparatorTokenType
+    public static class GroupOpen implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new SeparatorData(info, SeparatorType.ParenthesisOpen);
+            return new SeparatorData(info, SeparatorType.GroupOpen);
         }
     }
 
     @Data
-    public static class ParenthesisClose implements SeparatorTokenType
+    public static class GroupClose implements SeparatorTokenType
     {
         @Override
         public TokenData cast(LexTokenInfo info, char[] buffer)
         {
-            return new SeparatorData(info, SeparatorType.ParenthesisClose);
+            return new SeparatorData(info, SeparatorType.GroupClose);
         }
     }
 
@@ -119,14 +119,14 @@ public class Separator
 
     public enum SeparatorType
     {
-        CurlyBracketOpen,
-        CurlyBracketClose,
+        BlockOpen,
+        BlockClose,
 
-        SquareBracketOpen,
-        SquareBracketClose,
+        CollectionOpen,
+        CollectionClose,
 
-        ParenthesisOpen,
-        ParenthesisClose,
+        GroupOpen,
+        GroupClose,
 
         Semicolon,
         Period

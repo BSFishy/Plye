@@ -12,8 +12,7 @@ public class AbstractMatchingData
     @Contract(pure = true)
     public AbstractMatchingData(boolean value)
     {
-        this.value = value;
-        this.lookahead = 0;
+        this(value, 0);
     }
 
     @Contract(pure = true)

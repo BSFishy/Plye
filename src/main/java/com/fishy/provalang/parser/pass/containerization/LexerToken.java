@@ -1,4 +1,4 @@
-package com.fishy.provalang.parser.pass.association;
+package com.fishy.provalang.parser.pass.containerization;
 
 import com.fishy.provalang.api.lexer.LexToken;
 import com.fishy.provalang.api.lexer.TokenType;

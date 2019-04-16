@@ -12,14 +12,14 @@ import java.util.List;
 
 public class SeparatorMatcher
 {
-    public static final CurlyBracketOpen curlyBracketOpen = new CurlyBracketOpen();
-    public static final CurlyBracketClose curlyBracketClose = new CurlyBracketClose();
+    public static final BlockOpen  blockOpen  = new BlockOpen();
+    public static final BlockClose blockClose = new BlockClose();
 
-    public static final SquareBracketOpen squareBracketOpen = new SquareBracketOpen();
-    public static final SquareBracketClose squareBracketClose = new SquareBracketClose();
+    public static final CollectionOpen  collectionOpen  = new CollectionOpen();
+    public static final CollectionClose collectionClose = new CollectionClose();
 
-    public static final ParenthesisOpen parenthesisOpen = new ParenthesisOpen();
-    public static final ParenthesisClose parenthesisClose = new ParenthesisClose();
+    public static final GroupOpen  groupOpen  = new GroupOpen();
+    public static final GroupClose groupClose = new GroupClose();
 
     public static final Semicolon semicolon = new Semicolon();
     public static final Period period = new Period();
@@ -32,19 +32,19 @@ public class SeparatorMatcher
     public static void addDefaultMatches(List<Matcher> list)
     {
         LexerApi.addMatches(list, new Matcher[] {
-                curlyBracketOpen, curlyBracketClose,
-                squareBracketOpen, squareBracketClose,
-                parenthesisOpen, parenthesisClose,
+                blockOpen, blockClose,
+                collectionOpen, collectionClose,
+                groupOpen, groupClose,
                 semicolon, period
         });
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class CurlyBracketOpen extends Matcher<Separator.CurlyBracketOpen>
+    public static class BlockOpen extends Matcher<Separator.BlockOpen>
     {
-        public CurlyBracketOpen()
+        public BlockOpen()
         {
-            super(Separator.curlyBracketOpen);
+            super(Separator.blockOpen);
         }
 
         @Override
@@ -55,11 +55,11 @@ public class SeparatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class CurlyBracketClose extends Matcher<Separator.CurlyBracketClose>
+    public static class BlockClose extends Matcher<Separator.BlockClose>
     {
-        public CurlyBracketClose()
+        public BlockClose()
         {
-            super(Separator.curlyBracketClose);
+            super(Separator.blockClose);
         }
 
         @Override
@@ -70,11 +70,11 @@ public class SeparatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class SquareBracketOpen extends Matcher<Separator.SquareBracketOpen>
+    public static class CollectionOpen extends Matcher<Separator.CollectionOpen>
     {
-        public SquareBracketOpen()
+        public CollectionOpen()
         {
-            super(Separator.squareBracketOpen);
+            super(Separator.collectionOpen);
         }
 
         @Override
@@ -85,11 +85,11 @@ public class SeparatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class SquareBracketClose extends Matcher<Separator.SquareBracketClose>
+    public static class CollectionClose extends Matcher<Separator.CollectionClose>
     {
-        public SquareBracketClose()
+        public CollectionClose()
         {
-            super(Separator.squareBracketClose);
+            super(Separator.collectionClose);
         }
 
         @Override
@@ -100,11 +100,11 @@ public class SeparatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class ParenthesisOpen extends Matcher<Separator.ParenthesisOpen>
+    public static class GroupOpen extends Matcher<Separator.GroupOpen>
     {
-        public ParenthesisOpen()
+        public GroupOpen()
         {
-            super(Separator.parenthesisOpen);
+            super(Separator.groupOpen);
         }
 
         @Override
@@ -115,11 +115,11 @@ public class SeparatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class ParenthesisClose extends Matcher<Separator.ParenthesisClose>
+    public static class GroupClose extends Matcher<Separator.GroupClose>
     {
-        public ParenthesisClose()
+        public GroupClose()
         {
-            super(Separator.parenthesisClose);
+            super(Separator.groupClose);
         }
 
         @Override

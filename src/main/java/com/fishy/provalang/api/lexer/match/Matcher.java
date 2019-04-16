@@ -30,16 +30,19 @@ public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexCo
         return new LexToken(type, type.cast(info, buffer.toCharArray()));
     }
 
+    @NotNull
     @Override
     protected MatchData create(boolean value) {
         return new MatchData(value);
     }
 
+    @NotNull
     @Override
     protected MatchData create(boolean value, int lookahead) {
         return new MatchData(value, lookahead);
     }
 
+    @NotNull
     @Override
     protected MatchMethod create(@NotNull IMethod<MatchData, LexContext> method) {
         return method::run;
