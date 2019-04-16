@@ -14,9 +14,9 @@ public class MatcherComparator implements Comparator<Matcher>
 
     @Override
     @SuppressWarnings("FeatureEnvy")
-    // -1 == less than
-    // 0  == equal to
-    // 1  == greater than
+    // -1 == less than, 1 should be before 2
+    // 0  == equal to, the same
+    // 1  == greater than, 1 should be after 2
     public int compare(Matcher o1, Matcher o2)
     {
         MatcherPriority m1 = LexerApi.getAnnotation(o1);

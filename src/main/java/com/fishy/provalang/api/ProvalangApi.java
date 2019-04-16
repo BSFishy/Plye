@@ -3,6 +3,7 @@ package com.fishy.provalang.api;
 import com.fishy.provalang.api.cli.ProvalangCliApi;
 import com.fishy.provalang.api.lexer.ILexer;
 import com.fishy.provalang.api.lexer.LexToken;
+import com.fishy.provalang.api.parser.Parser;
 import com.fishy.provalang.lexer.Lexer;
 import com.fishy.provalang.utils.Utils;
 import org.jetbrains.annotations.Contract;
@@ -13,6 +14,7 @@ import java.util.logging.Level;
 public class ProvalangApi
 {
     public static ILexer  lexer;
+    public static Parser parser;
 //    public static IParser parser;
 
     public static void log(@NotNull String format, @NotNull Object... options)
@@ -57,6 +59,14 @@ public class ProvalangApi
             lexer = new Lexer();
 
         return lexer;
+    }
+
+    @Contract
+    public static Parser getParser() {
+        if(parser == null)
+            parser = new com.fishy.provalang.parser.Parser();
+
+        return parser;
     }
 
 //    public static IParser getParser()

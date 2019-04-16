@@ -3,6 +3,7 @@ package com.fishy.provalang;
 import com.fishy.provalang.api.ProvalangApi;
 import com.fishy.provalang.file.Program;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
@@ -30,9 +31,9 @@ public class Provalang
     }
 
     @Contract("_ -> param1")
-    public static Program parse(Program program)
+    public static Program parse(@NotNull Program program)
     {
-//        ProvalangApi.getParser().parse(program);
+        ProvalangApi.getParser().parse(program.getTokens());
         return program;
     }
 
