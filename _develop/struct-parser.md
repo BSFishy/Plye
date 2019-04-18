@@ -3,5 +3,5 @@ layout: default
 title: Parser
 slug: struct-parser
 ---
-# Provalang Parser
+# Plye Parser
 Coming soon!

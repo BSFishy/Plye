@@ -3,13 +3,13 @@ layout: default
 title: Lexer
 slug: struct-lexer
 ---
-# Provalang Lexer
-The main area of Provalang that needs to be extensible is the lexer and parser. These are the two main things that define how the language looks, and are what allows it to be extended to provide more features that are not included by default.
+# Plye Lexer
+The main area of Plye that needs to be extensible is the lexer and parser. These are the two main things that define how the language looks, and are what allows it to be extended to provide more features that are not included by default.
 
 Using this concept, the lexer contains one *main* type to allow extension. The interface, `ILexerTokenType` allows anyone to create their own token type as well as token data.
 
 ## Procedure
-> The procedure for Provalang is currently unoptimized, and is most definitely going to be changed in the future.
+> The procedure for Plye is currently unoptimized, and is most definitely going to be changed in the future.
 
 ### Current
 The current process for lexing, using the default lexer looks something like this:
