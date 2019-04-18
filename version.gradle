@@ -14,8 +14,8 @@ def getVersion = { ->
 
 version getVersion()
 
-def replaceFilesDir = 'com/fishy/provalang'
-def replaceFiles = ['Provalang']
+def replaceFilesDir = 'com/fishy/plye'
+def replaceFiles = ['Plye']
 
 task updateVersion(type: Copy) {
     group = 'Versioning'

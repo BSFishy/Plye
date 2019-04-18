@@ -1,0 +1,10 @@
+package com.fishy.plye.api.ast.visitor;
+
+import com.fishy.plye.api.context.ParseContext;
+
+public interface IVisitor<T>
+{
+    T visit(ParseContext context);
+
+    void clean(ParseContext context);
+}

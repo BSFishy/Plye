@@ -14,8 +14,10 @@ group 'com.fishy'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+def mainClass = 'com.fishy.plye.cli.PlyeCli'
+
 application {
-    mainClassName = 'com.fishy.provalang.cli.ProvalangCli'
+    mainClassName = mainClass
 }
 
 repositories {
@@ -39,7 +41,7 @@ jar {
     manifest {
         attributes(
                 'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-                'Main-Class': 'com.fishy.provalang.cli.ProvalangCli'
+                'Main-Class': mainClass
         )
     }
 }
