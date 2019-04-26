@@ -14,7 +14,7 @@ public class UnaryOperator
     public static final Decrement decrement = new Decrement();
 
     public static final Negate negate = new Negate();
-    public static final Not not = new Not();
+    public static final Not    not    = new Not();
 
     public static final NegateBits negateBits = new NegateBits();
 
@@ -31,6 +31,23 @@ public class UnaryOperator
                 negateBits
         });
     }
+
+    public enum OperatorType
+    {
+        Increment,
+        Decrement,
+
+        Negate,
+        Not,
+
+        NegateBits
+    }
+
+    public interface OperatorTokenType extends TokenType {}
+
+    public interface PrecedingType extends OperatorTokenType {}
+
+    public interface SucceedingType extends OperatorTokenType {}
 
     @Data
     public static class Increment implements PrecedingType, SucceedingType
@@ -82,17 +99,6 @@ public class UnaryOperator
         }
     }
 
-    public enum OperatorType
-    {
-        Increment,
-        Decrement,
-
-        Negate,
-        Not,
-
-        NegateBits
-    }
-
     @EqualsAndHashCode(callSuper = true)
     @Data
     public static class UnaryOperatorData extends TokenType.TokenData
@@ -106,10 +112,4 @@ public class UnaryOperator
             this.type = type;
         }
     }
-
-    public interface OperatorTokenType extends TokenType {}
-
-    public interface PrecedingType extends OperatorTokenType {}
-
-    public interface SucceedingType extends OperatorTokenType {}
 }

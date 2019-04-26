@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Ignored
 {
-    public static final Return returnToken = new Return();
+    public static final Return         returnToken    = new Return();
     public static final CarriageReturn carriageReturn = new CarriageReturn();
-    public static final Space space = new Space();
+    public static final Space          space          = new Space();
 
     public static void addDefaultTypes()
     {
@@ -27,6 +27,15 @@ public class Ignored
                 space
         });
     }
+
+    public enum IgnoredType
+    {
+        Return,
+        CarriageReturn,
+        Space
+    }
+
+    public interface IgnoredTokenType extends TokenType {}
 
     @Data
     public static class Return implements IgnoredTokenType
@@ -61,13 +70,6 @@ public class Ignored
         }
     }
 
-    public enum IgnoredType
-    {
-        Return,
-        CarriageReturn,
-        Space
-    }
-
     @EqualsAndHashCode(callSuper = true)
     @Data
     public static class IgnoredData extends TokenType.TokenData
@@ -81,6 +83,4 @@ public class Ignored
             this.type = type;
         }
     }
-
-    public interface IgnoredTokenType extends TokenType {}
 }

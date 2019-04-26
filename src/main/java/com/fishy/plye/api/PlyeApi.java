@@ -13,7 +13,7 @@ import java.util.logging.Level;
 
 public class PlyeApi
 {
-    public static ILexer  lexer;
+    public static ILexer lexer;
     public static Parser parser;
 //    public static IParser parser;
 
@@ -22,26 +22,15 @@ public class PlyeApi
         PlyeCliApi.log(Level.INFO, format, options);
     }
 
-    public static void err(@NotNull String format, @NotNull Object... options)
+    public static void error(@NotNull String message, @NotNull Exception e, @NotNull Object... options)
     {
-        PlyeCliApi.err(Level.SEVERE, format, options);
+        err(message, e, options);
+        System.exit(1);
     }
 
     public static void err(@NotNull String message, @NotNull Exception e, @NotNull Object... options)
     {
         PlyeCliApi.err(Level.SEVERE, message, e, options);
-    }
-
-    public static void error(@NotNull String format, @NotNull Object... options)
-    {
-        err(format, options);
-        System.exit(1);
-    }
-
-    public static void error(@NotNull String message, @NotNull Exception e, @NotNull Object... options)
-    {
-        err(message, e, options);
-        System.exit(1);
     }
 
     @SuppressWarnings("FeatureEnvy")
@@ -50,6 +39,17 @@ public class PlyeApi
         error("%s at line %d, column %d:\n\t%s\n\t%s%s\n", error, token.getData().getInfo().line + 1,
               token.getData().getInfo().column + 1, code.split("\n")[token.getData().getInfo().line],
               Utils.repeat(" ", token.getData().getInfo().column), Utils.repeat("^", token.getData().getInfo().length));
+    }
+
+    public static void error(@NotNull String format, @NotNull Object... options)
+    {
+        err(format, options);
+        System.exit(1);
+    }
+
+    public static void err(@NotNull String format, @NotNull Object... options)
+    {
+        PlyeCliApi.err(Level.SEVERE, format, options);
     }
 
     @Contract
@@ -62,8 +62,9 @@ public class PlyeApi
     }
 
     @Contract
-    public static Parser getParser() {
-        if(parser == null)
+    public static Parser getParser()
+    {
+        if (parser == null)
             parser = new com.fishy.plye.parser.Parser();
 
         return parser;

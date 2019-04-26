@@ -10,7 +10,8 @@ import org.jetbrains.annotations.Contract;
 @ToString
 public abstract class CodeGenerator
 {
-    @EqualsAndHashCode.Include private final Target target;
+    @EqualsAndHashCode.Include
+    private final Target target;
 
     @Contract(pure = true)
     public CodeGenerator(Target target)

@@ -16,7 +16,7 @@ public class UnaryOperatorMatcher
     public static final Decrement decrement = new Decrement();
 
     public static final Negate negate = new Negate();
-    public static final Not not = new Not();
+    public static final Not    not    = new Not();
 
     public static final NegateBits negateBits = new NegateBits();
 
@@ -27,7 +27,7 @@ public class UnaryOperatorMatcher
 
     public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Matcher[] {
+        LexerApi.addMatches(list, new Matcher[]{
                 increment, decrement,
                 negate, not,
                 negateBits

@@ -12,16 +12,16 @@ import java.util.List;
 
 public class OpAssignOperatorMatcher
 {
-    public static final Add add = new Add();
+    public static final Add      add      = new Add();
     public static final Subtract subtract = new Subtract();
     public static final Multiply multiply = new Multiply();
-    public static final Divide divide = new Divide();
+    public static final Divide   divide   = new Divide();
 
-    public static final ShiftLeft shiftLeft = new ShiftLeft();
+    public static final ShiftLeft  shiftLeft  = new ShiftLeft();
     public static final ShiftRight shiftRight = new ShiftRight();
 
     public static final And and = new And();
-    public static final Or or = new Or();
+    public static final Or  or  = new Or();
     public static final Xor xor = new Xor();
 
     public static void addDefaultMatches()
@@ -31,7 +31,7 @@ public class OpAssignOperatorMatcher
 
     public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Matcher[] {
+        LexerApi.addMatches(list, new Matcher[]{
                 add, subtract, multiply, divide,
                 shiftLeft, shiftRight,
                 and, or, xor
@@ -39,7 +39,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class Add extends Matcher<OpAssignOperator.Add> {
+    public static class Add extends Matcher<OpAssignOperator.Add>
+    {
         public Add()
         {
             super(OpAssignOperator.add);
@@ -53,7 +54,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class Subtract extends Matcher<OpAssignOperator.Subtract> {
+    public static class Subtract extends Matcher<OpAssignOperator.Subtract>
+    {
         public Subtract()
         {
             super(OpAssignOperator.subtract);
@@ -67,7 +69,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class Multiply extends Matcher<OpAssignOperator.Multiply> {
+    public static class Multiply extends Matcher<OpAssignOperator.Multiply>
+    {
         public Multiply()
         {
             super(OpAssignOperator.multiply);
@@ -81,7 +84,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class Divide extends Matcher<OpAssignOperator.Divide> {
+    public static class Divide extends Matcher<OpAssignOperator.Divide>
+    {
         public Divide()
         {
             super(OpAssignOperator.divide);
@@ -95,7 +99,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class ShiftLeft extends Matcher<OpAssignOperator.ShiftLeft> {
+    public static class ShiftLeft extends Matcher<OpAssignOperator.ShiftLeft>
+    {
         public ShiftLeft()
         {
             super(OpAssignOperator.shiftLeft);
@@ -109,7 +114,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class ShiftRight extends Matcher<OpAssignOperator.ShiftRight> {
+    public static class ShiftRight extends Matcher<OpAssignOperator.ShiftRight>
+    {
         public ShiftRight()
         {
             super(OpAssignOperator.shiftRight);
@@ -123,7 +129,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class And extends Matcher<OpAssignOperator.And> {
+    public static class And extends Matcher<OpAssignOperator.And>
+    {
         public And()
         {
             super(OpAssignOperator.and);
@@ -137,7 +144,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class Or extends Matcher<OpAssignOperator.Or> {
+    public static class Or extends Matcher<OpAssignOperator.Or>
+    {
         public Or()
         {
             super(OpAssignOperator.or);
@@ -151,7 +159,8 @@ public class OpAssignOperatorMatcher
     }
 
     @MatcherPriority(priority = Priority.Normal)
-    public static class Xor extends Matcher<OpAssignOperator.Xor> {
+    public static class Xor extends Matcher<OpAssignOperator.Xor>
+    {
         public Xor()
         {
             super(OpAssignOperator.xor);

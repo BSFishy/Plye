@@ -13,13 +13,12 @@ public class Lexer extends AbstractLexer
     {
         prepare(program.reader);
 
-        while(canStep())
+        while (canStep())
         {
             LexToken token = step();
 
-            if(!(token.type instanceof Ignored.Space))
+            if (!(token.type instanceof Ignored.IgnoredTokenType))
             {
-                System.out.println(token.toString());
                 program.getTokens().add(token);
             }
         }

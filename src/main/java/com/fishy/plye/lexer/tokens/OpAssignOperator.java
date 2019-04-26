@@ -36,6 +36,23 @@ public class OpAssignOperator
         });
     }
 
+    public enum OperatorType
+    {
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+
+        ShiftLeft,
+        ShiftRight,
+
+        And,
+        Or,
+        Xor
+    }
+
+    public interface OperatorTokenType extends TokenType {}
+
     @Data
     public static class Add implements OperatorTokenType
     {
@@ -126,21 +143,6 @@ public class OpAssignOperator
         }
     }
 
-    public enum OperatorType
-    {
-        Add,
-        Subtract,
-        Multiply,
-        Divide,
-
-        ShiftLeft,
-        ShiftRight,
-
-        And,
-        Or,
-        Xor
-    }
-
     @EqualsAndHashCode(callSuper = false)
     @Data
     public static class OpAssignOperatorData extends TokenType.TokenData
@@ -154,6 +156,4 @@ public class OpAssignOperator
             this.type = type;
         }
     }
-
-    public interface OperatorTokenType extends TokenType {}
 }

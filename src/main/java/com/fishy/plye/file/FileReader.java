@@ -39,9 +39,12 @@ public class FileReader implements Closeable
         }
     }
 
-    public boolean eof()
+    public char lookahead() throws IOException
     {
-        return eof;
+        stream.mark(2);
+        char c = read();
+        stream.reset();
+        return c;
     }
 
     public char read() throws IOException
@@ -71,12 +74,9 @@ public class FileReader implements Closeable
         return c;
     }
 
-    public char lookahead() throws IOException
+    public boolean eof()
     {
-        stream.mark(2);
-        char c = read();
-        stream.reset();
-        return c;
+        return eof;
     }
 
     @Override

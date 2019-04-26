@@ -19,7 +19,7 @@ import java.io.IOException;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexContext, MatchMethod, MatchData>
 {
-    private final T           type;
+    private final T type;
 
     // Type stuff
 
@@ -32,21 +32,24 @@ public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexCo
 
     @NotNull
     @Override
-    protected MatchData create(boolean value) {
-        return new MatchData(value);
+    protected MatchMethod create(@NotNull IMethod<MatchData, LexContext> method)
+    {
+        return method::run;
+//        return (MatchMethod) method;
     }
 
     @NotNull
     @Override
-    protected MatchData create(boolean value, int lookahead) {
+    protected MatchData create(boolean value, int lookahead)
+    {
         return new MatchData(value, lookahead);
     }
 
     @NotNull
     @Override
-    protected MatchMethod create(@NotNull IMethod<MatchData, LexContext> method) {
-        return method::run;
-//        return (MatchMethod) method;
+    protected MatchData create(boolean value)
+    {
+        return new MatchData(value);
     }
 
     // Parent matches
@@ -77,6 +80,16 @@ public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexCo
 
     // Helps
 
+    protected MatchMethod mnot(char c)
+    {
+        return (LexContext context, int index) -> {
+            char ch = read(context, index);
+            return new MatchData(ch != c, 1);
+        };
+    }
+
+    // Matches
+
     private char read(@NotNull LexContext context, int index)
     {
         try
@@ -88,24 +101,6 @@ public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexCo
             PlyeApi.error("Could not read from file(%s): %s", context.getWrapper().reader.filename, e.getMessage());
             return '\u0000';
         }
-    }
-
-    // Matches
-
-    protected MatchMethod m(char c)
-    {
-        return (LexContext context, int index) -> {
-            char ch = read(context, index);
-            return new MatchData(ch == c, 1);
-        };
-    }
-
-    protected MatchMethod mnot(char c)
-    {
-        return (LexContext context, int index) -> {
-            char ch = read(context, index);
-            return new MatchData(ch != c, 1);
-        };
     }
 
     protected MatchMethod m(String s)
@@ -140,14 +135,14 @@ public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexCo
         {
             return (LexContext context, int index) -> {
                 char ch = read(context, index);
-                return new MatchData(ch == c || ((int) ch)-0x20 == (int) c, 1);
+                return new MatchData(ch == c || ((int) ch) - 0x20 == (int) c, 1);
             };
         }
         else if (0x61 <= (int) c && 0x7A >= (int) c)
         {
             return (LexContext context, int index) -> {
                 char ch = read(context, index);
-                return new MatchData(ch == c || ((int) ch)+0x20 == (int) c, 1);
+                return new MatchData(ch == c || ((int) ch) + 0x20 == (int) c, 1);
             };
         }
         else
@@ -156,11 +151,19 @@ public abstract class Matcher<T extends TokenType> extends AbstractMatcher<LexCo
         }
     }
 
-    // Generic helpers
-
     protected MatchMethod newline()
     {
         return mor(m('\n'), m('\r'));
+    }
+
+    // Generic helpers
+
+    protected MatchMethod m(char c)
+    {
+        return (LexContext context, int index) -> {
+            char ch = read(context, index);
+            return new MatchData(ch == c, 1);
+        };
     }
 
     protected MatchMethod uppercase()

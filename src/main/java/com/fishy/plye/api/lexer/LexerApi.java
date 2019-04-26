@@ -63,6 +63,28 @@ public class LexerApi
             list.add(match);
     }
 
+    public static boolean hasReplacements(@NotNull Matcher match)
+    {
+        return getReplacements(match).size() < 1;
+    }
+
+    @NotNull
+    public static List<Class<? extends Matcher>> getReplacements(@NotNull Matcher match)
+    {
+        MatcherPriority priority = getAnnotation(match);
+        if (priority == null)
+            return new ArrayList<>();
+        return Arrays.asList(priority.replaces());
+    }
+
+    // Adding defaults
+
+    @Nullable
+    public static MatcherPriority getAnnotation(@NotNull Matcher matcher)
+    {
+        return matcher.getClass().getAnnotation(MatcherPriority.class);
+    }
+
     public static void addMatches(@NotNull Matcher[] matches)
     {
         addMatches(getMatches(), matches);
@@ -74,59 +96,33 @@ public class LexerApi
             addMatch(list, match);
     }
 
-    // Adding defaults
-
-    public static void addDefaultTokens()
-    {
-        addDefaultTokens(getTokens());
-    }
-
-    public static void addDefaultTokens(@NotNull List<TokenType> tokens)
-    {
-        BinaryOperator.addDefaultTypes(tokens);
-        Comment.addDefaultTypes(tokens);
-        Identifier.addDefaultType(tokens);
-        Ignored.addDefaultTypes(tokens);
-        Keyword.addDefaultTypes(tokens);
-        Literal.addDefaultTypes(tokens);
-        OpAssignOperator.addDefaultTypes(tokens);
-        Separator.addDefaultTypes(tokens);
-        UnaryOperator.addDefaultTypes(tokens);
-    }
-
-    public static void addDefaultMatches()
-    {
-        addDefaultMatches(getMatches());
-    }
-
-    public static void addDefaultMatches(@NotNull List<Matcher> match)
-    {
-        BinaryOperatorMatcher.addDefaultMatches(match);
-        CommentMatcher.addDefaultMatches(match);
-        IdentifierMatcher.addDefaultMatch(match);
-        IgnoredMatcher.addDefaultMatchers(match);
-        KeywordMatcher.addDefaultMatches(match);
-        LiteralMatcher.addDefaultMatches(match);
-        OpAssignOperatorMatcher.addDefaultMatches(match);
-        SeparatorMatcher.addDefaultMatches(match);
-        UnaryOperatorMatcher.addDefaultMatches(match);
-    }
-
-    // Getting lists
-
-    @Contract(pure = true)
-    public static List<TokenType> getTokens()
-    {
-        return tokenTypes;
-    }
-
     @Contract(pure = true)
     public static List<Matcher> getMatches()
     {
         return matches;
     }
 
+    // Getting lists
+
+    public static void prepare()
+    {
+        addDefaultTokens();
+        addDefaultMatches();
+
+        finalizeMatches();
+    }
+
+    public static void addDefaultTokens()
+    {
+        addDefaultTokens(getTokens());
+    }
+
     // LEXING STUFF
+
+    public static void addDefaultMatches()
+    {
+        addDefaultMatches(getMatches());
+    }
 
     public static void finalizeMatches()
     {
@@ -147,12 +143,38 @@ public class LexerApi
         matches.sort(MatcherComparator.instance);
     }
 
-    public static void prepare()
+    public static void addDefaultTokens(@NotNull List<TokenType> tokens)
     {
-        addDefaultTokens();
-        addDefaultMatches();
+        BinaryOperator.addDefaultTypes(tokens);
+        Comment.addDefaultTypes(tokens);
+        Identifier.addDefaultType(tokens);
+        Ignored.addDefaultTypes(tokens);
+        Keyword.addDefaultTypes(tokens);
+        Literal.addDefaultTypes(tokens);
+        OpAssignOperator.addDefaultTypes(tokens);
+        Separator.addDefaultTypes(tokens);
+        UnaryOperator.addDefaultTypes(tokens);
+    }
 
-        finalizeMatches();
+    @Contract(pure = true)
+    public static List<TokenType> getTokens()
+    {
+        return tokenTypes;
+    }
+
+    // Annotation stuff
+
+    public static void addDefaultMatches(@NotNull List<Matcher> match)
+    {
+        BinaryOperatorMatcher.addDefaultMatches(match);
+        CommentMatcher.addDefaultMatches(match);
+        IdentifierMatcher.addDefaultMatch(match);
+        IgnoredMatcher.addDefaultMatchers(match);
+        KeywordMatcher.addDefaultMatches(match);
+        LiteralMatcher.addDefaultMatches(match);
+        OpAssignOperatorMatcher.addDefaultMatches(match);
+        SeparatorMatcher.addDefaultMatches(match);
+        UnaryOperatorMatcher.addDefaultMatches(match);
     }
 
     public static LexReturnData lex(@NotNull LexContext context)
@@ -165,35 +187,22 @@ public class LexerApi
     {
         Map<Matcher, MatchReturnData> matched = new HashMap<>();
 
-        for(Matcher matcher : matchers)
+        for (Matcher matcher : matchers)
         {
             MatchReturnData data = matcher.run(context);
-            if(data.isMatch())
+            if (data.isMatch())
                 matched.put(matcher, data);
         }
 
-        if(matched.size() < 1)
+        if (matched.size() < 1)
             return null;
 
         List<Matcher> matchedKeys = new ArrayList<>(matched.keySet());
         matchedKeys.sort(MatcherComparator.instance);
-        Matcher m = matchedKeys.get(0);
+        Matcher         m    = matchedKeys.get(0);
         MatchReturnData data = matched.get(m);
 
         return new LexReturnData(data.getLength(), m.getType());
-    }
-
-    // Annotation stuff
-
-    @Nullable
-    public static MatcherPriority getAnnotation(@NotNull Matcher matcher)
-    {
-        return matcher.getClass().getAnnotation(MatcherPriority.class);
-    }
-
-    public static boolean hasReplacements(@NotNull Matcher match)
-    {
-        return getReplacements(match).size() < 1;
     }
 
     @NotNull
@@ -203,14 +212,5 @@ public class LexerApi
         if (priority == null)
             return new ArrayList<>();
         return Arrays.asList(priority.overrides());
-    }
-
-    @NotNull
-    public static List<Class<? extends Matcher>> getReplacements(@NotNull Matcher match)
-    {
-        MatcherPriority priority = getAnnotation(match);
-        if (priority == null)
-            return new ArrayList<>();
-        return Arrays.asList(priority.replaces());
     }
 }

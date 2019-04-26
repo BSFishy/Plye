@@ -1,9 +1,11 @@
 package com.fishy.plye.api.parser.pass;
 
+import com.fishy.plye.api.PlyeApi;
 import com.fishy.plye.api.data.parser.PassResult;
 import com.fishy.plye.api.data.parser.definer.DefinitionResult;
 import com.fishy.plye.api.parser.definer.Definer;
 import com.fishy.plye.api.parser.definer.Definition;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,26 +19,31 @@ public abstract class ParserPass<T extends PassToken, K extends PassToken>
     @Nullable
     private final Class<? extends ParserPass> previous;
     @NotNull
-    private final Class<K> kclass;
+    private final Class<K>                    kclass;
 
-    public ParserPass(@Nullable Class<? extends ParserPass> previous, @NotNull Class<K> kclass) {
+    public ParserPass(@Nullable Class<? extends ParserPass> previous, @NotNull Class<K> kclass)
+    {
         this.previous = previous;
         this.kclass = kclass;
     }
 
-    public void addDefiner(@NotNull Definer<? extends T, K> definer) {
-        definers.add(definer.define());
+    public void addDefiner(@NotNull Definer<? extends T, K> definer)
+    {
+        definers.add(definer.getDefinition());
     }
 
-    public void addDefiner(@NotNull Definition<? extends T, K> definer) {
+    public void addDefiner(@NotNull Definition<? extends T, K> definer)
+    {
         definers.add(definer);
     }
 
-    protected PassResult<T> run(@NotNull List<K> tokens) {
+    @Contract(value = "_ -> new", pure = true)
+    protected PassResult<T> run(@NotNull List<K> tokens)
+    {
         List<T> result = new ArrayList<>();
-        int index = 0;
+        int     index  = 0;
 
-        while (index <= tokens.size())
+        while (index < tokens.size())
         {
             boolean found = false;
 
@@ -50,6 +57,10 @@ public abstract class ParserPass<T extends PassToken, K extends PassToken>
 
                     index += res.getLookahead();
                     found = true;
+
+                    PlyeApi.log(res.toString() + "\n");
+
+                    break;
                 }
             }
 
@@ -57,37 +68,49 @@ public abstract class ParserPass<T extends PassToken, K extends PassToken>
             {
                 break;
             }
-
         }
 
-        return new PassResult<>(result, index);
+        return new PassResult<>(index >= tokens.size(), result, index);
     }
 
     @Nullable
-    public Class<? extends ParserPass> previousPass() {
+    public Class<? extends ParserPass> previousPass()
+    {
         return previous;
-    }
-
-    @NotNull
-    public Class<K> outputClass() {
-        return kclass;
     }
 
     public abstract void defaultDefiners();
 
-    public abstract PassResult<T> parse(List<K> tokens);
-
-    public PassResult<T> parseGeneric(@NotNull List<? extends PassToken> currentTokens) {
+    @Contract(value = "_ -> new", pure = true)
+    public List<K> convertList(@NotNull List<? extends PassToken> tks) {
         List<K> tokens = new ArrayList<>();
 
-        for(PassToken token : currentTokens) {
+        for (PassToken token : tks)
+        {
             try
             {
                 tokens.add(outputClass().cast(token));
-            } catch(ClassCastException ignored) {
+            }
+            catch (ClassCastException ignored)
+            {
             }
         }
 
-        return parse(tokens);
+        return tokens;
     }
+
+    @Contract(value = "_ -> new", pure = true)
+    public PassResult<T> parseGeneric(@NotNull List<? extends PassToken> currentTokens)
+    {
+        return parse(convertList(currentTokens));
+    }
+
+    @NotNull
+    public Class<K> outputClass()
+    {
+        return kclass;
+    }
+
+    @Contract(value = "_ -> new", pure = true)
+    public abstract PassResult<T> parse(List<K> tokens);
 }

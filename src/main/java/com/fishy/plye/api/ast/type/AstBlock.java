@@ -10,7 +10,8 @@ public abstract class AstBlock extends FeatureNode
 {
     protected final List<AstNode> children = new ArrayList<>();
 
-    public void addChild(AstNode child) {
+    public void addChild(AstNode child)
+    {
         children.add(child);
     }
 

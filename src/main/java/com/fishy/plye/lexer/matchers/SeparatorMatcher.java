@@ -22,7 +22,7 @@ public class SeparatorMatcher
     public static final GroupClose groupClose = new GroupClose();
 
     public static final Semicolon semicolon = new Semicolon();
-    public static final Period period = new Period();
+    public static final Period    period    = new Period();
 
     public static void addDefaultMatches()
     {
@@ -31,7 +31,7 @@ public class SeparatorMatcher
 
     public static void addDefaultMatches(List<Matcher> list)
     {
-        LexerApi.addMatches(list, new Matcher[] {
+        LexerApi.addMatches(list, new Matcher[]{
                 blockOpen, blockClose,
                 collectionOpen, collectionClose,
                 groupOpen, groupClose,

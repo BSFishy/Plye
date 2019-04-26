@@ -8,41 +8,41 @@ import com.fishy.plye.parser.pass.containerization.token.ContainerizationToken;
 import com.fishy.plye.parser.pass.containerization.token.StatementToken;
 import org.jetbrains.annotations.NotNull;
 
-public class BlockDefiner extends ContainerizationDefiner
+public class BlockDefiner extends AbstractContainerizationDefiner
 {
     public static final BlockDefiner                                  instance   = new BlockDefiner();
-    public static final Definition<ContainerizationToken, LexerToken> definition = instance.define();
+    public static final Definition<ContainerizationToken, LexerToken> definition = instance.getDefinition();
 
     @Override
     public @NotNull Definition<ContainerizationToken, LexerToken> define()
     {
         return define(() -> new BlockToken(null),
                       mwhile(m(ContainerizationToken::addToken,
-                               mnot(
-                                       m(Separator.semicolon),
-                                       m(Separator.blockOpen),
-                                       m(Separator.blockClose)
-//                                       m(Separator.groupOpen),
-//                                       m(Separator.groupClose)
+                               mand(
+                                       mnot(Separator.semicolon),
+                                       mnot(Separator.blockOpen),
+                                       mnot(Separator.blockClose)
+//                                       mnot(Separator.groupOpen),
+//                                       mnot(Separator.groupClose)
                                ))),
                       m(Separator.blockOpen),
                       mwhile(m((ContainerizationToken token, ContainerizationToken t) -> {
-                                  BlockToken bt;
-                                  if (token instanceof BlockToken)
-                                  {
-                                      bt = (BlockToken) token;
-                                  }
-                                  else if (token instanceof StatementToken)
-                                  {
-                                      bt = ((StatementToken) token).promote();
-                                  }
-                                  else
-                                  {
-                                      bt = new BlockToken(token.getParent(), token.getTokens());
-                                  }
+                          BlockToken bt;
+                          if (token instanceof BlockToken)
+                          {
+                              bt = (BlockToken) token;
+                          }
+                          else if (token instanceof StatementToken)
+                          {
+                              bt = ((StatementToken) token).promote();
+                          }
+                          else
+                          {
+                              bt = new BlockToken(token.getParent(), token.getTokens());
+                          }
 
-                                  return bt.addChild(t);
-                              }, StatementDefiner.definition)),
+                          return bt.addChild(t);
+                      }, ContainerizationDefiner.instance.getDefinition())),
                       m(Separator.blockClose)
         );
     }

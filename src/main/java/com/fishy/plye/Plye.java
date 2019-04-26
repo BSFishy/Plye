@@ -12,6 +12,29 @@ public class Plye
 
     public static final String VERSION = "@VERSION@";
 
+    public static void interpret(String file)
+    {
+        Program program = parse(file);
+
+//        PlyeApi.log(program.getTokens().stream()
+//                                .map(l -> "" + l.getData().toString() + "")
+//                                .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
+
+//        program.getAst().execute();
+    }
+
+    public static Program parse(String file)
+    {
+        return parse(lex(file));
+    }
+
+    @Contract("_ -> param1")
+    public static Program parse(@NotNull Program program)
+    {
+        PlyeApi.log(PlyeApi.getParser().parse(program.getTokens()).toString());
+        return program;
+    }
+
     public static Program lex(String filename)
     {
         Program p = new Program(filename);
@@ -27,29 +50,6 @@ public class Plye
         }
 
         return p;
-    }
-
-    @Contract("_ -> param1")
-    public static Program parse(@NotNull Program program)
-    {
-        PlyeApi.log(PlyeApi.getParser().parse(program.getTokens()).toString());
-        return program;
-    }
-
-    public static Program parse(String file)
-    {
-        return parse(lex(file));
-    }
-
-    public static void interpret(String file)
-    {
-        Program program = parse(file);
-
-//        PlyeApi.log(program.getTokens().stream()
-//                                .map(l -> "" + l.getData().toString() + "")
-//                                .collect(Collectors.joining(", ", "[", "]")).replace("\n", "\\n").replace("\r", "\\r").replace("\t", "\\t") + "\n");
-
-//        program.getAst().execute();
     }
 
     public static void compile(String file)

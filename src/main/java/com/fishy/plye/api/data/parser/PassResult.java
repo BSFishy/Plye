@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class PassResult<T>
 {
+    public final boolean full;
     public final List<T> tokens;
-    public final int length;
+    public final int     length;
 }

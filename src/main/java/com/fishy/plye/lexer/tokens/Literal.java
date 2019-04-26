@@ -10,17 +10,17 @@ import java.util.List;
 
 public class Literal
 {
-    public static final Integer integer = new Integer();
-    public static final Byte byteToken = new Byte();
-    public static final Short shortToken = new Short();
-    public static final Long longToken = new Long();
+    public static final Integer integer    = new Integer();
+    public static final Byte    byteToken  = new Byte();
+    public static final Short   shortToken = new Short();
+    public static final Long    longToken  = new Long();
 
-    public static final Float floatToken = new Float();
+    public static final Float  floatToken  = new Float();
     public static final Double doubleToken = new Double();
 
     public static final Boolean booleanToken = new Boolean();
 
-    public static final String string = new String();
+    public static final String    string    = new String();
     public static final Character character = new Character();
 
     public static void addDefaultTypes()
@@ -35,6 +35,12 @@ public class Literal
                 booleanToken,
                 string, character});
     }
+
+    public interface LiteralType extends TokenType {}
+
+    public interface NumberType extends LiteralType {}
+
+    public interface FloatingPointType extends NumberType {}
 
     @Data
     public static class Integer implements NumberType
@@ -251,10 +257,4 @@ public class Literal
             }
         }
     }
-
-    public interface LiteralType extends TokenType {}
-
-    public interface NumberType extends LiteralType {}
-
-    public interface FloatingPointType extends NumberType {}
 }

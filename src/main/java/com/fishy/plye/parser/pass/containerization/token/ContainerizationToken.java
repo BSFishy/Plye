@@ -14,7 +14,8 @@ public abstract class ContainerizationToken extends PassToken
     public final ContainerizationToken parent;
     public final List<LexerToken>      tokens = new ArrayList<>();
 
-    public ContainerizationToken(@Nullable ContainerizationToken parent){
+    public ContainerizationToken(@Nullable ContainerizationToken parent)
+    {
         this.parent = parent;
     }
 
@@ -24,7 +25,6 @@ public abstract class ContainerizationToken extends PassToken
         return parent;
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean hasParent()
     {
         return parent != null;
@@ -36,7 +36,8 @@ public abstract class ContainerizationToken extends PassToken
         return this;
     }
 
-    public ContainerizationToken addTokens(Collection<LexerToken> tokens) {
+    public ContainerizationToken addTokens(Collection<LexerToken> tokens)
+    {
         this.tokens.addAll(tokens);
         return this;
     }

@@ -18,7 +18,8 @@ public class Visibility extends Feature<ContainerNode>
         this.value = value;
     }
 
-    public enum Values {
+    public enum Values
+    {
         Public,
         Protected,
         PackagePrivate,

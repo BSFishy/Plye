@@ -27,7 +27,8 @@ public @interface MatcherPriority
     Class<? extends Matcher>[] overrides() default {};
 
     /**
-     * A list that represents the matchers that this matcher replaces. This is useful when you want to change the syntax of a token without completely creating a new token and matcher to support it.
+     * A list that represents the matchers that this matcher replaces. This is useful when you want to change the syntax of a token without completely creating a new token and
+     * matcher to support it.
      *
      * @return a list of matchers that this matcher replace
      */

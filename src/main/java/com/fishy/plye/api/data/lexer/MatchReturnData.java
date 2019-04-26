@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class MatchReturnData
 {
-    private boolean match = true;
-    private int length = 0;
+    private boolean match  = true;
+    private int     length = 0;
 
     public MatchReturnData setMatch(boolean value)
     {

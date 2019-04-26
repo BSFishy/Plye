@@ -7,22 +7,22 @@ import com.fishy.plye.parser.pass.containerization.token.ContainerizationToken;
 import com.fishy.plye.parser.pass.containerization.token.StatementToken;
 import org.jetbrains.annotations.NotNull;
 
-public class StatementDefiner extends ContainerizationDefiner
+public class StatementDefiner extends AbstractContainerizationDefiner
 {
     public static final StatementDefiner                              instance   = new StatementDefiner();
-    public static final Definition<ContainerizationToken, LexerToken> definition = instance.define();
+    public static final Definition<ContainerizationToken, LexerToken> definition = instance.getDefinition();
 
     @Override
     public @NotNull Definition<ContainerizationToken, LexerToken> define()
     {
         return define(() -> new StatementToken(null),
                       mwhile(m(ContainerizationToken::addToken,
-                               mnot(
-                                       m(Separator.semicolon),
-                                       m(Separator.blockOpen),
-                                       m(Separator.blockClose)
-//                                       m(Separator.groupOpen),
-//                                       m(Separator.groupClose)
+                               mand(
+                                       mnot(Separator.semicolon),
+                                       mnot(Separator.blockOpen),
+                                       mnot(Separator.blockClose)
+//                                       mnot(Separator.groupOpen),
+//                                       mnot(Separator.groupClose)
                                ))),
                       m(Separator.semicolon)
         );

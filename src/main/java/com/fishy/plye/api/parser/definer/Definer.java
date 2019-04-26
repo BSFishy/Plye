@@ -25,11 +25,22 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"SpellCheckingInspection", "unused"})
 public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>, DefinitionMethod<K, T>, DefinitionData>
 {
+    private Definition<T, K> def;
+
+    @NotNull
+    @Contract
+    public final Definition<T, K> getDefinition() {
+        if(def == null)
+            def = define();
+
+        return def;
+    }
+
     @NotNull
     @Override
-    public DefinitionData create(boolean value)
+    public DefinitionMethod<K, T> create(@NotNull IMethod<DefinitionData, DefinerContext<K, T>> method)
     {
-        return new DefinitionData(value);
+        return method::run;
     }
 
     @NotNull
@@ -41,35 +52,9 @@ public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>
 
     @NotNull
     @Override
-    public DefinitionMethod<K, T> create(@NotNull IMethod<DefinitionData, DefinerContext<K, T>> method)
+    public DefinitionData create(boolean value)
     {
-        if (method instanceof MethodWrapper)
-        {
-            MethodWrapper<K, T> w = (MethodWrapper<K, T>) method;
-            return (DefinerContext<K, T> context, int index) -> {
-                DefinitionData data = w.run(context, index);
-
-                if (data.isValue())
-                {
-                    T result = w.perform(context.getCurrentToken(), context.get(index));
-                    if(result != null) {
-                        context.setCurrentToken(result);
-                    }
-                }
-
-                return data;
-            };
-        }
-
-        return method::run;
-    }
-
-    @SafeVarargs
-    @NotNull
-    @Contract(value = "_, _, _ -> new", pure = true)
-    public final MethodWrapper<K, T> create(@NotNull DefinitionMethod<K, T> method, @Nullable BiFunction<T, K, T> function, @NotNull Class<? extends K>... tokens)
-    {
-        return new MethodWrapper<>(Arrays.stream(tokens).findFirst().orElse(null), method, function);
+        return new DefinitionData(value);
     }
 
     @NotNull
@@ -85,29 +70,26 @@ public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>
     }
 
     @NotNull
-    @Contract(value = "_, _ -> new", pure = true)
-    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, K, T> function, @NotNull Class<? extends K> token)
-    {
-        return create((DefinerContext<K, T> context, int index) -> new DefinitionData(token.isInstance(context.get(index)), 1),
-                      function,
-                      token);
-    }
-
-    @SafeVarargs
-    @NotNull
-    @Contract(value = "_, _ -> new", pure = true)
-    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, K, T> function, @NotNull Class<? extends K>... tokens)
-    {
-        return create(m(Arrays.stream(tokens).map(token -> m(function, token)).collect(Collectors.toList())), function, tokens);
-    }
-
-    @NotNull
     @Contract(value = "_ -> new", pure = true)
     public final MethodWrapper<K, T> m(@NotNull Class<? extends K> token)
     {
         return m(null, token);
     }
 
+    @NotNull
+    @Contract(value = "_, _ -> new", pure = true)
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, K, T> function, @NotNull Class<? extends K> token)
+    {
+        return create((DefinerContext<K, T> context, int index) -> new DefinitionData(token.isInstance(context.get(index)), 1),
+                      function);
+    }
+
+    @NotNull
+    @Contract(value = "_, _ -> new", pure = true)
+    public final MethodWrapper<K, T> create(@NotNull DefinitionMethod<K, T> method, @Nullable BiFunction<T, K, T> function)
+    {
+        return new MethodWrapper<>(method, function);
+    }
 
     @SafeVarargs
     @NotNull
@@ -117,26 +99,36 @@ public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>
         return m(null, tokens);
     }
 
+    @SafeVarargs
+    @NotNull
+    @Contract(value = "_, _ -> new", pure = true)
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, K, T> function, @NotNull Class<? extends K>... tokens)
+    {
+        return create(m(Arrays.stream(tokens).map(token -> m(function, token)).collect(Collectors.toList())), function);
+    }
 
     @NotNull
     @Contract(value = "_, _ -> new", pure = true)
-    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, K, T> function, @NotNull DefinitionMethod<K, T> method) {
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, K, T> function, @NotNull DefinitionMethod<K, T> method)
+    {
         return create(method, function);
     }
 
     @NotNull
     @Contract(value = "_, _, _ -> new", pure = true)
-    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, T, T> func, @Nullable BiFunction<T, K, T> function, @NotNull Definition<T, K> definition) {
-        return new MethodWrapper<>(null, (DefinerContext<K, T> context, int index) -> {
-            DefinitionResult<T> result        =  definition.run(context.getTokens(), index);
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, T, T> func, @Nullable BiFunction<T, K, T> function, @NotNull Definition<T, K> definition)
+    {
+        return create((DefinerContext<K, T> context, int index) -> {
+            DefinitionResult<T> result = definition.run(context.getTokens(), index);
 
-            if(result.getValue())
+            if (result.getValue())
             {
                 if (func != null)
                 {
                     T token = func.apply(context.getCurrentToken(), result.getToken());
 
-                    if(token != null) {
+                    if (token != null)
+                    {
                         context.setCurrentToken(token);
                     }
                 }
@@ -148,20 +140,52 @@ public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>
 
     @NotNull
     @Contract(value = "_, _ -> new", pure = true)
-    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, T, T> function, @NotNull Definition<T, K> definition) {
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, T, T> function, @NotNull Definition<T, K> definition)
+    {
         return m(function, null, definition);
     }
 
     @NotNull
     @Contract(value = "_, _ -> new", pure = true)
-    public final MethodWrapper<K, T> mwrap(@Nullable BiFunction<T, K, T> function, @NotNull Definition<T, K> definition) {
+    public final MethodWrapper<K, T> mwrap(@Nullable BiFunction<T, K, T> function, @NotNull Definition<T, K> definition)
+    {
         return m(null, function, definition);
     }
 
 
     @NotNull
     @Contract(value = "_ -> new", pure = true)
-    public final MethodWrapper<K, T> m(@NotNull Definition<T, K> definition) {
+    public final MethodWrapper<K, T> m(@NotNull Definition<T, K> definition)
+    {
         return m(null, null, definition);
+    }
+
+    @NotNull
+    @Contract(value = "_, _, _ -> new", pure = true)
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, T, T> func, @Nullable BiFunction<T, K, T> function, @NotNull Definer<T, K> definer)
+    {
+        return create((DefinerContext<K, T> context, int index) -> m(func, function, definer.getDefinition()).run(context, index), null);
+    }
+
+    @NotNull
+    @Contract(value = "_, _ -> new", pure = true)
+    public final MethodWrapper<K, T> m(@Nullable BiFunction<T, T, T> function, @NotNull Definer<T, K> definer)
+    {
+        return m(function, null, definer);
+    }
+
+    @NotNull
+    @Contract(value = "_, _ -> new", pure = true)
+    public final MethodWrapper<K, T> mwrap(@Nullable BiFunction<T, K, T> function, @NotNull Definer<T, K> definer)
+    {
+        return m(null, function, definer);
+    }
+
+
+    @NotNull
+    @Contract(value = "_ -> new", pure = true)
+    public final MethodWrapper<K, T> m(@NotNull Definer<T, K> definer)
+    {
+        return m(null, null, definer);
     }
 }

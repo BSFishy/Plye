@@ -9,11 +9,10 @@ public class Targets
 {
     public static final Target llvm = new Target("llvm");
     public static final Target java = new Target("java");
+    private static final List<Target> targets = new ArrayList<>();
 
     @Contract(pure = true)
     private Targets() {}
-
-    private static final List<Target> targets = new ArrayList<>();
 
     static void addTarget(Target target)
     {

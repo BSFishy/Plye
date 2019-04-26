@@ -1,6 +1,7 @@
 package com.fishy.plye.api.parser;
 
 import com.fishy.plye.api.PlyeApi;
+import com.fishy.plye.api.ast.AstNode;
 import com.fishy.plye.api.data.parser.PassResult;
 import com.fishy.plye.api.lexer.LexToken;
 import com.fishy.plye.api.parser.pass.ParserPass;
@@ -9,62 +10,71 @@ import com.fishy.plye.api.parser.pass.PassToken;
 import com.fishy.plye.parser.pass.containerization.LexerToken;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class AbstractParser implements Parser
 {
     private final List<ParserPass<? extends PassToken, ? extends PassToken>> passes = new ArrayList<>();
 
-    public void addPass(@NotNull ParserPass<? extends PassToken, ? extends PassToken> pass) {
-        if(!passes.contains(pass))
-            passes.add(pass);
-    }
-
-    public void addPasses(@NotNull Collection<ParserPass<? extends PassToken, ? extends PassToken>> passes) {
-        for(ParserPass<? extends PassToken, ? extends PassToken> pass : passes) {
+    public void addPasses(@NotNull Collection<ParserPass<? extends PassToken, ? extends PassToken>> passes)
+    {
+        for (ParserPass<? extends PassToken, ? extends PassToken> pass : passes)
+        {
             addPass(pass);
         }
     }
 
+    public void addPass(@NotNull ParserPass<? extends PassToken, ? extends PassToken> pass)
+    {
+        if (!passes.contains(pass))
+            passes.add(pass);
+    }
+
     public abstract void addDefaultPasses();
 
-    public void preparePasses() {
-        for(ParserPass pass : passes) {
+    public void preparePasses()
+    {
+        for (ParserPass pass : passes)
+        {
             pass.defaultDefiners();
         }
     }
 
-    public <T extends PassToken> List<T> run(@NotNull List<LexToken> tokens) {
-        List<T> result = new ArrayList<>();
-        List<? extends PassToken> currentTokens = LexerToken.convert(tokens);
-        Class<? extends ParserPass> previousPass = null;
+    public List<AstNode> run(@NotNull List<LexToken> tokens)
+    {
+        List<? extends PassToken>   currentTokens     = LexerToken.convert(tokens);
+        Class<? extends ParserPass> previousPassClass = null;
         PassSorter.sort(passes);
         int index = 0;
 
-        while(index <= tokens.size()) {
+        while (index < tokens.size())
+        {
             boolean found = false;
 
-            for(ParserPass<? extends PassToken, ? extends PassToken> pass : passes) {
-                if(pass.previousPass() == null || Objects.equals(pass.previousPass(), previousPass)) {
+            for (ParserPass<? extends PassToken, ? extends PassToken> pass : passes)
+            {
+                if (pass.previousPass() == null || Objects.equals(pass.previousPass(), previousPassClass))
+                {
                     PassResult<? extends PassToken> res = pass.parseGeneric(currentTokens);
+                    found = res.isFull();
 
-                    index += res.getLength();
-                    currentTokens = res.getTokens();
-                    previousPass = pass.getClass();
+                    if (found)
+                    {
+                        index += res.getLength();
+                        currentTokens = res.getTokens();
+                        previousPassClass = pass.getClass();
+                    }
 
-                    found = true;
                     break;
                 }
             }
 
-            if(!found) {
+            if (!found)
+            {
                 PlyeApi.error("Error parsing: %s", currentTokens.get(index));
             }
         }
 
-        return result;
+        return Collections.emptyList();
     }
 }

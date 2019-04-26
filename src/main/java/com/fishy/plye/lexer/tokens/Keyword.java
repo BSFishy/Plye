@@ -35,6 +35,24 @@ public class Keyword
         });
     }
 
+    public enum KeywordType
+    {
+        New,
+        Class,
+        Static,
+
+        Package,
+        Import,
+
+        Public,
+        Protected,
+        Private
+    }
+
+    public interface KeywordTokenType extends TokenType {}
+
+    public interface VisibilityTokenType extends KeywordTokenType {}
+
     @Data
     public static class New implements KeywordTokenType
     {
@@ -123,20 +141,6 @@ public class Keyword
         }
     }
 
-    public enum KeywordType
-    {
-        New,
-        Class,
-        Static,
-
-        Package,
-        Import,
-
-        Public,
-        Protected,
-        Private
-    }
-
     @EqualsAndHashCode(callSuper = true)
     @Data
     public static class KeywordData extends TokenType.TokenData
@@ -151,8 +155,4 @@ public class Keyword
             this.keyword = keyword;
         }
     }
-
-    public interface KeywordTokenType extends TokenType {}
-
-    public interface VisibilityTokenType extends KeywordTokenType {}
 }

@@ -16,8 +16,13 @@ public class LexerToken extends PassToken
 {
     public final LexToken token;
 
-    public final TokenType type;
+    public final TokenType           type;
     public final TokenType.TokenData data;
+
+    public static List<LexerToken> convert(@NotNull List<LexToken> tokens)
+    {
+        return tokens.stream().map(LexerToken::new).collect(Collectors.toList());
+    }
 
     public LexerToken(@NotNull LexToken token)
     {
@@ -25,10 +30,5 @@ public class LexerToken extends PassToken
 
         this.type = token.type;
         this.data = token.data;
-    }
-
-    public static List<LexerToken> convert(@NotNull List<LexToken> tokens)
-    {
-        return tokens.stream().map(LexerToken::new).collect(Collectors.toList());
     }
 }

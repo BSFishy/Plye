@@ -5,14 +5,16 @@ import lombok.Data;
 @Data
 public class DefinitionResult<T>
 {
-    public final T token;
+    public final T              token;
     public final DefinitionData result;
 
-    public boolean getValue() {
+    public boolean getValue()
+    {
         return result.isValue();
     }
 
-    public int getLookahead() {
+    public int getLookahead()
+    {
         return result.getLookahead();
     }
 }

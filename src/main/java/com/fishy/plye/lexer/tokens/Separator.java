@@ -20,7 +20,7 @@ public class Separator
     public static final GroupClose groupClose = new GroupClose();
 
     public static final Semicolon semicolon = new Semicolon();
-    public static final Period period = new Period();
+    public static final Period    period    = new Period();
 
     public static void addDefaultTypes()
     {
@@ -36,6 +36,23 @@ public class Separator
                 semicolon, period
         });
     }
+
+    public enum SeparatorType
+    {
+        BlockOpen,
+        BlockClose,
+
+        CollectionOpen,
+        CollectionClose,
+
+        GroupOpen,
+        GroupClose,
+
+        Semicolon,
+        Period
+    }
+
+    public interface SeparatorTokenType extends TokenType {}
 
     @Data
     public static class BlockOpen implements SeparatorTokenType
@@ -117,21 +134,6 @@ public class Separator
         }
     }
 
-    public enum SeparatorType
-    {
-        BlockOpen,
-        BlockClose,
-
-        CollectionOpen,
-        CollectionClose,
-
-        GroupOpen,
-        GroupClose,
-
-        Semicolon,
-        Period
-    }
-
     @EqualsAndHashCode(callSuper = true)
     @Data
     public static class SeparatorData extends TokenType.TokenData
@@ -146,6 +148,4 @@ public class Separator
             this.type = type;
         }
     }
-
-    public interface SeparatorTokenType extends TokenType {}
 }

@@ -11,15 +11,13 @@ import java.util.function.BiFunction;
 @Data
 public class MethodWrapper<T, K> implements DefinitionMethod<T, K>
 {
-    @Nullable
-    private final Class<? extends T>     firstType;
     private final DefinitionMethod<T, K> method;
     @Nullable
     private final BiFunction<K, T, K>    function;
 
     @Contract(pure = true)
-    public MethodWrapper(@Nullable Class<? extends T> firstType, DefinitionMethod<T, K> method, @Nullable BiFunction<K, T, K> function) {
-        this.firstType = firstType;
+    public MethodWrapper(DefinitionMethod<T, K> method, @Nullable BiFunction<K, T, K> function)
+    {
         this.method = method;
         this.function = function;
     }
@@ -27,12 +25,29 @@ public class MethodWrapper<T, K> implements DefinitionMethod<T, K>
     @Override
     public DefinitionData run(DefinerContext<T, K> context, int index)
     {
-        return method.run(context, index);
+        DefinitionData data = method.run(context, index);
+
+        if (data.isValue())
+        {
+            for (int i = 0; i < data.getLookahead(); i++)
+            {
+                K token = perform(context.getCurrentToken(), context.get(index + i));
+
+                if (token != null)
+                {
+                    context.setCurrentToken(token);
+                }
+            }
+        }
+
+        return data;
     }
 
     @Nullable
-    public K perform(K node, T token) {
-        if(function != null) {
+    public K perform(K node, T token)
+    {
+        if (function != null)
+        {
             return function.apply(node, token);
         }
 

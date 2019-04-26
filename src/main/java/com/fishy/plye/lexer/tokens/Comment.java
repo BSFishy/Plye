@@ -29,6 +29,8 @@ public class Comment
         });
     }
 
+    public interface CommentType extends TokenType {}
+
     @Data
     public static class SingleLine implements CommentType
     {
@@ -72,6 +74,4 @@ public class Comment
             this.value = value;
         }
     }
-
-    public interface CommentType extends TokenType {}
 }

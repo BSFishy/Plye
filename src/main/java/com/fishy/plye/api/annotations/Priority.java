@@ -24,24 +24,6 @@ public enum Priority
         this.value = value;
     }
 
-    @Contract(pure = true)
-    public int id()
-    {
-        return id;
-    }
-
-    @Contract(pure = true)
-    public String getName()
-    {
-        return name;
-    }
-
-    @Contract(pure = true)
-    public String getValue()
-    {
-        return value;
-    }
-
     @Nullable
     public static Priority fromName(String name)
     {
@@ -64,6 +46,24 @@ public enum Priority
         }
 
         return null;
+    }
+
+    @Contract(pure = true)
+    public int id()
+    {
+        return id;
+    }
+
+    @Contract(pure = true)
+    public String getName()
+    {
+        return name;
+    }
+
+    @Contract(pure = true)
+    public String getValue()
+    {
+        return value;
     }
 
     @NotNull

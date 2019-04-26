@@ -14,7 +14,7 @@ import java.util.List;
 public class BlockToken extends ContainerizationToken
 {
     public final List<ContainerizationToken> children = new ArrayList<>();
-    public boolean                           open     = false;
+    public       boolean                     open     = false;
 
     public BlockToken(@Nullable ContainerizationToken parent)
     {
@@ -34,7 +34,8 @@ public class BlockToken extends ContainerizationToken
         return this;
     }
 
-    public BlockToken addChildren(Collection<ContainerizationToken> tokens) {
+    public BlockToken addChildren(Collection<ContainerizationToken> tokens)
+    {
         children.addAll(tokens);
         return this;
     }

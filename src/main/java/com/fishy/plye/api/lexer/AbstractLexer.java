@@ -23,7 +23,7 @@ public abstract class AbstractLexer implements ILexer
     private FileWrapper wrapper;
 
     private LexTokenInfo info = new LexTokenInfo();
-    private LexContext context;
+    private LexContext   context;
 
     protected void prepare(FileReader reader)
     {
@@ -36,31 +36,21 @@ public abstract class AbstractLexer implements ILexer
         this.prepared = true;
     }
 
-    public boolean isPrepared()
-    {
-        return prepared;
-    }
-
-    protected void check()
-    {
-        if (!isPrepared()) PlyeApi.error("Lexer was not prepared before running");
-    }
-
     @SuppressWarnings("FeatureEnvy")
     public LexToken step()
     {
         check();
 
         LexReturnData data = LexerApi.lex(this.context);
-        if(data == null)
+        if (data == null)
             return NullTokenType.create(info);
 
         info.increment(data.length);
 
-        String buffer = clean(data.length);
-        LexToken token = new LexToken(data.type, data.cast(info.clone(), buffer));
+        String   buffer = clean(data.length);
+        LexToken token  = new LexToken(data.type, data.cast(info.clone(), buffer));
 
-        if(data.type instanceof Ignored.Return)
+        if (data.type instanceof Ignored.Return)
             info.incrementLine();
         else
             info.incrementColumn(data.length);
@@ -68,9 +58,9 @@ public abstract class AbstractLexer implements ILexer
         return token;
     }
 
-    public boolean canStep()
+    protected void check()
     {
-        return !reader.eof();
+        if (!isPrepared()) PlyeApi.error("Lexer was not prepared before running");
     }
 
     protected String clean(int length)
@@ -87,5 +77,15 @@ public abstract class AbstractLexer implements ILexer
         wrapper.clean(length);
 
         return output;
+    }
+
+    public boolean isPrepared()
+    {
+        return prepared;
+    }
+
+    public boolean canStep()
+    {
+        return !reader.eof();
     }
 }

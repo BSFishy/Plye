@@ -9,31 +9,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class provides information to {@link com.fishy.plye.api.parser.definer.Definer}'s while they are matching. This can provide them with {@link PersistentData} or a list of input tokens.
+ * This class provides information to {@link com.fishy.plye.api.parser.definer.Definer}'s while they are matching. This can provide them with {@link PersistentData} or a list of
+ * input tokens.
+ *
  * @param <T> The type of input token
  */
 @Data
 public class DefinerContext<T, K>
 {
-    private final List<T> tokens = new ArrayList<>();
-    private final List<PersistentData> data = new ArrayList<>();
-    private K currentToken;
+    private final List<T>              tokens = new ArrayList<>();
+    private final List<PersistentData> data   = new ArrayList<>();
+    private       K                    currentToken;
 
-    public void fill(List<T> tokens) {
+    public void fill(List<T> tokens)
+    {
         this.tokens.addAll(tokens);
     }
 
-    public T get(int index) {
+    public T get(int index)
+    {
         return tokens.get(index);
     }
 
-    public void addData(PersistentData data) {
+    public void addData(PersistentData data)
+    {
         this.data.add(data);
     }
 
-    public <U extends PersistentData> U get(Class<U> c) {
-        for(PersistentData d : data) {
-            if(c.isInstance(d))
+    public <U extends PersistentData> U get(Class<U> c)
+    {
+        for (PersistentData d : data)
+        {
+            if (c.isInstance(d))
                 return c.cast(d);
         }
 

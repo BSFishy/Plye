@@ -54,6 +54,41 @@ public class BinaryOperator
         });
     }
 
+    public enum OperatorType
+    {
+        Assign,
+        Equals,
+        NotEquals,
+
+        Add,
+        Subtract,
+        Multiply,
+        Divide,
+
+        GreaterThan,
+        LessThan,
+        GreaterThanEquals,
+        LessThanEquals,
+
+        And,
+        Or,
+        Xor,
+
+        BooleanAnd,
+        BooleanOr,
+
+        Modulus,
+
+        ShiftLeft,
+        ShiftRight
+    }
+
+    public interface OperatorTokenType extends TokenType {}
+
+    public interface ComparisonTokenType extends OperatorTokenType {}
+
+    public interface ArithmeticTokenType extends OperatorTokenType {}
+
     @Data
     public static class Assign implements OperatorTokenType
     {
@@ -263,35 +298,6 @@ public class BinaryOperator
         }
     }
 
-    public enum OperatorType
-    {
-        Assign,
-        Equals,
-        NotEquals,
-
-        Add,
-        Subtract,
-        Multiply,
-        Divide,
-
-        GreaterThan,
-        LessThan,
-        GreaterThanEquals,
-        LessThanEquals,
-
-        And,
-        Or,
-        Xor,
-
-        BooleanAnd,
-        BooleanOr,
-
-        Modulus,
-
-        ShiftLeft,
-        ShiftRight
-    }
-
     @EqualsAndHashCode(callSuper = true)
     @Data
     public static class BinaryOperatorData extends TokenType.TokenData
@@ -305,10 +311,4 @@ public class BinaryOperator
             this.type = type;
         }
     }
-
-    public interface OperatorTokenType extends TokenType {}
-
-    public interface ComparisonTokenType extends OperatorTokenType {}
-
-    public interface ArithmeticTokenType extends OperatorTokenType {}
 }

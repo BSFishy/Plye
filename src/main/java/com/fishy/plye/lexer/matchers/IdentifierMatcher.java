@@ -15,6 +15,11 @@ public class IdentifierMatcher extends Matcher<Identifier>
 {
     public static final IdentifierMatcher instance = new IdentifierMatcher();
 
+    public IdentifierMatcher()
+    {
+        super(Identifier.instance);
+    }
+
     public static void addDefaultMatch()
     {
         addDefaultMatch(LexerApi.getMatches());
@@ -23,11 +28,6 @@ public class IdentifierMatcher extends Matcher<Identifier>
     public static void addDefaultMatch(List<Matcher> list)
     {
         LexerApi.addMatch(list, instance);
-    }
-
-    public IdentifierMatcher()
-    {
-        super(Identifier.instance);
     }
 
     @Override
