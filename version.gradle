@@ -1,3 +1,7 @@
+/**************************************************************************************************
+ * Copyright (c) 2019 Matt Provost                                                                *
+ **************************************************************************************************/
+
 import org.apache.tools.ant.filters.ReplaceTokens
 
 project.ext.distance = versionDetails().commitDistance
