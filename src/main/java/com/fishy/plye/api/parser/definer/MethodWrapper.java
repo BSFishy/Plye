@@ -1,5 +1,6 @@
 package com.fishy.plye.api.parser.definer;
 
+import com.fishy.plye.api.PlyeApi;
 import com.fishy.plye.api.context.DefinerContext;
 import com.fishy.plye.api.data.parser.definer.DefinitionData;
 import lombok.Data;

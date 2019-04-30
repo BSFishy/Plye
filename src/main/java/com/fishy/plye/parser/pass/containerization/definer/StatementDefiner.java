@@ -16,14 +16,14 @@ public class StatementDefiner extends AbstractContainerizationDefiner
     public @NotNull Definition<ContainerizationToken, LexerToken> define()
     {
         return define(() -> new StatementToken(null),
-                      mwhile(m(ContainerizationToken::addToken,
-                               mand(
+                      mwhile(mor(m(ContainerizationToken::addToken, mand(
                                        mnot(Separator.semicolon),
                                        mnot(Separator.blockOpen),
-                                       mnot(Separator.blockClose)
-//                                       mnot(Separator.groupOpen),
-//                                       mnot(Separator.groupClose)
-                               ))),
+                                       mnot(Separator.blockClose),
+                                       mnot(Separator.groupOpen),
+                                       mnot(Separator.groupClose)
+                               )),
+                              m(ContainerizationToken::addToken, GroupDefiner.instance))),
                       m(Separator.semicolon)
         );
     }

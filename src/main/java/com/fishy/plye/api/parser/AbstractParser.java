@@ -71,7 +71,7 @@ public abstract class AbstractParser implements Parser
 
             if (!found)
             {
-                PlyeApi.error("Error parsing: %s", currentTokens.get(index));
+                PlyeApi.error("Error parsing\n");
             }
         }
 

@@ -31,7 +31,7 @@ public class Plye
     @Contract("_ -> param1")
     public static Program parse(@NotNull Program program)
     {
-        PlyeApi.log(PlyeApi.getParser().parse(program.getTokens()).toString());
+        PlyeApi.log(PlyeApi.getParser().parse(program.getTokens()).toString() + "\n");
         return program;
     }
 
@@ -46,7 +46,7 @@ public class Plye
         }
         catch (IOException e)
         {
-            PlyeApi.error("Unable to close file (%s): %s", filename, e.getMessage());
+            PlyeApi.error("Unable to close file (%s): %s\n", filename, e.getMessage());
         }
 
         return p;

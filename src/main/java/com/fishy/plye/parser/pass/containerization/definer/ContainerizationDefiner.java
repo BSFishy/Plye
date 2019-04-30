@@ -17,6 +17,7 @@ public class ContainerizationDefiner extends AbstractContainerizationDefiner
         return define(() -> new StatementToken(null),
                       mor(
                               m((ContainerizationToken token, ContainerizationToken t) -> t, StatementDefiner.instance),
+                              m((ContainerizationToken token, ContainerizationToken t) -> t, GroupDefiner.instance),
                               m((ContainerizationToken token, ContainerizationToken t) -> t, BlockDefiner.instance)
                       ));
     }

@@ -66,6 +66,8 @@ public abstract class ParserPass<T extends PassToken, K extends PassToken>
 
             if (!found)
             {
+                PlyeApi.error("Error parsing: %s\n", tokens.get(index).toString());
+
                 break;
             }
         }

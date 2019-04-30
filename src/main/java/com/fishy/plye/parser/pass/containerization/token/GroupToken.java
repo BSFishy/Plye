@@ -8,15 +8,10 @@ import org.jetbrains.annotations.Nullable;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class StatementToken extends ContainerizationToken
+public class GroupToken extends ContainerizationToken
 {
-    public StatementToken(@Nullable ContainerizationToken parent)
+    public GroupToken(@Nullable ContainerizationToken parent)
     {
         super(parent);
-    }
-
-    public BlockToken promote()
-    {
-        return new BlockToken(parent, tokens);
     }
 }

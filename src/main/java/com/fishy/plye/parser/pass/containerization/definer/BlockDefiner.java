@@ -21,10 +21,11 @@ public class BlockDefiner extends AbstractContainerizationDefiner
                                mand(
                                        mnot(Separator.semicolon),
                                        mnot(Separator.blockOpen),
-                                       mnot(Separator.blockClose)
-//                                       mnot(Separator.groupOpen),
-//                                       mnot(Separator.groupClose)
+                                       mnot(Separator.blockClose),
+                                       mnot(Separator.groupOpen),
+                                       mnot(Separator.groupClose)
                                ))),
+                      moptional(m(ContainerizationToken::addToken, GroupDefiner.instance)),
                       m(Separator.blockOpen),
                       mwhile(m((ContainerizationToken token, ContainerizationToken t) -> {
                           BlockToken bt;
@@ -41,8 +42,9 @@ public class BlockDefiner extends AbstractContainerizationDefiner
                               bt = new BlockToken(token.getParent(), token.getTokens());
                           }
 
+                          t.setParent(bt);
                           return bt.addChild(t);
-                      }, ContainerizationDefiner.instance.getDefinition())),
+                      }, ContainerizationDefiner.instance)),
                       m(Separator.blockClose)
         );
     }
