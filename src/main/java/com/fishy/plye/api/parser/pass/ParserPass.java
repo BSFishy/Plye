@@ -43,7 +43,7 @@ public abstract class ParserPass<T extends PassToken, K extends PassToken>
 
             for (Definition<? extends T, K> def : definers)
             {
-                DefinitionResult<? extends T> res = def.run(tokens, index);
+                DefinitionResult<? extends T> res = def.getInteraction().run(def, tokens, index);
 
                 if (res.getValue())
                 {

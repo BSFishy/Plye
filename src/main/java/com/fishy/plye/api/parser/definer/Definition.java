@@ -7,6 +7,7 @@ package com.fishy.plye.api.parser.definer;
 import com.fishy.plye.api.context.DefinerContext;
 import com.fishy.plye.api.data.parser.definer.DefinitionData;
 import com.fishy.plye.api.data.parser.definer.DefinitionResult;
+import com.fishy.plye.api.parser.definer.interaction.DefinerInteraction;
 import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,6 +28,8 @@ public class Definition<T, K>
     private final DefinitionMethod<K, T> method;
     @NotNull
     private final Supplier<T>            create;
+    @NotNull
+    private final DefinerInteraction interaction;
 
     public DefinitionResult<T> run(List<K> tokens)
     {

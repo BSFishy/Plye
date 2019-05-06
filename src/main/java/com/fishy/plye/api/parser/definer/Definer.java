@@ -9,6 +9,8 @@ import com.fishy.plye.api.data.parser.definer.DefinitionData;
 import com.fishy.plye.api.data.parser.definer.DefinitionResult;
 import com.fishy.plye.api.matching.AbstractMatcher;
 import com.fishy.plye.api.matching.IMethod;
+import com.fishy.plye.api.parser.definer.interaction.DefaultInteraction;
+import com.fishy.plye.api.parser.definer.interaction.DefinerInteraction;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -29,7 +31,20 @@ import java.util.stream.Collectors;
 @SuppressWarnings({"SpellCheckingInspection", "unused"})
 public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>, DefinitionMethod<K, T>, DefinitionData>
 {
-    private Definition<T, K> def;
+    private       Definition<T, K>   def;
+    private final DefinerInteraction interaction;
+
+    public Definer() {
+        this(DefaultInteraction.instance);
+    }
+
+    public Definer(DefinerInteraction interaction) {
+        this.interaction = interaction;
+    }
+
+    public DefinerInteraction getInteraction() {
+        return interaction;
+    }
 
     @NotNull
     @Contract
@@ -70,7 +85,7 @@ public abstract class Definer<T, K> extends AbstractMatcher<DefinerContext<K, T>
     @Contract(value = "_, _ -> new", pure = true)
     public final Definition<T, K> define(@NotNull Supplier<T> create, @NotNull DefinitionMethod<K, T>... methods)
     {
-        return new Definition<>(m(methods), create);
+        return new Definition<>(m(methods), create, getInteraction());
     }
 
     @NotNull
