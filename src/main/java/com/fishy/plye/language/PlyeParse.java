@@ -2,18 +2,19 @@
 // Copyright (c) 2019 Matt Provost                                                                 /
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-package com.fishy.plye.parser;
+package com.fishy.plye.language;
 
+import com.fishy.plye.api.language.Parse;
 import com.fishy.plye.api.language.PassHandler;
-import com.fishy.plye.api.parser.AbstractParser;
-import com.fishy.plye.file.ProgramFile;
-import org.jetbrains.annotations.NotNull;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-public class Parser extends AbstractParser
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class PlyeParse extends Parse
 {
-    @Override
-    public void parse(@NotNull ProgramFile file, @NotNull PassHandler handler)
+    public PlyeParse()
     {
-        handler.passes(file);
+        super(PlyeLanguage.NAME, new PlyePassHandler());
     }
 }

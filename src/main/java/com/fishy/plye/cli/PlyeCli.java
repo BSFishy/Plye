@@ -22,7 +22,7 @@ public class PlyeCli
         }
         else if (arg.getOption() == CliArgs.Option.COMPILE)
         {
-            throw new UnsupportedOperationException("Not implemented");
+            Plye.compile(arg.getFile());
         }
         else
         {

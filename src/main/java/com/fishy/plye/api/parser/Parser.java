@@ -4,14 +4,11 @@
 
 package com.fishy.plye.api.parser;
 
-import com.fishy.plye.api.ast.AstNode;
-import com.fishy.plye.api.lexer.LexToken;
-import com.fishy.plye.api.parser.pass.PassToken;
+import com.fishy.plye.api.language.PassHandler;
+import com.fishy.plye.file.ProgramFile;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public interface Parser
 {
-    List<AstNode> parse(@NotNull List<LexToken> tokens);
+    void parse(@NotNull ProgramFile file, @NotNull PassHandler handler);
 }

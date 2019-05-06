@@ -2,11 +2,17 @@
 // Copyright (c) 2019 Matt Provost                                                                 /
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-package com.fishy.plye.api.lexer;
+package com.fishy.plye.api.language;
 
-import com.fishy.plye.file.ProgramFile;
+import lombok.Data;
 
-public interface ILexer
+@Data
+public abstract class Parse
 {
-    void lex(ProgramFile programFile);
+    private final String name;
+    private final PassHandler passHandler;
+
+    public void passes() {
+        passHandler.preparePasses();
+    }
 }

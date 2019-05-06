@@ -17,10 +17,6 @@ import java.util.logging.Level;
 
 public class PlyeApi
 {
-    public static ILexer lexer;
-    public static Parser parser;
-//    public static IParser parser;
-
     public static void log(@NotNull String format, @NotNull Object... options)
     {
         PlyeCliApi.log(Level.INFO, format, options);
@@ -55,30 +51,4 @@ public class PlyeApi
     {
         PlyeCliApi.err(Level.SEVERE, format, options);
     }
-
-    @Contract
-    public static ILexer getLexer()
-    {
-        if (lexer == null)
-            lexer = new Lexer();
-
-        return lexer;
-    }
-
-    @Contract
-    public static Parser getParser()
-    {
-        if (parser == null)
-            parser = new com.fishy.plye.parser.Parser();
-
-        return parser;
-    }
-
-//    public static IParser getParser()
-//    {
-//        if(parser == null)
-//            parser = new Parser();
-//
-//        return parser;
-//    }
 }

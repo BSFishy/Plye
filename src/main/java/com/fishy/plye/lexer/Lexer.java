@@ -6,16 +6,16 @@ package com.fishy.plye.lexer;
 
 import com.fishy.plye.api.lexer.AbstractLexer;
 import com.fishy.plye.api.lexer.LexToken;
-import com.fishy.plye.file.Program;
+import com.fishy.plye.file.ProgramFile;
 import com.fishy.plye.lexer.tokens.Ignored;
 import org.jetbrains.annotations.NotNull;
 
 public class Lexer extends AbstractLexer
 {
     @Override
-    public void lex(@NotNull Program program)
+    public void lex(@NotNull ProgramFile file)
     {
-        prepare(program.reader);
+        prepare(file.reader);
 
         while (canStep())
         {
@@ -23,7 +23,7 @@ public class Lexer extends AbstractLexer
 
             if (!(token.type instanceof Ignored.IgnoredTokenType))
             {
-                program.getTokens().add(token);
+                file.getTokens().add(token);
             }
         }
     }

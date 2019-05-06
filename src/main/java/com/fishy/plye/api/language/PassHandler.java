@@ -2,18 +2,18 @@
 // Copyright (c) 2019 Matt Provost                                                                 /
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-package com.fishy.plye.parser;
+package com.fishy.plye.api.language;
 
-import com.fishy.plye.api.language.PassHandler;
-import com.fishy.plye.api.parser.AbstractParser;
 import com.fishy.plye.file.ProgramFile;
+import lombok.Data;
 import org.jetbrains.annotations.NotNull;
 
-public class Parser extends AbstractParser
+@Data
+public abstract class PassHandler
 {
-    @Override
-    public void parse(@NotNull ProgramFile file, @NotNull PassHandler handler)
-    {
-        handler.passes(file);
-    }
+    private final String name;
+
+    public abstract void preparePasses();
+
+    public abstract void passes(@NotNull ProgramFile file);
 }
