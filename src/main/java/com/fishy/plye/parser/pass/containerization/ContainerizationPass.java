@@ -15,11 +15,6 @@ public class ContainerizationPass extends ParserPass<ContainerizationToken, Lexe
 {
     public static final ContainerizationPass instance = new ContainerizationPass();
 
-    public ContainerizationPass()
-    {
-        super(null, LexerToken.class);
-    }
-
     @Override
     public void defaultDefiners()
     {
