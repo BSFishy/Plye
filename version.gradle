@@ -33,8 +33,11 @@ def fullReplaceFiles = [] as List<String>
 def prepareReplaceFiles = { ->
     if (!fullReplaceFiles.empty) return
 
-    replaceFiles.forEach { value ->
-        fullReplaceFiles.add("$replaceFilesDir/${value}.java")
+    sourceSets.main.allJava.srcDirs.forEach { dir ->
+        replaceFiles.forEach { value ->
+            fullReplaceFiles.add("${dir.path}/$replaceFilesDir/${value}.java")
+            println "${dir.path}/$replaceFilesDir/${value}.java"
+        }
     }
 }
 
@@ -42,13 +45,11 @@ task updateVersion(type: Copy) {
     group = 'Versioning'
     description = 'Copies files from source to build/generated-src, replacing instances of @version@ with the current version.'
 
-    doFirst {
-        println "Preparing ${project.name} ${project.absoluteVersion} for the build process"
-    }
+    outputs.cacheIf { true }
 
     prepareReplaceFiles()
-    inputs.files(fullReplaceFiles)
-    outputs.dir("$buildDir/generated-src")
+    inputs.files(fullReplaceFiles).withPropertyName("Replace files")
+    outputs.dir("$buildDir/generated-src").withPropertyName("Generated files")
 
     from sourceSets.main.allJava.srcDirs
     into "$buildDir/generated-src"
@@ -68,8 +69,10 @@ task copyBuild(type: Copy) {
     def input = "$buildDir/libs/${project.name}-${project.version}.jar"
     def out = "$buildDir/libs"
 
-    inputs.file(input)
-    outputs.file("$out/${project.name}-current.jar")
+    outputs.cacheIf { true }
+
+    inputs.file(input).withPropertyName("Built jar")
+    outputs.file("$out/${project.name}-current.jar").withPropertyName("Current jar")
 
     from file(input)
     into file(out)
@@ -90,37 +93,40 @@ task finalizeBuild {
     def currentInput = "${project.name}-current.jar"
     def shouldDelete = false
 
+    outputs.cacheIf { true }
+
     if (shouldDelete) input.forEach { value -> destroyables.register("$libsDir/$value") }
     else {
-        inputs.files(input)
-        input.forEach { value -> outputs.file("${project.outDir}/$value") }
-        outputs.file("${project.baseOutDir}/$currentInput")
+        input.forEach { value -> inputs.file("$libsDir/$value").withPropertyName("Input jar") }
+        inputs.file("$libsDir/$currentInput").withPropertyName("Current input jar")
+        input.forEach { value -> outputs.file("${project.outDir}/$value").withPropertyName("Output jar") }
+        outputs.file("${project.baseOutDir}/$currentInput").withPropertyName("Current output jar")
     }
 
-    doLast {
-        if (!file(project.outDir).exists())
-            mkdir project.outDir
+//    doLast {
+    if (!file(project.outDir).exists())
+        mkdir project.outDir
 
-        copy {
-            from libsDir
-            include input
-            into project.outDir
-        }
+    copy {
+        from libsDir
+        include input
+        into project.outDir
+    }
 
-        copy {
-            from libsDir
-            include currentInput
-            into project.baseOutDir
-        }
+    copy {
+        from libsDir
+        include currentInput
+        into project.baseOutDir
+    }
 
-        if (shouldDelete) {
-            delete {
-                input.forEach { value ->
-                    delete "$libsDir/$value"
-                }
+    if (shouldDelete) {
+        delete {
+            input.forEach { value ->
+                delete "$libsDir/$value"
             }
         }
     }
+//    }
 }
 
 task cleanBuilds {
